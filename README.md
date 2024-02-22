@@ -11,13 +11,13 @@ Il sera aussi possible de voir les statistiques individuelles des athlètes ains
     
 **Language de programmation et librairie:**  
   1. API Rest: 
-    -[PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
+    [PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
      
   3. Frontend: 
-    -HTML, [Bootstrap](https://getbootstrap.com/) et [React](https://react.dev/)
+     HTML, [Bootstrap](https://getbootstrap.com/) et [React](https://react.dev/)
      
   5. Backend: 
-    -[PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
+     [PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
 
 ## Base de données
 **MySQL**

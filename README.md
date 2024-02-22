@@ -8,9 +8,10 @@ Il sera aussi possible de voir les statistiques individuelles des athlètes ains
 **Interfaces:**
   - Site web
   - Application mobile
--**API Rest:** [PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
--**Frontend:** HTML, [Bootstrap](https://getbootstrap.com/) et [React](https://react.dev/)
--**Backend:** [PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
+### language de programmation et librairie:    
+  -**API Rest:** [PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
+  -**Frontend:** HTML, [Bootstrap](https://getbootstrap.com/) et [React](https://react.dev/)
+  -**Backend:** [PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
 
 ## Base de données
 **MySQL**

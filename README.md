@@ -20,8 +20,10 @@ Il sera aussi possible de voir les statistiques individuelles des athlètes ains
      [PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
 
 ## Base de données
-**MySQL**
-**Certaines tables dans la BDD**
+**MySQL**  
+
+**Certaines tables dans la BDD:**  
+
     - Compétition;
     - Équipe;
     - Joueur;

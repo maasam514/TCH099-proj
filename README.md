@@ -8,12 +8,15 @@ Il sera aussi possible de voir les statistiques individuelles des athlètes ains
 **Interfaces:**
   - Site web
   - Application mobile
-### Language de programmation et librairie:    
-  1**API Rest:** 
+    
+**Language de programmation et librairie:**  
+  1. API Rest: 
     -[PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
-  2**Frontend:** 
+     
+  3. Frontend: 
     -HTML, [Bootstrap](https://getbootstrap.com/) et [React](https://react.dev/)
-  3**Backend:** 
+     
+  5. Backend: 
     -[PHP](https://www.php.net/) avec la librairie [Laravel](https://laravel.com/)
 
 ## Base de données

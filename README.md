@@ -41,9 +41,9 @@ Il sera aussi possible de voir les statistiques individuelles des athlètes ains
       - Accpeter les demandes des entraîneurs,
       - Rentrer les résultats des matchs.
       - ...
-  - Joueurs:
-      - S'ajouter ou créer une équipe.
-  - Visiteurs:
+  - Capitaine:
+      - Créer une équipe et gerer l'adhesion aux competitions
+  - Visiteurs/joueurs:
     - Peuvent tout voir mais rien modifier.
   
    

@@ -3,7 +3,7 @@
 # Liste des membres de l'équipe avec identifiant Github et Discord
 
 - massam514 : sam_514_
-- AlexandreRacine01 : racer002
+- AlexandreRacine02 : racer002
 - emilemadore : emilemadore
 - Eti-Lema : hydr0qc
 - : ykelsea

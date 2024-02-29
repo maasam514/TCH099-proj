@@ -43,7 +43,7 @@ Insérez une image du schéma de la base de données (vous pouvez amélioré cha
 
 ## Liste d’user stories
 1. En tant que responsable de ligue, je souhaite pouvoir ajouter et gerer des equipes
-participantes avec leur nom, les memebres et les informations de contact.
+participantes avec leur nom, les membres et les informations de contact.
 
 2. En tant que responsable de ligue, je souhaite pouvoir planifier le calendrier des matchs a venir en assurant une
  equite entre les equipes.
@@ -65,7 +65,7 @@ participantes avec leur nom, les memebres et les informations de contact.
 8. En tant que gestionnaire de ligue, je souhaite pouvoir gerer les inscriptions aux ligues que je cree en verfifiant
   les informations des differentes equipes et d'accepter ou non leur demande d'adhesion.
 
-9. En tant que joueur d'une equippe, je souhaite pouvoir voir un profil personnalise ou je peux visualiser
+9. En tant que joueur d'une equipe, je souhaite pouvoir voir un profil personnalise ou je peux visualiser
   mes statistiques individuelles, d'equipe, mes performances passes afin de suivre ma progression.
 
 10. En tant que capitaine d'equipe, je souhaite pouvoir faire des demandes officiels de report de match

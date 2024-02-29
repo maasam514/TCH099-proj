@@ -81,7 +81,9 @@ participantes avec leur nom, les membres et les informations de contact.
   certaines informations, telle qu'une description, y ajouter un logo d'equipe et autres.
 
 ### Liste de requis technologiques
-Ajoutez deux requis technologiques avec les liens vers les Issues de votre projet.
+1. Utilisation du framework JavaScript React côté client pour développer l'interface utilisateur.
+2. Utilisation du framework Laravel côté serveur pour créer les endpoints REST.
 
 ### Liste de requis non fonctionnels
-Ajoutez deux requis non fonctionnels avec les liens vers les Issues de votre projet.
+1. Il faut sécuriser les informations d'identification pour prévenir les intrusions indésirables.
+2. Le programme devrait être structuré de manière claire et accompagné de documentation pour simplifier son entretien ultérieur.

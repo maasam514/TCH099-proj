@@ -39,7 +39,7 @@ Insérez une image votre diagramme de cas d'utilisation
 
 
 ## Schéma initial de la base de données
-Insérez une image du schéma de la base de données (vous pouvez amélioré changer le schéma durant le restant du développement)
+![Image de la structure de base de donnees](/img/Image_BaseDonneejpeg)
 
 ## Liste d’user stories
 1. En tant que responsable de ligue, je souhaite pouvoir ajouter et gerer des equipes

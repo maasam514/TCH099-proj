@@ -6,7 +6,7 @@
 - AlexandreRacine02 : racer002
 - emilemadore : emilemadore
 - Eti-Lema : hydr0qc
-- : ykelsea
+- cloudedxyekay: ykelsea
 
 # Description l'objectif principal de l'application
 Gestionnaire de ligue où il sera possible de créer des ligues et d'y inviter des équipes selon la catégorie d'âge. Il sera aussi possible de voir les statistiques individuelles des joueurs ainsi que les statistiques d'équipes.

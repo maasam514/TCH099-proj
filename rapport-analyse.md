@@ -29,7 +29,7 @@ Gestionnaire de ligue où il sera possible de créer des ligues et d'y inviter d
 # Planification du Sprint 1 
 
 ## Diagramme de cas d'utilisation
-Insérez une image votre diagramme de cas d'utilisation
+![Image du diagramme de cas d'utilisation](/img/Screenshot_2024-03-02_201938.png)
 
 ## Diagramme de séquences
 ![Image des diagrammes de séquences](/img/Screenshot_2024-02-29_at_11.04.02_AM.jpeg)

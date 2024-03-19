@@ -1,0 +1,46 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ffffff;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #e8e2e2;
+}
+tr:nth-child(pair) {
+    background-color: #ececec;
+}
+.day{
+    background-color: rgba(183, 248, 184, 0.592);
+}
+#form{
+    border: solid #e8e2e2 3px;
+    text-align: center;
+}
+#form:hover{
+    transform: scale(1.005);
+    transition: 2s;
+}
+
+#form input{
+    width: 10em;
+}
+
+.day:hover{
+    background-color: rgba(11, 172, 2, 0.404);
+    transform: scale(1.1);
+    transition: 1s;
+}
+.day{
+    text-align: center;
+}
+body{
+    background-color: #ffffff;
+}
+.container{
+    height: 100%;
+    width: 100%;
+}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Database\QueryException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
@@ -19,16 +20,30 @@ class GameController extends Controller
             'equipeVis'=>null,
         ];
 
+        /*
+        -SELECT * FROM game
+        -JOIN game_equipe ON game.id_game=game_equipe.id_game
+        -WHERE game.id_game=$id
+        */
+
         $requete=DB::table('game')
                 ->where('game.id_game',$id)
                 ->join('game_equipe','game.id_game','=','game_equipe.id_game')
                 ->first();
 
+        /*
+        -SELECT equipe.nom FROM equipe
+        -WHERE equipe.id_equipe=$requete.id_equipe_dom;
+        */        
         $equipeDom=DB::table('equipe')
                    ->select('equipe.nom')
                    ->where('id_equipe',$requete->id_equipe_dom)
                    ->first();
 
+        /*
+        -SELECT equipe.nom FROM equipe
+        -Where id_equipe = $requete.id_equipe_ext;
+        */           
         $equipeVis=DB::table('equipe')
                    ->select('equipe.nom')
                    ->where('id_equipe',$requete->id_equipe_ext)
@@ -53,6 +68,17 @@ class GameController extends Controller
             'parties'=>[],
         ];
 
+         /*
+        -SELECT game.id_game, game.date_game, game.lieu, equipe.nom as equipeContre
+        -FROM game_equipe
+        -JOIN game ON game_equipe.id_game = game.id_game
+        -JOIN equipe ON (
+            (equipe.id_equipe = game_equipe.id_equipe_ext AND game_equipe.id_equipe_dom = $id)
+            OR
+            (equipe.id_equipe = game_equipe.id_equipe_dom AND game_equipe.id_equipe_ext = $id)
+        )
+        -WHERE game_equipe.id_equipe_ext = $id OR game_equipe.id_equipe_dom = $id;
+        */
 
         //faire la requete vers la base de donne
         $games = DB::table('game_equipe')
@@ -98,6 +124,10 @@ class GameController extends Controller
     }
 
     public function getGameLigue(int $id){
+
+        /*SELECT game.id_ligue FROM Game
+        - WHERE game.id_ligue=$id;
+        */
         $games=DB::table('Game')
                ->where('id_ligue',$id)
                ->get();
@@ -106,6 +136,78 @@ class GameController extends Controller
             return response()->json(['error'=>'Aucun match trouve pour cette ligue'],404);
         }  
         return response()->json($games,200);     
+    }
+
+    public function ajouterGame(Request $requete){
+        $regles=[
+            'id_game'=>'required|integer',
+            'date'=>'required|date',
+            'lieu'=>'required|string|max:20',
+            'id_ligue'=>'required|integer',
+            'id_equipe_dom'=>'required|integer',
+            'id_equipe_ext'=>'required|integer'
+        ];
+
+        $validation=Validator::make($requete->all(),$regles);
+
+        if($validation->fails()){
+            return response()->json(['error'=>$validation->errors()],422);
+        }
+
+        $id_game=strip_tags($requete->input('id_game'));
+        $date=strip_tags($requete->input('date'));
+        $lieu=strip_tags($requete->input('lieu'));
+        $id_ligue=strip_tags($requete->input('id_ligue'));
+        $id_equipe_dom=strip_tags($requete->input('id_equipe_dom'));
+        $id_equipe_ext=strip_tags($requete->input('id_equipe_ext'));
+
+        try{
+            DB::beginTransaction();
+
+             DB::table('game')->insert([
+                'id_game'=>$id_game,
+                'date_game'=>$date,
+                'lieu'=>$lieu,
+                'id_ligue'=>$id_ligue
+            ]);
+
+            DB::table('game_equipe')->insert([
+                'id_equipe_dom'=>$id_equipe_dom,
+                'id_equipe_ext'=>$id_equipe_ext,
+                'id_game'=>$id_game
+            ]);
+
+            DB::commit();
+        }catch(QueryException $e){
+            DB::rollBack();
+            return response()->json(['error'=>'Ajout impossible','exception'=>$e->getMessage()],500);
+        }
+        return response()->json(['succes'=>'Insertion du match reussi'],200);
+        
+    }
+
+    public function deleteGame(int $id){
+    
+        try{
+             DB::beginTransaction();
+    
+            $delete=DB::table('game')
+                    ->where('id_game',$id)
+                    ->delete(); 
+                
+            if($delete>0){
+                DB::commit();
+                return response()->json(['succes'=>'Partie supprime avec succes.'],200);
+            } else{
+                DB::rollBack();
+                return response()->json(['error'=>'Aucune Partie trouvee.'],404);
+            }  
+                        
+        }catch(QueryException $e){
+            DB::rollBack();
+            return response()->json(['erreur'=>'Erreur dans la deletion','exception'=>$e->getMessage()],500);
+        }
+        
     }
 
 

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daily Calendar</title>
+    <link rel="stylesheet" href="calendar.css">
+</head>
+
+<body>
+    <div class="container">
+        <button>back</button>
+        <h2>Calendar</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Event Description</th>
+                    <th>Time</th>
+                    <th>Location</th>
+                </tr>
+            </thead>
+            <tbody id="calendarBody">
+                <!-- les evenenemts sont visivle ici -->
+            </tbody>
+        </table>
+        <br><br><br>
+        <table>
+            <thead>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="day">1</td>
+                    <td class="day">2</td>
+                    <td class="day">3</td>
+                    <td class="day">4</td>
+                    <td class="day">5</td>
+                    <td class="day">6</td>
+                    <td class="day">7</td>
+                </tr>
+                <tr>
+                    <td class="day">8</td>
+                    <td class="day">9</td>
+                    <td class="day">10</td>
+                    <td class="day">11</td>
+                    <td class="day">12</td>
+                    <td class="day">13</td>
+                    <td class="day">14</td>
+                </tr>
+                <tr>
+                    <td class="day">15</td>
+                    <td class="day">16</td>
+                    <td class="day">17</td>
+                    <td class="day">18</td>
+                    <td class="day">19</td>
+                    <td class="day">20</td>
+                    <td class="day">21</td>
+                </tr>
+                <tr>
+                    <td class="day">22</td>
+                    <td class="day">23</td>
+                    <td class="day">24</td>
+                    <td class="day">25</td>
+                    <td class="day">26</td>
+                    <td class="day">27</td>
+                    <td class="day">28</td>
+                </tr>
+                <tr>
+                    <td class="day">29</td>
+                    <td class="day">30</td>
+                    <td class="day">31</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+
+    </div>
+    <script src="calendar.js"></script>
+    </div>
+
+    <div id="teamStat">
+
+    </div>
+    <table id="teams">
+        <th>Teams</th>
+    </table>
+    <br>
+    <table name="teamStats">
+        <thead>
+            <tr>
+                <th name="numMatch">Matches played</th>
+                <th name="points">Points</th>
+                <th name="numWin" >Wins</th>
+                <th name="numLoss">Losses</th>
+                <th name="numDraw">Draws</th>
+                <th name="numGoal">Goals</th>
+                <th name="goalRecu">Goals Recieved</th>
+            </tr>
+        </thead>
+        <tbody id="statsBody">
+            <!-- les evenenemts sont visivle ici -->
+        </tbody>
+    </table>
+
+<script src="calGuest.js"></script>
+</body>
+
+</html>

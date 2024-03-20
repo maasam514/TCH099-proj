@@ -44,3 +44,9 @@ body{
     height: 100%;
     width: 100%;
 }
+#teams tr{
+    text-align: center;
+    width: 100%;
+    height: 1cm;
+    border: #110f0f solid 1px;
+}

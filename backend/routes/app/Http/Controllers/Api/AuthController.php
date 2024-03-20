@@ -9,12 +9,24 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    /**
+     * Commentaire generaux: 
+     * L'authentification se fait a l'aide de Sanctum, un systeme d'authentification built-in dans laravel.
+     * L'authentification se fait sous la base d'un token identifiant qui est generer lorsque qu'un utilisateur
+     * se cree un compte ou se connecte a un compte existant. Le token est detruit des que l'utilisateur se logout.
+     * Etant donne qu'on utilise un token d'identification, on doit le fournir dans chaque requete qui le necessite dans le header
+     * avec Authorization: Bearer <token> qui est envoye dans la reponse lors de la creation ou de la connection a son compte.
+     * Il faut donc gerer le token dans le javascript et s'assurer de ne pas l'afficher. Le token est liee a un utilisateur specifique
+     * dans la table personnal_access_token qui a ete generer automatiquement par Sanctum, il est donc possible d'avoir acces a champs de la table
+     * utilisateur a partir du token Bearer.
+     */
+
     //creation d'un utilisateur
     public function creerCompte(Request $requete){
         //validation des champs de la requete
         $champsValidee=$requete->validate([
             'nom'=>'required|string|max:100',
-            'email'=>'required|string|max:255|unique:utilisateur,email',
+            'email'=>'required|string|max:255|unique:utilisateur,email', //le email doit etre unique dans la base de donnee
             'mot_de_passe'=>'required|string|min:9',
             'role_utilisateur'=>'nullable|string|in:visiteur,joueur,gestionnaire',
         ]);
@@ -27,7 +39,7 @@ class AuthController extends Controller
             'role_utilisateur'=>$champsValidee['role_utilisateur']
         ]);
         
-        //creation d'un token d'identification propre a l'utilisateur
+        //creation d'un token d'identification propre a l'utilisateur et qui est valide jusqu'au logout
         $tokenIdentification=$utilisateur->createToken('tokenutilisateur')->plainTextToken;
         echo $tokenIdentification;
 
@@ -59,7 +71,10 @@ class AuthController extends Controller
         //Verification du email dans la base de donne pour retrouver l'utilisateur
         $utilisateur=User::where('email',$champsValidee['email'])->first();
 
+        //si l'utilisateur n'a pas ete trouve par son email, ou si le mot de passe fourni ne concorde pas avec le mot de passe dans la base de donnee.
         if(!$utilisateur || !Hash::check($champsValidee['mot_de_passe'],$utilisateur->mot_de_passe)){
+
+            //envoyer un message d'erreur
             return response([
                 'message'=>'Mauvais email ou mot de passe'
             ],401);

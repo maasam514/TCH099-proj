@@ -10,14 +10,15 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+
+    /* Cette classe permet l'interfacage entre l'api et la table utilisateur de la base de donnee.
+    *  C'est grace a celle-ci que l'authentification se fait et que le systeme peut savoir si un utilisateur est authentifier.
+    *  La table utilisateur pourra etre appele avec User directement.
+    */
     use HasApiTokens, HasFactory, Notifiable;
 
-    //Differentes classes d'utilisateurs de l'application
-    const ROLE_VISITEUR='visiteur';
-    const ROLE_JOUEUR='joueur';
-    const ROLE_GESTIONNAIRE='gestionnaire';
 
-    //Donne le bon nom de colonne pour la cle primaire.
+    //Donne le bon nom de colonne pour la cle primaire au systeme
     protected $primaryKey = 'id_utilisateur';
 
     //Nom de la table dans laquelle inserer les nouveaux utilisateurs
@@ -28,7 +29,7 @@ class User extends Authenticatable
         'role_utilisateur' => 'visiteur',
     ];
     /**
-     * The attributes that are mass assignable.
+     * The attributes that are mass assignable. Les attributs de la table utilisateur que le systeme peut remplir
      *
      * @var array<int, string>
      */
@@ -45,7 +46,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        'mot_de_passe',
         'remember_token',
     ];
 

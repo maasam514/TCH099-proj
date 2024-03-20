@@ -46,6 +46,7 @@ class Kernel extends HttpKernel
 
         ],
 
+        //creation de la classe d'utilisateur gestionnaire permettant 
         'gestionnaire'=>[
             \App\Http\Middleware\GestionnaireLigueMiddleware::class,
         ],    

@@ -15,15 +15,12 @@ class GestionnaireLigueMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->user()){
-            return response()->json(['message' => 'Unauthorized'], 401);
+        //verifier si le role_utilisateur de l'utilisateur provenant du token de la prochaine requete est de type gestionnaire, si c'est le cas, lui donne acces a la requete,
+        //sinon envoyer un message d'erreur.
+        if($request->user()->role_utilisateur !== 'gestionnaire'){
+            return response()->json(['message' => 'Acces non autorisee'], 401);
         }
-        if ($request->routeIs('gestionnaire.*')) {
-            // Check if user is a gestionnaire
-            if ($request->user()->role_utilisateur !== 'gestionnaire') {
-                return response()->json(['message' => 'Access denied'], 403);
-            }
-        }
+        
         return $next($request);
     }
 }

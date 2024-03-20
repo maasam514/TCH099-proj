@@ -13,6 +13,11 @@ class StatistiqueLigueController extends Controller
 
         //requete vers la base de donnes qui va renvoyer toutes les informations sur toutes les equipes
         //faisant partie de la ligue
+
+        /* SELECT * FROM Equipe
+        -  WHERE id_ligue=$id
+        -  INNER JOIN statistique_equipe ON Equipe.id_equipe = statistique_equipe.id_equipe
+        */
         $equipes=DB::table('Equipe')
                 ->where('id_ligue',$id)
                 ->join('statistique_equipe','Equipe.id_equipe','=','statistique_equipe.id_equipe')

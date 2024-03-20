@@ -12,6 +12,10 @@ class StatistiqueJoueurController extends Controller
     public function getStatistiqueIndividuelle(int $id)
     {
         //Faire la connection a la base de donnee pour obtenir le joueur que l'on veut.
+
+        /* SELECT * FROM Feuille_Statistique_Joueur
+        -  WHERE id_joueur=$id
+        */
         $statistiques = DB::table('Feuille_Statistique_Joueur')
         ->where('id_joueur', $id)
         ->get();

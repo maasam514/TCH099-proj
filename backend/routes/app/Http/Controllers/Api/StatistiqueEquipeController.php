@@ -23,6 +23,9 @@ class StatistiqueEquipeController extends Controller
        ];
        
        //faire la requete a la base de donnee pour l'equipe voulue
+       /* SELECT * FROM Statistique_Equipe
+       -  WHERE id_equipe=$id
+       */
        $requete=DB::table('Statistique_Equipe')
                 ->where('id_equipe',$id)
                 ->first();
@@ -46,6 +49,9 @@ class StatistiqueEquipeController extends Controller
 
     public function getStatistiquesJoueurs(int $id){
 
+        /* SELECT * FROM Joueur
+        -  WHERE id_equipe=$id
+        */
         $joueurs=DB::table('Joueur')
                  ->where('id_equipe',$id)
                  ->get();
@@ -54,6 +60,9 @@ class StatistiqueEquipeController extends Controller
         $compteur=0;
         if(!$joueurs->isEmpty()){
             foreach($joueurs as $joueur){
+                /* SELECT * FROM Feuille_Statistique_Joueur
+                -  WHERE id_joueur=$joueur.id_joueur
+                */
                 $statistiques = DB::table('Feuille_Statistique_Joueur')
                 ->where('id_joueur', $joueur->id_joueur)
                 ->get();

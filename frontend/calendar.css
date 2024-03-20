@@ -2,45 +2,63 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-th, td {
+
+th,
+td {
     border: 1px solid #ffffff;
     padding: 8px;
     text-align: left;
 }
+
 th {
     background-color: #e8e2e2;
 }
+
 tr:nth-child(pair) {
     background-color: #ececec;
 }
-.day{
+
+.day {
     background-color: rgba(183, 248, 184, 0.592);
 }
-#form{
+
+#form {
     border: solid #e8e2e2 3px;
     text-align: center;
+    
 }
-#form:hover{
+
+#form:hover {
     transform: scale(1.005);
     transition: 2s;
 }
 
-#form input{
+#form input {
     width: 10em;
 }
 
-.day:hover{
+.day:hover {
     background-color: rgba(11, 172, 2, 0.404);
     transform: scale(1.1);
     transition: 1s;
 }
-.day{
+
+.day {
     text-align: center;
 }
-body{
+
+body {
     background-color: #ffffff;
 }
-.container{
+
+.container {
     height: 100%;
     width: 100%;
+}
+
+#teams tr {
+    text-align: center;
+    width: 100%;
+    height: 1cm;
+    border: #110f0f solid 1px;
 }

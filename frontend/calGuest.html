@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daily Calendar</title>
+    <title>Monthly Calendar</title>
     <link rel="stylesheet" href="calendar.css">
 </head>
 
@@ -12,6 +12,7 @@
     <div class="container">
         <button>back</button>
         <h2>Calendar</h2>
+
         <table>
             <thead>
                 <tr>
@@ -19,11 +20,10 @@
                     <th>Event Description</th>
                     <th>Time</th>
                     <th>Location</th>
-                    <th>Ligue</th>
                 </tr>
             </thead>
             <tbody id="calendarBody">
-                <!-- les evenements s'ajoute ici -->
+                <!-- les evenenemts sont visivle ici -->
             </tbody>
         </table>
         <br><br><br>
@@ -84,30 +84,38 @@
             </tbody>
         </table>
         <br>
-        <div id="form">
-            <h3>Add New Event</h3>
-            <form id="eventForm" action="calendar.php" method="post">
-                <label for="eventDate">Date:</label>
-                <br>
-                <input type="date" id="eventDate" name="eventDate" required><br>
-                <label for="eventDescription">Description:</label>
-                <br>
-                <input type="text" id="eventDescription" name="eventDescription"><br>
-                <label for="eventTime">Ligue:</label>
-                <br>
-                <input type="text" id="eventLigue" name="eventLigue" required><br>
-                <label for="eventLigue">Time:</label>
-                <br>
-                <input type="time" id="eventTime" name="eventTime" required><br>
-                <label for="eventLocation">Location:</label>
-                <br>
-                <input type="text" id="eventLocation" name="eventLocation" required><br>
-                <br>
-                <button type="submit">Add Event</button>
-            </form>
-        </div>
-        <script src="calendar.js"></script>
+
     </div>
+    <script src="calendar.js"></script>
+    </div>
+
+    <div id="teamStat">
+
+    </div>
+    <table id="teams">
+        <th>Teams</th>
+        <th>Ligue</th>
+        <th>Category</th>
+    </table>
+    <br>
+    <table name="teamStats">
+        <thead>
+            <tr>
+                <th name="numMatch">Matches played</th>
+                <th name="points">Points</th>
+                <th name="numWin">Wins</th>
+                <th name="numLoss">Losses</th>
+                <th name="numDraw">Draws</th>
+                <th name="numGoal">Goals</th>
+                <th name="goalRecu">Goals Recieved</th>
+            </tr>
+        </thead>
+        <tbody id="statsBody">
+            <!-- les evenenemts sont visivle ici -->
+        </tbody>
+    </table>
+
+    <script src="calGuest.js"></script>
 </body>
 
 </html>

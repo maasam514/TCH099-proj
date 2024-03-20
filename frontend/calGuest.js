@@ -34,12 +34,6 @@ function getTeamstats(teamId)
 {
     //interaction avec database
 
-    return{// test
-        "Team": teamName,
-        "Wins": Math.floor(Math.random() * 10),
-        "Losses": Math.floor(Math.random() * 10),
-        "Draws": Math.floor(Math.random() * 10)
-    };
 }
 
 function updateStatRow(teamStat)

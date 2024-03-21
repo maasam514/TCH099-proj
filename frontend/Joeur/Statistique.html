@@ -215,7 +215,7 @@
 
 /////////////////////////////Statistique d'un joueur///////////////////////////////////////
 
-let tableBod = document.querySelector("#statsJoueurTable tbody");
+let tableJoueur = document.querySelector("#statsJoueurTable tbody");
 
     async function fetchInfoJoueur() {
         const response = await fetch("http://127.0.0.1:8000/api/statistique/joueur/1");
@@ -235,7 +235,7 @@ let tableBod = document.querySelector("#statsJoueurTable tbody");
         });
 
         // Ajouter la nouvelle ranger dans l'espace specifique du tableau
-        tableBod.appendChild(newRow);
+        tableJoueur.appendChild(newRow);
     }        
         fetchInfoJoueur();
     </script>
@@ -246,7 +246,7 @@ let tableBod = document.querySelector("#statsJoueurTable tbody");
 <script>
 
 /////////////////////////////Statistique des joueurs dans la meme equipe///////////////////////////////////////
-let tableBody = document.querySelector("#statsEquipeTable tbody");
+let tableEquipe = document.querySelector("#statsEquipeTable tbody");
 
 async function fetchInfoJoueurEquipe() {
     const response = await fetch("http://127.0.0.1:8000/api/equipe/1/joueurs");
@@ -275,7 +275,7 @@ async function fetchInfoJoueurEquipe() {
                     cell.textContent = value;
                     newRow.appendChild(cell);
                 });
-                tableBody.appendChild(newRow);
+                tableEquipe.appendChild(newRow);
             });
         }
     }

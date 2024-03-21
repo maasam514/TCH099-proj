@@ -1,7 +1,4 @@
 
- 
- 
- 
  .navbar {
   overflow: hidden;
   background-color: #333;
@@ -23,10 +20,6 @@
   color: black;
 }
 
-.navbar a.active {
-  background-color: #4CAF50;
-  color: white;
-}
 .navbar a {
   /* Remove underlines */
   text-decoration: none;
@@ -119,4 +112,27 @@
 
 p{
   color: white;
+}
+
+
+.rounded-grid .col {
+  border-radius: 50%;
+  overflow: hidden; /* to ensure content inside does not overflow */
+}
+
+.bubble {
+  background-color: #0de22d;
+  border-radius: 20px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.bubble2 {
+  background-color: #3498db; /* Blue background color */
+  color: white; /* White text color */
+  border-radius: 20px; /* Rounded corners */
+  padding: 10px 20px; /* Padding inside the bubble */
+  margin-bottom: 10px; /* Spacing between bubbles */
 }

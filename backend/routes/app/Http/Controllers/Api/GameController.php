@@ -12,6 +12,16 @@ use function PHPUnit\Framework\isEmpty;
 
 class GameController extends Controller
 {
+
+    public function getAllGames(){
+        $games=DB::table('game')
+               ->get();
+               
+        if(!$games->isEmpty()){
+            return response()->json($games,200);
+        } 
+        return response()->json(["error"=>"Erreur lors de la requete"],404);      
+    }
     public function getGame(int $id){
         $informations=[
             'date'=>null,
@@ -208,6 +218,14 @@ class GameController extends Controller
             return response()->json(['erreur'=>'Erreur dans la deletion','exception'=>$e->getMessage()],500);
         }
         
+    }
+
+    public function getResultatGame(int $id){
+
+    }
+
+    public function getResultatsGamesPourEquipe(int $id){
+
     }
 
 

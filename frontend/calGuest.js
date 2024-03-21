@@ -1,47 +1,52 @@
 
 
-async function fetchDataAndPopulateTable() {
+async function fetchDataAndPopulateTable1() {
     try {
-        
-        const response = await fetch("http://127.0.0.1:8000/api/");
+
+        const response = await fetch("http://127.0.0.1:8000/api/game/4");//à changer 
         const jsonData = await response.json();
-        
-        populateTable(jsonData);
+
+        populateTable1(jsonData);
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
 
-function populateTable(data) {
+function populateTable1(data) {
     const tableBody = document.getElementById("calendarBody");
-    
-    data.forEach(entry => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-            <td>${entry.id_game}</td>
-            <td>${entry.date_game}</td>
-            <td>${entry.lieu}</td>
-            <td>${entry.id_ligue}</td>
-            <td>${entry.time}</td>
+    const currentDate = new Date();
+    const entryDate = new Date(entry.date_game);
+    if (entryDate > currentDate) {
+        data.forEach(entry => {
+            const row = document.createElement("tr");
+            row.innerHTML = `
+        <td>${entry.id_game}</td>
+        <td>${entry.date_game}</td>
+        <td>${entry.equipeDom}</td>
+        <td>${entry.equipeVis}</td>
+        <td>${entry.lieu}</td>
+        <td>${entry.id_ligue}</td>
+        <td>${entry.time}</td>
         `;
-        tableBody.appendChild(row);
-    });
+            tableBody.appendChild(row);
+        });
+    }
 }
-async function fetchDataAndPopulateTable() {
+async function fetchDataAndPopulateTable2() {
     try {
-        
-        const response = await fetch("http://127.0.0.1:8000/api/");
+
+        const response = await fetch("http://127.0.0.1:8000/api/");//à changer routes pour tous les equipes peu importe la ligue
         const jsonData = await response.json();
-        
-        populateTable(jsonData);
+
+        populateTable2(jsonData);
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
 
-function populateTable(data) {
+function populateTable2(data) {
     const tableBody = document.getElementById("teams");
-    
+
     data.forEach(entry => {
         const row = document.createElement("tr");
         row.innerHTML = `
@@ -49,41 +54,39 @@ function populateTable(data) {
             <td>${entry.nom}</td>
             <td>${entry.id_ligue}</td>
             <td>${entry.categorie}</td>
-        
         `;
         tableBody.appendChild(row);
     });
 }
 
 let teamStat;
-
 let teamstable = document.getElementById("teams");
 teamstable.addEventListener("click", function (event) {
     if (event.target.tagName === "TR") {
         teamId = event.target.querySelector("td:first-child").textContent;
 
-        teamStat = getTeamstats(teamId);
+        teamStat = fetchDataAndPopulateTable3(teamId);
 
         updateStatRow(teamStat);
     }
 })
 
 
-    async function fetchDataAndPopulateTable() {
-        try {
-            
-            const response = await fetch("http://127.0.0.1:8000/api/ ${teamId}");
-            const jsonData = await response.json();
-            
-            populateTable2(jsonData);
-        } catch (error) {
-            console.error("Error fetching data:", error);
-        }
+async function fetchDataAndPopulateTable3(teamId) {
+    try {
+
+        const response = await fetch("http://127.0.0.1:8000/api/statistique/equipe/${teamId}");
+        const jsonData = await response.json();
+
+        populateTable3(jsonData);
+    } catch (error) {
+        console.error("Error fetching data:", error);
     }
-    
-function populateTable(data) {
+}
+
+function updateStatRow(data) {
     const tableBody = document.getElementById("statsBody");
-    
+
     data.forEach(entry => {
         const row = document.createElement("tr");
         row.innerHTML = `

@@ -1,67 +1,104 @@
-let teamNameTab = new Array();
-let teamLigTab = new Array();
-let teamCatTab = new Array();
 
 
-//code d'interaction avec database
-//pour recuperer les equipes
-
-//test
-teamNameTab[0] = "voila";
-teamNameTab[1] = "koala";
-teamLigTab[0] = "ligue 3";
-teamLigTab[1] = "ligue 1";
-teamCatTab[0] = "ligue 1";
-teamCatTab[1] = "ligue 1";
-
-for (let i = 0; i < teamNameTab
-    .length && teamNameTab
-    [i] !== undefined; i++) {
-    let teamName = teamNameTab[i];
-    let teamLig = teamLigTab[i];
-    let teamCat = teamCatTab[i];
-    let newRow = document.createElement("tr");
-    newRow.id = `${teamName}`;
-    newRow.innerHTML = `
-                            <td>${teamName}</td>
-                            <td>${teamLig}</td>
-                            <td>${teamCat}</td>
-                        `;
-    document.getElementById("teams").appendChild(newRow);
+async function fetchDataAndPopulateTable() {
+    try {
+        
+        const response = await fetch("http://127.0.0.1:8000/api/");
+        const jsonData = await response.json();
+        
+        populateTable(jsonData);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
 }
+
+function populateTable(data) {
+    const tableBody = document.getElementById("calendarBody");
+    
+    data.forEach(entry => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${entry.id_game}</td>
+            <td>${entry.date_game}</td>
+            <td>${entry.lieu}</td>
+            <td>${entry.id_ligue}</td>
+            <td>${entry.time}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+async function fetchDataAndPopulateTable() {
+    try {
+        
+        const response = await fetch("http://127.0.0.1:8000/api/");
+        const jsonData = await response.json();
+        
+        populateTable(jsonData);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+    }
+}
+
+function populateTable(data) {
+    const tableBody = document.getElementById("teams");
+    
+    data.forEach(entry => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${entry.id_equipe}</td>
+            <td>${entry.nom}</td>
+            <td>${entry.id_ligue}</td>
+            <td>${entry.categorie}</td>
+        
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+let teamStat;
 
 let teamstable = document.getElementById("teams");
 teamstable.addEventListener("click", function (event) {
     if (event.target.tagName === "TR") {
-        let teamId = event.target.id.team;
+        teamId = event.target.querySelector("td:first-child").textContent;
 
-        let teamStat = getTeamstats(teamId);
+        teamStat = getTeamstats(teamId);
 
         updateStatRow(teamStat);
     }
 })
 
-function getTeamstats(teamId) {
-    let numMatch, numWin, numLoss, points, numDraw, numRecu, numGoal;
-    //interaction avec database
 
+    async function fetchDataAndPopulateTable() {
+        try {
+            
+            const response = await fetch("http://127.0.0.1:8000/api/ ${teamId}");
+            const jsonData = await response.json();
+            
+            populateTable2(jsonData);
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+    
+function populateTable(data) {
+    const tableBody = document.getElementById("statsBody");
+    
+    data.forEach(entry => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${entry.nb_game}</td>
+            <td>${entry.nb_point}</td>
+            <td>${entry.nb_victoire}</td>
+            <td>${entry.nb_defaite}</td>
+            <td>${entry.nb_nul}</td>
+            <td>${entry.but_pour}</td>
+            <td>${entry.but_contre}</td>
+        `;
+        tableBody.appendChild(row);
+    });
 }
 
-function updateStatRow(teamStat) {
-    let statRow = document.getElementById("statsBody");
-    statRow.removeChild;
-    let newRow = document.createElement("tr");
-    newRow.innerHTML = `
-        <td>${numMatch}</td>
-        <td>${points}</td>
-        <td>${numWin}</td>
-        <td>${numLoss}</td>
-        <td>${numDraw}</td>
-        <td>${numGoal}</td>
-        <td>${numRecu}</td>
-    `;
 
-    statRow.appendChild(newRow);
 
-}
 

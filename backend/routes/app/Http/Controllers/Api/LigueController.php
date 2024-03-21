@@ -11,6 +11,12 @@ use Illuminate\Database\QueryException;
         
 class LigueController extends Controller
 {
+
+    public function getAllLigues(){
+        $reponse=DB::table('ligue')->get();
+
+        return response()->json($reponse,200);
+    }
     //fonction qui renvoie les informations sur une ligue
     public function getLigue(int $id){
         $infoLigue=[

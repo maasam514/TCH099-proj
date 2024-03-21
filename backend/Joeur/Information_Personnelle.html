@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html>
 	<head>	
@@ -21,6 +22,62 @@
             
         </div> 
 
+        <center><h1>Information Personnelle</h1></center>
+        <br>
+        <div class="container" id="joueurInfoPerso">
+            <!-- Information joueurs ici -->
+        </div>
 
+
+<script>
+    let joueurInfoPerso = document.getElementById("joueurInfoPerso");
+
+    async function fetchJoueurInfo() {
+
+        const response = await fetch("http://127.0.0.1:8000/api/joueur/1");
+        const data = await response.json();
+
+        
+
+        // Mettre les noms des valeurs
+        const elementsNames = {
+            prenom: "Prénom",
+            nom: "Nom",
+            num_tel: "Numéro de téléphone",
+            courriel: "Courriel",
+            date_de_naissance: "Date de naissance"
+        };
+
+        // Informations pas inclut dans la page
+        const excludedFields = ["id_joueur", "capitaine", "numero", "nbButs", "nbPasses", "nbCatronJaune", "nbCartonRouge"];
+
+        // Creer une bulle pour chaque ligne d;information du joueur
+        for (const key in data) {
+            if (data.hasOwnProperty(key) && !excludedFields.includes(key)) {
+
+                //<div class = "bubble2">
+                let bubble = document.createElement("div");
+                bubble.classList.add("bubble2");
+
+                // La valeur key va devenir la nouvelle valeur defini plus haut columnNames sinon c'est le nom original
+                //A la place de retourner le id de l'equipe j'aimerais que ca retourne le nom d'equipe comme ca j'ai pas besoin ||key
+                const elementsName = elementsNames[key] || key;
+
+                // Inserer les informations personnelles du joueur dans la bulle
+                let content = `<strong>${elementsName}:</strong> ${data[key]}`;
+
+                // Set tle content de la bubble
+                bubble.innerHTML = content;
+
+                // Append la bulle
+                joueurInfoPerso.appendChild(bubble);
+            }
+        }
+
+    }
+
+    fetchJoueurInfo();
+
+</script>
     </body>
 </html>

@@ -14,6 +14,7 @@
 	</head>
 
     <body>
+        
         <div class = "navbar">
             <a href="Statistique.html">Rank</a>
             <a href="Equipe.html">Equipe</a>
@@ -22,11 +23,152 @@
             
         </div> 
         <br> 
-        <ul>
+        <ul id = "categories">
             <h2> Est-ce que vous voulez vos...</h2>
-            <li> <a href = "Match.html?categorie=1"> Match avenir</a></li>
-            <li> <a href = "Match.html?categorie=2"> Match precedents </a></li>							
+            <li> <a href = "Match.php?categorie=1"> Match avenir</a></li>
+            <li> <a href = "Match.php?categorie=2"> Match precedents </a></li>							
 
         </ul>
+
+
+
+        <ul id="tasks">
+            <li data-category= 1>
+                <div class="container" id="MatchAvenir">
+                    <!-- Information du tableau -->
+                </div>
+            </li>
+        </ul>
+
+        <ul id ="tasks">
+            <li data-category= 2>
+                <p>Hiiiiiiiiiiiiiiiiiii</p>
+                <h3>KOOOO</h3>
+                <div class="container" id="MatchPasser">
+                    <!-- Information du tableau -->
+                </div>
+                
+            </li>
+        </ul>
+
+
+        
+
+
+
+
+
+        <script>
+			
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryLinks = document.querySelectorAll('#categories a');
+            // Cacher les tache
+            CacheTache();
+            categoryLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); 
+                    
+                    // Prendre le numero de la categorie du href attribue
+                    const categoryId = link.getAttribute('href').split('=')[1];
+                    
+                    // Cacher les tache
+                    CacheTache();
+        
+                    // Call la fonction pour afficher les tache par categorie
+                    TacheParCategorie(categoryId);
+                });
+            });
+        
+            // Fonction cacher les tache
+            function CacheTache() {
+                const tasks = document.querySelectorAll('#tasks li');
+                tasks.forEach(function(task) {
+                    task.style.display = 'none';
+                });
+            }
+            // Fonction affiche tache conrrespondant a sa category
+            function TacheParCategorie(categoryId) {
+            
+                const tasks = document.querySelectorAll('#tasks li');
+                tasks.forEach(function(task) {
+                    if (task.dataset.category === categoryId) {
+                        task.style.display = 'block';
+                    } 
+                });
+            }
+        });
+        </script>
+
+    <div class="Bouton">
+        <div id="test">
+        </div>
+        <br>
+        
+
+
+    <script>
+        let MatchAvenirTable = document.getElementById("MatchAvenir");
+
+        async function fetchMatchAvenir() {
+            const response = await fetch("http://127.0.0.1:8000/api/game/equipe/1");
+            const data = await response.json();
+
+            // Chercher les valeurs Date, Lieu, Adversaire
+            data.parties.forEach(match => {
+                let bubble = document.createElement("div");
+                bubble.classList.add("bubble");
+
+                // Creer le content dans la bulle
+                let content = `
+                    <p><strong>Date:</strong> ${match.dateGame}</p>
+                    <p><strong>Lieu:</strong> ${match.lieu}</p>
+                    <p><strong>Adversaire:</strong> ${match.equipeContre}</p>
+                `;
+
+                // Set le content de la bubble
+                bubble.innerHTML = content;
+
+                // Append la bubble a MatchAvenir
+                MatchAvenirTable.appendChild(bubble);
+            });
+        }
+
+        fetchMatchAvenir();
+    </script>
+
+<script>
+    let MatchPasserTable = document.getElementById("MatchPasser");
+
+    async function fetchMatchPasser() {
+        const response = await fetch("http://127.0.0.1:8000/api/game/equipe/1");
+        const data = await response.json();
+
+        // Chercher les valeurs Date, Lieu, Adversaire
+        data.parties.forEach(match => {
+            let bubble = document.createElement("div");
+            bubble.classList.add("bubble");
+
+            // Creer le content dans la bulle
+            let content = `
+                <p><strong>Date:</strong> ${match.dateGame}</p>
+                <p><strong>Lieu:</strong> ${match.lieu}</p>
+                <p><strong>Adversaire:</strong> ${match.equipeContre}</p>
+                
+            `; //<p><strong>Resultats: </strong>${match.resultats}</p>
+
+            // Set le content de la bubble
+            bubble.innerHTML = content;
+
+            // Append la bubble a MatchAvenir
+            MatchPasserTable.appendChild(bubble);
+        });
+    }
+
+    fetchMatchPasser();
+</script>
+
+
+
+
     </body>
 </html>

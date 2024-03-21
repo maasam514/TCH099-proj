@@ -1,0 +1,366 @@
+<!doctype html>
+<html>
+	<head>	
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width...">
+		<title>Yemisi page</title>
+        <link rel="stylesheet" href="ma_feuille_style.css">
+          <!--   Bootstrap librairies-->
+          <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+          <script  defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+          <script src="javascript.js"></script> 
+        
+	</head>
+
+    <body>
+    <div id="root"></div>
+        <div class = "navbar">
+            <a href="Statistique.html">Rank</a>
+            <a href="Equipe.html">Equipe</a>
+            <a href="Match.html">Game</a>
+            <a href="Information_Personnelle.html">Information Personelle</a>
+
+        </div> 
+
+        <!--  La page commence ici-->
+        <div id="table-container">
+            <!-- l'information du tableau -->
+            
+            </div>
+        <br> 
+    <center>
+        <ul id = "categories">
+            <h2> Est-ce que vous voulez ...</h2>
+             <li><a href = "Statistique.html?categorie=1" id ="StatsJoeurPerso"> Vos stastistique       </a></li>
+             <li><a href = "Statistique.html?categorie=2"> Équipe stastistique    </a></li>							
+             <li><a href = "Statistique.html?categorie=3"> Ligue Rang           </a> </li>
+             
+        </ul>
+    </center>
+
+
+        <br>
+
+        <ul id = "tasks">
+        <center>
+    
+            <li data-category= 1 ><img src="Gold_FIFA.webp" class="img_fluid" alt="Responsive image" style = "width: 50% ">
+            <br>
+
+            <ul id ="tasks">
+                <li data-category = 1>
+                    <div class="container">
+                        <table class="table" id="statsJoueurTable">
+                            <thead>
+                                <tr>
+                                    <th>nb_but</th>
+                                    <th>nb_passe</th>
+                                    <th>nb_carton_jaune</th>
+                                    <th>nb_carton_rouge</th>
+                                    <th>id_joueur</th>
+                                    <th>id_game</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- l'information du tableau -->
+                            </tbody>
+                        </table>
+                    </div>
+                </li>
+            </ul>
+            
+            
+            <br>
+        </li>
+            
+        </center>   
+        </ul>
+
+        <!--  Les stats personelles de son equipe-->
+
+        <ul id ="tasks">
+            <li data-category = 2>
+                <center><h2>Statistique des joueurs dans l'équipe</h2></center>
+                <div class="container">
+                    <table class="table" id="statsEquipeTable">
+                        <thead>
+                            <tr>
+                                <th>Rang</th>
+                                <th>Nom</th>
+                                <th>Prenom</th>
+                                <th>Buts</th>
+                                <th>Assists</th>
+                                <th>Carton Jaune</th>
+                                <th>Carton Rouge</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- l'information du tableau -->
+                        </tbody>
+                    </table>
+                </div>
+
+            <center><h2>Statistique de l'équipe</h2></center>
+                <div class="container">
+                    <table class="table" id="statsEquipeJoueurTable">
+                        <thead>
+                            <tr>
+                                <th>Victoires</th>
+                                <th>Defaites</th>
+                                <th>Null</th>
+                                <th>Points</th>
+                                <th>Buts Pour</th>
+                                <th>Buts Contre</th>
+                                <th>Matchs</th>  
+                            </tr>
+                        </thead>
+                        <tbody>
+                            
+                            <!-- l'information du tableau -->
+                        </tbody>
+                    </table>
+                </div>
+
+            </li>
+        </ul>    
+
+
+
+
+
+    <br>
+    <!--  Les stats de sa Ligue-->
+    <ul id ="tasks">
+        <li data-category = 3>
+            <center><h2>Statistique des équipes dans ta ligue</h2></center>
+            <div class="container">
+                <table class="table" id="statsLigueTable">
+                    <thead>
+                        <tr>
+                            <th>Rang</th>
+                            <th>Nom Équipe</th>
+                            <th>Victoire</th>
+                            <th>Defaite</th>
+                            <th>Null</th>
+                            <th>Points</th>
+                            <th>Buts Pour</th>
+                            <th>Buts Contre</th>
+                            <th>Match Jouer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- l'information du tableau -->
+                    </tbody>
+                </table>
+            </div>
+        </li>
+    </ul>
+
+
+
+
+         
+
+
+
+    <script>
+
+/////////////////  Afficher les categories   /////////////////////////////////////////////        
+			
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryLinks = document.querySelectorAll('#categories a');
+            // Cacher les tache
+            CacheTache();
+            categoryLinks.forEach(function(link) {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault(); 
+                    
+                    // Prendre le numero de la categorie du href attribue
+                    const categoryId = link.getAttribute('href').split('=')[1];
+                    
+                    // Cacher les tache
+                    CacheTache();
+        
+                    // Call la fonction pour afficher les tache par categorie
+                    TacheParCategorie(categoryId);
+                });
+            });
+        
+            // Fonction cacher les tache
+            function CacheTache() {
+                const tasks = document.querySelectorAll('#tasks li');
+                tasks.forEach(function(task) {
+                    task.style.display = 'none';
+                });
+            }
+            // Fonction affiche tache conrrespondant a sa category
+            function TacheParCategorie(categoryId) {
+            
+                const tasks = document.querySelectorAll('#tasks li');
+                tasks.forEach(function(task) {
+                    if (task.dataset.category === categoryId) {
+                        task.style.display = 'block';
+                    } 
+                });
+            }
+        });
+        </script>
+
+
+
+
+
+    <script>
+
+/////////////////////////////Statistique d'un joueur///////////////////////////////////////
+
+let tableBod = document.querySelector("#statsJoueurTable tbody");
+
+    async function fetchInfoJoueur() {
+        const response = await fetch("http://127.0.0.1:8000/api/statistique/joueur/1");
+        const data = await response.json();
+
+        // Prendre seulement les valeurs de l'objet
+        const values = Object.values(data[0]);
+
+        // Creer une nouvelle ranger
+        let newRow = document.createElement("tr");
+
+        // Mettre les valeurs dans la ranger
+        values.forEach(value => {
+            let cell = document.createElement("td");
+            cell.textContent = value;
+            newRow.appendChild(cell);
+        });
+
+        // Ajouter la nouvelle ranger dans l'espace specifique du tableau
+        tableBod.appendChild(newRow);
+    }        
+        fetchInfoJoueur();
+    </script>
+
+    
+
+
+<script>
+
+/////////////////////////////Statistique des joueurs dans la meme equipe///////////////////////////////////////
+let tableBody = document.querySelector("#statsEquipeTable tbody");
+
+async function fetchInfoJoueurEquipe() {
+    const response = await fetch("http://127.0.0.1:8000/api/equipe/1/joueurs");
+    const data = await response.json();
+
+    // Regrouper l'information paar les id
+    const groupedData = {};
+    data.forEach(player => {
+        if (!groupedData[player.idJoueur]) {
+            groupedData[player.idJoueur] = [];
+        }
+        groupedData[player.idJoueur].push(player);
+    });
+
+    // Creer la range d'information par id de joueur
+    for (const id in groupedData) {
+        if (groupedData.hasOwnProperty(id)) {
+            const players = groupedData[id];
+            players.forEach(player => {
+                let newRow = document.createElement("tr");
+                // On ne veut pas faire afficher les donnees capitaine et idJoeur
+                const { capitaine, idJouer, ...playerData } = player;
+                const values = Object.values(playerData);
+                values.forEach(value => {
+                    let cell = document.createElement("td");
+                    cell.textContent = value;
+                    newRow.appendChild(cell);
+                });
+                tableBody.appendChild(newRow);
+            });
+        }
+    }
+}
+
+fetchInfoJoueurEquipe();
+    
+</script>
+
+    
+    
+<div class="container">
+    <table class="table" id="teamStatsTable">
+        <tbody>
+            <!-- Single row for the team statistics values will be dynamically added here -->
+        </tbody>
+    </table>
+</div>
+
+<script>
+/////////////////////////////Statistique d'une equipe ///////////////////////////////////////
+let TableEquipe = document.getElementById("statsEquipeJoueurTable").getElementsByTagName('tbody')[0];
+
+async function fetchEquipeStats() {
+    try {
+        const response = await fetch("http://127.0.0.1:8000/api/statistique/equipe/1");
+        const teamStats = await response.json();
+
+        // Prendre seulement les valeurs de l'objet 
+        const values = Object.values(teamStats);
+
+        // Creer une nouvelle ranger 
+        let newRow = teamStatsTable.insertRow();
+
+        // Create cells for each value
+        values.forEach(value => {
+            let cell = newRow.insertCell();
+            cell.textContent = value;
+        });
+
+        // Mettre les valeurs dans la ranger
+        TableEquipe.appendChild(newRow);
+    } catch (error) {
+        console.error('Error fetching team statistics:', error);
+    }
+}
+
+fetchEquipeStats();    
+</script>
+
+
+
+<script>
+
+/////////////////////////////Statistique des equipes dans une ligue /////////////////////////////////////////
+
+    let tableLigue = document.querySelector("#statsLigueTable tbody");
+
+    async function fetchLigueStats() {
+        const response = await fetch("http://127.0.0.1:8000/api/ligue/1/equipes");
+        const data = await response.json();
+
+        // Iterate over each team's stats
+        data.forEach(team => {
+            let newRow = document.createElement("tr");
+
+            // Exclude id_equipe, id_ligue, and categorie from values
+            const {categorie, id_ligue, Win, Loss, Ties,nb_joueurs, ...teamStats } = team;
+            const values = Object.values(teamStats);
+
+            // Populate the row with the values
+            values.forEach(value => {
+                let cell = document.createElement("td");
+                cell.textContent = value;
+                newRow.appendChild(cell);
+            });
+
+            // Append the new row to the table body
+            tableLigue.appendChild(newRow);
+        });
+    }
+
+    fetchLigueStats();
+</script>
+
+
+    </body>
+</html>

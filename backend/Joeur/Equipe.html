@@ -17,7 +17,7 @@
             <a href="Statistique.html">Rank</a>
             <a href="Equipe.html">Equipe</a>
             <a href="Match.html">Game</a>
-            <a href="Personal_Info.html">Information Personelle</a>
+            <a href="Information_Personnelle.html">Information Personelle</a>
             
         </div> 
         <br> 
@@ -30,7 +30,20 @@
         </center>
 
         <div class="Bouton">
+        <div id="test">
+        </div>
+        <br>
+        
 
+        <script>
+            let div=document.getElementById("test");
+            async function fetchInfoJoueur(){
+                const response = await fetch("http://127.0.0.1:8000/api/statistique/joueur/1");
+                const data = await response.json();
+                div.innerHTML = JSON.stringify(data);
+            }
+            fetchInfoJoueur();
+        </script>
     
     </body>
 </html>

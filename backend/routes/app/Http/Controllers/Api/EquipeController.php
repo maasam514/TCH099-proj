@@ -23,6 +23,28 @@ class EquipeController extends Controller
         return response()->json(['error'=>'Aucune equipe trouvee'],404);            
     }
 
+    public function getAllEquipes(){
+        $equipes=DB::table('equipes')
+                ->get();
+        
+        if(!$equipes->isEmpty()){
+            return response()->json($equipes,200);
+        }
+        return response()->json(['message'=>'erreur lors de la demande'],404);        
+    }
+
+    public function getEquipesAvecMoinsDeJoueurs(Request $requete){
+        $nbJoueurs=$requete->query('nb_joueurs');
+        $equipes=DB::table('equipe')
+                ->where('nb_joueurs','<=',$nbJoueurs)
+                ->get();
+         
+        if(!$equipes->isEmpty()){
+            return response()->json($equipes,200);  
+        }        
+        return response()->json(['message'=>'Aucune equipe avec moins de '.$nbJoueurs.' joueurs'],404);        
+    }
+
     public function ajouterEquipe(Request $requete){
         $regles=[
             'nom'=>'required|string|max:20',

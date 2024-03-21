@@ -83,6 +83,16 @@ Route::get('statistique/equipe/{id}',[StatistiqueEquipeController::class, 'getSt
 */
 Route::get('joueur/{id}',[JoueurController::class, 'getJoueur']);
 
+/*Route qui retourne le resultat d'un match specifique
+- Prend en parametre l'id du match dans l'url
+*/
+Route::get('resultat/{id}',[GameController::class,'getResultatGame']);
+
+/*Route qui retourne les resultats des matchs jouees par une equipe specifique
+- Prend en parametre l'id de l'equipe dans l'url
+*/
+Route::get('resultats/equipe/{id}',[GameController::class,'getResultatsGamesPourEquipe']);
+
 /*Route qui retroune les informations sur une ligue en particulier
 -Prend en parametre l'id de la ligue dans l'url.
 */
@@ -103,10 +113,21 @@ Route::get('equipe/{id}/joueurs',[StatistiqueEquipeController::class,'getStatist
 */
 Route::get('equipe/{id}',[EquipeController::class,'getEquipe']);
 
+/*Route qui retourne toutes qui ont moins de x joueurs
+- La route se presente comme telle: ../api/equipes?nb_joueurs=x ou x correspond a la limite superieure de nb de joueurs voulus
+*/
+Route::get('equipes',[EquipeController::class,'getEquipesAvecMoinsDeJoueurs']);
+
+//Route qui retourne toutes les equipes
+Route::get('equipes/all',[EquipeController::class,'getAllEquipes']);
+
 /*Route qui retourne les informations sur un match en particulier
 -Prend en parametre l'id du match
 */
 Route::get('game/{id}',[GameController::class,'getGame']);
+
+//Route qui retourne toutes les matchs
+Route::get('games',[GameController::class,'getAllGames']);
 
 /*Route qui retourne tout les matchs d'une equipe en particulier
 -Prend en parametre l'id de l'equipe

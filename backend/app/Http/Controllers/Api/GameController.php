@@ -15,7 +15,9 @@ class GameController extends Controller
 
     public function getAllGames(){
         $games=DB::table('game')
-               ->get();
+                 ->select('game.*','game_equipe.id_equipe_dom','game_equipe.id_equipe_ext')
+                 ->join('game_equipe','game.id_game','=','game_equipe.id_game')
+                 ->get();
                
         if(!$games->isEmpty()){
             return response()->json($games,200);
@@ -28,6 +30,7 @@ class GameController extends Controller
             'lieu'=>null,
             'equipeDom'=>null,
             'equipeVis'=>null,
+            'id_ligue'=>0,
         ];
 
         /*
@@ -64,6 +67,7 @@ class GameController extends Controller
             $informations['lieu']=$requete->lieu;
             $informations['equipeDom']=$equipeDom->nom;
             $informations['equipeVis']=$equipeVis->nom;
+            $informations['id_ligue']=$requete->id_ligue;
 
             return response()->json($informations,200);
         }else{

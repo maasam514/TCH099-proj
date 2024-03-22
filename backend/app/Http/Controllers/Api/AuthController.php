@@ -41,7 +41,6 @@ class AuthController extends Controller
         
         //creation d'un token d'identification propre a l'utilisateur et qui est valide jusqu'au logout
         $tokenIdentification=$utilisateur->createToken('tokenutilisateur')->plainTextToken;
-        echo $tokenIdentification;
 
         $reponse=[
             'utilisateur'=>$utilisateur,

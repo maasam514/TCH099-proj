@@ -30,33 +30,44 @@ use App\Http\Controllers\Controller;
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::post('logout', [AuthController::class, 'seDeconnecter']);
-    Route::post('ajouter/joueur', [JoueurController::class, 'ajouterJoueur']);
+    Route::post('joueur', [JoueurController::class, 'ajouterJoueur']);
 });
 
 //Les routes qui ne peuvent etre accessible au gestionnaire de ligue
 Route::middleware(['auth:sanctum','gestionnaire'])->group(function(){
 
-    //Route qui insert une nouvelle ligue dans la base de donnee. (TODO: LE RENDRE SEULEMENT POSSIBLE POUR UN GESTIONNAIRE DE LIGUE)
-    Route::post('ajouter/ligue',[LigueController::class,'ajouterLigue']);
+    //Route qui insert une nouvelle ligue dans la base de donnee.
+    Route::post('ligue',[LigueController::class,'ajouterLigue']);
 
     /*Route qui insert un nouveau match dans la base de donnee.
     - La requete doit comptre les id des deux equipes (exterieur et domicile)
     - ainsi qu'un id de match
     */
-    Route::post('ajouter/game',[GameController::class,'ajouterMatch']);
+    Route::post('game',[GameController::class,'ajouterMatch']);
 
     //Route qui supprime un joueur dans la base de donnee.
-    Route::delete('delete/joueur/{id}',[JoueurController::class,'deleteJoueur']);
+    Route::delete('joueur/{id}',[JoueurController::class,'deleteJoueur']);
 
     //Route qui supprime une equipe dans la base de donnee.
-    Route::delete('delete/equipe/{id}',[EquipeController::class,'deleteEquipe']);
+    Route::delete('equipe/{id}',[EquipeController::class,'deleteEquipe']);
 
     //Route qui supprime une ligue dans la base de donnee.
-    Route::delete('delete/ligue/{id}',[LigueController::class,'deleteLigue']);
+    Route::delete('ligue/{id}',[LigueController::class,'deleteLigue']);
 
     //Route qui supprime un match dans la base de donnee.
-    Route::delete('delete/game/{id}',[GameController::class,'deleteGame']);
+    Route::delete('game/{id}',[GameController::class,'deleteGame']);
 
+    //Route qui insert une nouvelle equipe dans la base de donnee.
+    Route::post ('equipe',[EquipeController::class,'ajouteurEquipe']);
+
+    //Route qui modifie un joueur dans la base de donnee.
+    Route::put('joueur',[JoueurController::class,'modifierJoueur']);
+
+    //Route qui modifie une equipe dans la base de donnee.
+    Route::put('equipe',[EquipeController::class,'modifierEquipe']);
+
+    //Route qui modifie une ligue dans la base de donnee.
+    Route::put('ligue/{id}',[LigueController::class,'modifierLigue']);
 });
 
 //Route pour se connecter a son compte utilisateur si on en possede un
@@ -142,18 +153,5 @@ Route::get('game/ligue/{id}',[GameController::class,'getGameLigue']);
 //Route qui retoure les informations sur un gestionnaire de ligue en particulier
 Route::get('gestionnaire/{id}',[GestionnaireController::class,'getGestionnaireLigue']);
 
-
-//Route qui insert une nouvelle equipe dans la base de donnee.
-Route::post ('ajouter/equipe',[EquipeController::class,'ajouteurEquipe']);
-
-//Route qui modifie un joueur dans la base de donnee.
-//Route::put('modifier/joueur/{id}',[JoueurController::class,'modifierJoueur']);
-
-//Route qui modifie une equipe dans la base de donnee.
-//Route::put('modifier/equipe/{id}',[EquipeController::class,'modifierEquipe']);
-
-//Route qui modifie une ligue dans la base de donnee.
-//Route::put('modifier/ligue/{id}',[LigueController::class,'modifierLigue']);
-
 //Route qui modifie une partie dans la base de donnee.
-//Route::put('modifier/game/{id}',[GameController::class,'modifierGame']);
+//Route::put('game/{id}',[GameController::class,'modifierGame']);

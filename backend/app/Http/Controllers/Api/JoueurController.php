@@ -102,6 +102,30 @@ class JoueurController extends Controller
     
     }
 
+    public function modifierJoueur(Request $requete){
+        try{
+            DB::beginTransaction();
+
+            $modification=DB::table('joueur')
+                          ->where('id_joueur',$requete->id_joueur)
+                          ->update(['prenom'=>$requete->prenom,'nom'=>$requete->nom,
+                                    'num_tel'=>$requete->num_tel,'courriel'=>$requete->courriel,
+                                    'capitaine'=>$requete->capitaine,'numero'=>$requete->numero,
+                                    'id_equipe'=>$requete->id_equipe,'date_de_naissance'=>$requete->date_de_naissance]);          
+            
+            if($modification>0){
+                DB::commit();
+                return response()->json(['message'=>'Joueur modifie avec succes'],200);
+            }else{
+                DB::rollBack();
+                return response()->json(['message'=>'Modification a echouee'],404);
+            }                        
+        }catch(QueryException $e){
+            DB::rollBack();
+            return response()->json(['error'=>'Erreur dans la modification du jouer '.$e->getMessage()],400);
+        }
+    }
+
 
     
 }

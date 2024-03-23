@@ -15,6 +15,9 @@
             "dest": "backend/api/index.php"
         }
     ],
+     "functions": {
+    "api/index.php": { "runtime": "vercel-php@0.3.1" }
+      },
     "env": {
         "APP_NAME": "LigueSoccer",
         "APP_ENV": "production",

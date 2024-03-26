@@ -1,15 +1,16 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "api/index.php", "use": "vercel-php@0.7.0" },
-    { "src": "frontend/**", "use": "@vercel/static" }
-  ],
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.7.0"
+    }
+  },
   "routes": [
     {
       "src": "/(css|js)/(.*)",
       "dest": "public/$1/$2"
     },
-    { "src": "/api/(.*)", "dest": "api/index.php" },
+    { "src": "/api/(.*)", "dest": "api/index" },
     {
       "src": "/(.+)/$",
       "status": 301,
@@ -18,7 +19,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "api/index.php"
+      "dest": "index.html"
     }
   ],
   "env": {

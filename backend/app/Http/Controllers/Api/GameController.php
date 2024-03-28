@@ -26,6 +26,7 @@ class GameController extends Controller
     }
     public function getGame(int $id){
         $informations=[
+            'id_game'=>$id,
             'date'=>null,
             'lieu'=>null,
             'equipeDom'=>null,

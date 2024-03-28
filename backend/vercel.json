@@ -16,6 +16,10 @@
       "status": 301,
       "headers": { "Location": "/$1" },
       "continue": true
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api"
     }
   ],
   "env": {

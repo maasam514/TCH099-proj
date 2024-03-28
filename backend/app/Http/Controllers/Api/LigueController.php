@@ -110,4 +110,28 @@ class LigueController extends Controller
             return response()->json(['erreur'=>'Erreur dans la deletion','exception'=>$e->getMessage()],500);
         }
     }
+
+    public function modifierLigue (Request $requete){
+        try{
+            DB::beginTransaction();
+
+            $modification=DB::table('ligue')
+                          ->where('id_ligue',$requete->id_ligue)
+                          ->update(['nom'=>$requete->nom,
+                                    'categorie'=>$requete->categorie,
+                                    'annee'=>$requete->annee,
+                                    'nb_equipe'=>$requete->nb_equipe]);          
+            
+            if($modification>0){
+                DB::commit();
+                return response()->json(['message'=>'Ligue modifie avec succes'],200);
+            }else{
+                DB::rollBack();
+                return response()->json(['message'=>'Modification a echouee'],404);
+            }                        
+        }catch(QueryException $e){
+            DB::rollBack();
+            return response()->json(['error'=>'Erreur dans la modification de la ligue '.$e->getMessage()],400);
+        }
+    }
 }

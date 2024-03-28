@@ -41,7 +41,7 @@ class StatistiqueJoueurController extends Controller
             $statistiquesComplete['nbCartonRouge']+=$statistique->nb_carton_rouge;
         }
         //renvoyer les statistiques.
-        return response()->json($statistiques,200);
+        return response()->json($statistiquesComplete,200);
      
     }
 }

@@ -24,7 +24,7 @@ class EquipeController extends Controller
     }
 
     public function getAllEquipes(){
-        $equipes=DB::table('equipes')
+        $equipes=DB::table('equipe')
                 ->get();
         
         if(!$equipes->isEmpty()){
@@ -119,5 +119,29 @@ class EquipeController extends Controller
             return response()->json(['erreur'=>'Erreur dans la deletion','exception'=>$e->getMessage()],500);
         }
         
+    }
+
+    public function modifierEquipe(Request $requete){
+        try{
+            DB::beginTransaction();
+
+            $modification=DB::table('equipe')
+                          ->where('id_equipe',$requete->id_equipe)
+                          ->update(['nom'=>$requete->nom,
+                                    'categorie'=>$requete->categorie,
+                                    'id_ligue'=>$requete->id_ligue,
+                                    'nb_joueurs'=>$requete->nb_joueurs,]);          
+            
+            if($modification>0){
+                DB::commit();
+                return response()->json(['message'=>'Equipe modifiee avec succes'],200);
+            }else{
+                DB::rollBack();
+                return response()->json(['message'=>'Modification echouee'],404);
+            }                        
+        }catch(QueryException $e){
+            DB::rollBack();
+            return response()->json(['error'=>'Erreur dans la modification de l\'equipe '.$e->getMessage()],400);
+        }
     }
 }

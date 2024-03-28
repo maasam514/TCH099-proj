@@ -10,11 +10,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => getenv('POSTGRES_HOST'),
-            'port' => getenv('POSTGRES_PORT'),
-            'database' => getenv('POSTGRES_DATABASE'),
-            'username' => getenv('POSTGRES_USER'),
-            'password' => getenv('POSTGRES_PASSWORD'),
+            'host' => $_ENV['POSTGRES_HOST'],
+            'port' => $_ENV['POSTGRES_PORT'],
+            'database' => $_ENV['POSTGRES_DATABASE'],
+            'username' => $_ENV['POSTGRES_USER'],
+            'password' => $_ENV['POSTGRES_PASSWORD'],
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',

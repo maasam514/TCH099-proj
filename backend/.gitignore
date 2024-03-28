@@ -47,3 +47,4 @@ Homestead.json
 
 # End of https://www.toptal.com/developers/gitignore/api/laravel,visualstudiocode
 .vercel
+.env*.local

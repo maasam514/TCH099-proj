@@ -1,151 +1,27 @@
-DROP TABLE IF EXISTS personal_access_tokens;
-DROP TABLE IF EXISTS password_reset_tokens;
-DROP TABLE IF EXISTS migrations;
-DROP TABLE IF EXISTS statistique_equipe;
-DROP TABLE IF EXISTS feuille_statistique_joueur;
-DROP TABLE IF EXISTS game_equipe;
-DROP TABLE IF EXISTS game;
-DROP TABLE IF EXISTS joueur;
-DROP TABLE IF EXISTS equipe;
-DROP TABLE IF EXISTS gestionnaire_de_ligue;
-DROP TABLE IF EXISTS ligue;
-DROP TABLE IF EXISTS utilisateur;
-
-
-CREATE TABLE ligue (
-  id_ligue serial PRIMARY KEY,
-  nom varchar(15) NOT NULL,
-  categorie varchar(10) NOT NULL,
-  annee integer NOT NULL,
-  nb_equipe smallint NOT NULL,
-  id_gestionnaire integer NOT NULL
-);
-
-CREATE TABLE gestionnaire_de_ligue (
-  id_gestionnaire serial PRIMARY KEY,
-  nom varchar(20) DEFAULT NULL,
-  prenom varchar(20) DEFAULT NULL,
-  num_tel varchar(15) DEFAULT NULL,
-  courriel varchar(40) DEFAULT NULL,
-  id_ligue integer DEFAULT NULL,
-  FOREIGN KEY (id_ligue) REFERENCES ligue (id_ligue)
-);
-
-CREATE TABLE equipe (
-  id_equipe SERIAL PRIMARY KEY,
-  nom varchar(20) NOT NULL,
-  categorie varchar(10) NOT NULL,
-  id_ligue integer NOT NULL,
-  nb_joueurs integer DEFAULT NULL,
-  FOREIGN KEY (id_ligue) REFERENCES ligue (id_ligue)
-);
-
-CREATE TABLE joueur (
-  id_joueur serial PRIMARY KEY,
-  prenom varchar(20) NOT NULL,
-  nom varchar(20) NOT NULL,
-  num_tel varchar(15) NOT NULL,
-  courriel varchar(40) NOT NULL,
-  capitaine boolean NOT NULL,
-  numero integer NOT NULL,
-  id_equipe integer NOT NULL,
-  date_de_naissance date NOT NULL,
-  FOREIGN KEY (id_equipe) REFERENCES equipe (id_equipe)
-);
-
-CREATE TABLE game (
-  id_game serial PRIMARY KEY,
-  date_game timestamp DEFAULT NULL,
-  lieu varchar(20) NOT NULL,
-  id_ligue integer NOT NULL,
-  FOREIGN KEY (id_ligue) REFERENCES ligue (id_ligue)
-);
-
-CREATE TABLE game_equipe (
-  id_equipe_dom integer NOT NULL,
-  id_equipe_ext integer NOT NULL,
-  id_game integer NOT NULL,
-  PRIMARY KEY (id_equipe_dom, id_equipe_ext, id_game),
-  FOREIGN KEY (id_equipe_dom) REFERENCES equipe (id_equipe),
-  FOREIGN KEY (id_equipe_ext) REFERENCES equipe (id_equipe),
-  FOREIGN KEY (id_game) REFERENCES game (id_game)
-);
-
-CREATE TABLE feuille_statistique_joueur (
-  nb_but integer NOT NULL,
-  nb_passe integer NOT NULL,
-  nb_carton_jaune integer NOT NULL,
-  nb_carton_rouge integer NOT NULL,
-  id_joueur integer NOT NULL,
-  id_game integer NOT NULL,
-  PRIMARY KEY (id_joueur, id_game),
-  FOREIGN KEY (id_joueur) REFERENCES joueur (id_joueur),
-  FOREIGN KEY (id_game) REFERENCES game (id_game)
-);
-
-CREATE TABLE statistique_equipe (
-  nb_victoire smallint NOT NULL,
-  nb_defaite smallint NOT NULL,
-  nb_nul smallint NOT NULL,
-  nb_point smallint NOT NULL,
-  but_pour smallint NOT NULL,
-  but_contre smallint NOT NULL,
-  nb_game smallint NOT NULL,
-  id_equipe integer PRIMARY KEY,
-  FOREIGN KEY (id_equipe) REFERENCES equipe (id_equipe)
-);
-
-CREATE TABLE migrations (
-  id serial PRIMARY KEY,
-  migration varchar(255) NOT NULL,
-  batch integer NOT NULL
-);
-
-CREATE TABLE password_reset_tokens (
-  email varchar(255) PRIMARY KEY,
-  token varchar(255) NOT NULL,
-  created_at timestamp NULL DEFAULT NULL
-);
-
-CREATE TABLE personal_access_tokens (
-  id bigserial PRIMARY KEY,
-  tokenable_type varchar(255) NOT NULL,
-  tokenable_id bigint NOT NULL,
-  name varchar(255) NOT NULL,
-  token varchar(64) NOT NULL,
-  abilities text DEFAULT NULL,
-  last_used_at timestamp NULL DEFAULT NULL,
-  expires_at timestamp NULL DEFAULT NULL,
-  created_at timestamp NULL DEFAULT NULL,
-  updated_at timestamp NULL DEFAULT NULL
-);
-
-CREATE TABLE utilisateur (
-  id_utilisateur serial PRIMARY KEY,
-  nom varchar(255) NOT NULL,
-  email varchar(255) UNIQUE NOT NULL,
-  mot_de_passe varchar(255) NOT NULL,
-  role_utilisateur varchar(20) DEFAULT 'joueur',
-  created_at timestamp NOT NULL DEFAULT current_timestamp,
-  updated_at timestamp NULL DEFAULT NULL
-);
-
-ALTER TABLE feuille_statistique_joueur
-  ADD CONSTRAINT fk_stat_id_game FOREIGN KEY (id_game) REFERENCES game (id_game);
-
-ALTER TABLE game
-  ADD CONSTRAINT fk_game_id_ligue FOREIGN KEY (id_ligue) REFERENCES ligue (id_ligue);
-
-ALTER TABLE game_equipe
-  ADD CONSTRAINT fk_id_equipe_dom FOREIGN KEY (id_equipe_dom) REFERENCES equipe (id_equipe),
-  ADD CONSTRAINT fk_id_equipe_ext FOREIGN KEY (id_equipe_ext) REFERENCES equipe (id_equipe),
-  ADD CONSTRAINT fk_id_game FOREIGN KEY (id_game) REFERENCES game (id_game) ON DELETE CASCADE;
-
-ALTER TABLE joueur
-  ADD CONSTRAINT fk_equipe_id_joueur FOREIGN KEY (id_equipe) REFERENCES equipe (id_equipe) ON DELETE CASCADE;
-
-ALTER TABLE equipe
-  ADD CONSTRAINT fk_ligue_id_equipe FOREIGN KEY (id_ligue) REFERENCES ligue (id_ligue);
-
-ALTER TABLE statistique_equipe
-  ADD CONSTRAINT fk_id_equipe_stat FOREIGN KEY (id_equipe) REFERENCES equipe (id_equipe);
+# Created by Vercel CLI
+APP_KEY="base64:cMjHw4w6p5Ktrk8lr9wO1rjNNPy3lh1cPmdq6gMCyBE="
+NX_DAEMON=""
+POSTGRES_DATABASE="verceldb"
+POSTGRES_HOST="ep-tiny-hill-a46zs5ek-pooler.us-east-1.aws.neon.tech"
+POSTGRES_PASSWORD="O9KB1NMnlQJo"
+POSTGRES_PRISMA_URL="postgres://default:O9KB1NMnlQJo@ep-tiny-hill-a46zs5ek-pooler.us-east-1.aws.neon.tech/verceldb?pgbouncer=true&connect_timeout=15&sslmode=require"
+POSTGRES_URL="postgres://default:O9KB1NMnlQJo@ep-tiny-hill-a46zs5ek-pooler.us-east-1.aws.neon.tech/verceldb?sslmode=require"
+POSTGRES_URL_NON_POOLING="postgres://default:O9KB1NMnlQJo@ep-tiny-hill-a46zs5ek.us-east-1.aws.neon.tech/verceldb?sslmode=require"
+POSTGRES_URL_NO_SSL="postgres://default:O9KB1NMnlQJo@ep-tiny-hill-a46zs5ek-pooler.us-east-1.aws.neon.tech/verceldb"
+POSTGRES_USER="default"
+TURBO_REMOTE_ONLY=""
+TURBO_RUN_SUMMARY=""
+VERCEL="1"
+VERCEL_ENV="development"
+VERCEL_GIT_COMMIT_AUTHOR_LOGIN=""
+VERCEL_GIT_COMMIT_AUTHOR_NAME=""
+VERCEL_GIT_COMMIT_MESSAGE=""
+VERCEL_GIT_COMMIT_REF=""
+VERCEL_GIT_COMMIT_SHA=""
+VERCEL_GIT_PREVIOUS_SHA=""
+VERCEL_GIT_PROVIDER=""
+VERCEL_GIT_PULL_REQUEST_ID=""
+VERCEL_GIT_REPO_ID=""
+VERCEL_GIT_REPO_OWNER=""
+VERCEL_GIT_REPO_SLUG=""
+VERCEL_URL=""

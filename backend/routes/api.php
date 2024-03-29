@@ -122,7 +122,7 @@ Route::get('equipe/{id}/joueurs',[StatistiqueEquipeController::class,'getStatist
 /*Route qui retourne les informations d'une equipe particuliere
 -Prend en parametre l'id de l'equipe dans l'url
 */
-Route::get('/api/equipe/{id}',[EquipeController::class,'getEquipe']);
+Route::get('equipe/{id}',[EquipeController::class,'getEquipe']);
 
 /*Route qui retourne toutes qui ont moins de x joueurs
 - La route se presente comme telle: ../api/equipes?nb_joueurs=x ou x correspond a la limite superieure de nb de joueurs voulus

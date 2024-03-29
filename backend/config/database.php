@@ -11,14 +11,14 @@ return [
         'pgsql' => [
             'driver' => 'pgsql',
             'host' => env('POSTGRES_HOST'),
-            'port' => env('POSTGRES_PORT', '5432'), 
+            'port' => 5432, 
             'database' => env('POSTGRES_DATABASE'),
             'username' => env('POSTGRES_USER'),
             'password' => env('POSTGRES_PASSWORD'),
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
-            //'sslmode' => 'prefer',
+            'sslmode' => 'prefer',
         ],
     ],
 

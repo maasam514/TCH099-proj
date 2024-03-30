@@ -18,7 +18,7 @@ class StatistiqueLigueController extends Controller
         -  WHERE id_ligue=$id
         -  INNER JOIN statistique_equipe ON Equipe.id_equipe = statistique_equipe.id_equipe
         */
-        $equipes=DB::table('Equipe')
+        $equipes=DB::table('equipe')
                 ->where('id_ligue',$id)
                 ->join('statistique_equipe','Equipe.id_equipe','=','statistique_equipe.id_equipe')
                 ->get();

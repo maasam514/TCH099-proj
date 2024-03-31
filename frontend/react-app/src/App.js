@@ -1,21 +1,26 @@
-import { BrowserRouter, Routes, Route, Router } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import CreateEquipe from "./components/CreateEquipe";
-import CreateLigue from "./components/CreateLigue";
-import ModifierLigue from "./components/ModifierLigue.js";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import BarreNav from './BarreNav';
+import Acceuil from './Acceuil';
+import APropos from './APropos';
+import Parties from './Parties';
+import Classements from './Classement';
 
-function App(){
-  return(
-    
+function App() {
+  return (
+    <Router>
       <div className="App">
-        <Navbar />
-        <div className="content">
-          <CreateEquipe />
-          <CreateLigue />
-          
+        <BarreNav />
+        <div className="page">
+          <Routes>
+            <Route path="/" element={<Acceuil />} />
+            <Route path="/a-propos" element={<APropos />} />
+            <Route path="/parties" element={<Parties />} />
+            <Route path="/classements" element={<Classements />} />
+          </Routes> 
         </div>
       </div>
-    
+    </Router>
   );
 }
 

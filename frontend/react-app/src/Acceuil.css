@@ -1,0 +1,170 @@
+.conteneur{
+    margin: 1.5rem 1.5rem 1.5rem;
+    background-color: #E0E0E0;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);
+    border-radius: 0.5rem;
+    padding:1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.connexion{
+    width: 50%;
+    height:50%;
+}
+
+.connexion h2{
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    margin-top:0.5rem;
+}
+
+.connexion h3{
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top:0;
+}
+
+.connexion span{
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+#register{
+    margin-top: 0.8rem;
+    padding:0.6rem;
+    font-size: 20px;
+    background-color:#77AF9C;
+    border-radius: 0.5rem;
+    color:black;
+    border:none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+#register:hover {
+    background-color: #39856b;
+}
+
+#register:focus {
+    outline: none; 
+}
+
+#register:focus-visible {
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2); 
+}
+
+ul#ligues{
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-weight: bold;
+}
+
+#ligues>li{
+    width: 10%;
+    height: 15%;
+    border:1px solid gray;
+    padding:10px;
+    text-align: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+#ligues .ligueActive{
+    width: 10%;
+    height: 15%;
+    background-color:#77AF9C;
+    color:black;
+    padding:10px;
+    text-align: center;
+    border-radius: 0.5rem;
+}
+
+#ligues>li:hover{
+    background-color: #39856b;
+}
+
+#resultatsHebdomadaire {
+    padding-top: 3rem;
+    text-align: center;
+    position: relative;
+    margin-bottom: 1rem; 
+}
+
+#resultatsHebdomadaire::after {
+    content: '';
+    position: absolute;
+    bottom: 0; /* Move to the bottom of the <h1> */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5%;
+    height: 2px; /* Adjust the height of the underline */
+    background-color: #77AF9C;
+    border-radius: 0.8rem;
+}
+
+#calendrier{
+    margin-top: 2em;
+    width: 50%; 
+    position: absolute;
+    height: 50%;
+    right: 1rem; 
+    top: 0; 
+    bottom: 0; 
+    display: flex;
+    justify-content: center; 
+    align-items:center;
+    flex-direction: column;
+}
+
+#calendrier>span{
+    font-weight: bold;
+    font-size: large;
+}
+
+
+.react-calendar {
+    max-width: 400px; 
+    margin: 0 auto; 
+    border: 1px solid #ccc; 
+    background-color: #474A48;
+  }
+
+  .react-calendar__tile {
+    padding: 0.5rem; 
+    background-color: #f0f0f0; 
+  }
+  
+  
+  .react-calendar__tile--active {
+    background-color: #007bff; 
+    color: #fff;
+  }
+  
+
+  .react-calendar__navigation button {
+    background-color: #77AF9C; 
+    color: black;  
+    border-radius: 0;
+    padding: 0.3rem 0.5rem; 
+    cursor: pointer; 
+  }
+
+  .react-calendar button {
+    border: none !important;
+  }   
+  
+ 
+  .react-calendar__navigation button:hover {
+    background-color: #0056b3; 
+  }
+
+

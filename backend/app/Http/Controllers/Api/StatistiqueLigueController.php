@@ -20,7 +20,7 @@ class StatistiqueLigueController extends Controller
         */
         $equipes=DB::table('equipe')
                 ->where('id_ligue',$id)
-                ->join('statistique_equipe','Equipe.id_equipe','=','statistique_equipe.id_equipe')
+                ->join('statistique_equipe','equipe.id_equipe','=','statistique_equipe.id_equipe')
                 ->get();
         
         if(!$equipes->isEmpty()){

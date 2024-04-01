@@ -1,8 +1,10 @@
 import React, {useState, useEffect} from "react";
+import StatistiqueJoueurPopup from "./StatistiqueJoueurPopup";
 
 function BarreRecherche(){
-    const [nomJoueur, setNomJoueur] = useState([]);
+    const [nomJoueur, setNomJoueur] = useState("");
     const [allJoueurs, setAllJoueurs] = useState([]);
+    const [idJoueurSelectionne, setIdJoueurSelectionne] = useState(null);
 
     useEffect(() => {
         const fetchJoueur = async () => {
@@ -30,17 +32,29 @@ function BarreRecherche(){
         joueur.nom.toLowerCase().includes(nomJoueur.toLowerCase()) || joueur.prenom.toLowerCase().includes(nomJoueur.toLowerCase())
     );
 
+    const voirStatisitqueJoueur = (idJoueur) =>{
+        setIdJoueurSelectionne(idJoueur);
+    }
+
+    const fermeturePopup = () =>{
+        setIdJoueurSelectionne(null);
+    }
+
+
     return(
         <div>
             <input type="text" placeholder="Recherche d'un joueur" value={nomJoueur} onChange={changementBarreRecherche}/>
             <ul>
                 {joueursFiltrer.map((joueur)=>
-                <li key={joueur.id_joueur}>
+                <li key={joueur.id_joueur} onClick={voirStatisitqueJoueur(joueur.id_joueur)}>
                     <span className="prenom">{joueur.prenom}</span>
                     <span className="nom">{joueur.nom}</span>
                 </li>
                 )}
             </ul>
+            {/* Afficher les statistiques du joueur si un joueur a ete selectionne dans la barre de recherche*/}
+            {/* Si aucun joueur a ete selectionne, ne pas afficher de statistiques, sauf si le popup n'a pas ete ferme. */}
+            {idJoueurSelectionne && <StatistiqueJoueurPopup idJoueur={idJoueurSelectionne} onClose={fermeturePopup} />}
         </div>
     );
 }

@@ -21,6 +21,15 @@ class JoueurController extends Controller
         return response()->json(['error'=>'Aucun joueur trouvee'],404);
     }
 
+    public function getAllJoueurs(){
+        $infoJoueurs=DB::table('joueur')
+                    ->get();
+        if(!is_null($infoJoueurs)){
+            return response()->json($infoJoueurs,200);
+        } 
+        return response()->json(['error'=>'Erreur dans la recuperation des joueurs']);           
+    }
+
     public function ajouterJoueur(Request $requete){
 
         //regles de validation

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {Link, useLocation } from 'react-router-dom';
-import './BarreNav.css';
+import '../styles/BarreNav.css';
 
 /**
  * Composant fonctionnel représentant la barre de naviguation de l'application.

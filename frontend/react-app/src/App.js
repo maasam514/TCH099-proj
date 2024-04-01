@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import BarreNav from './BarreNav';
-import Acceuil from './Acceuil';
-import APropos from './APropos';
-import Parties from './Parties';
-import Classements from './Classement';
+import BarreNav from './components/BarreNav';
+import Acceuil from './components/Acceuil';
+import APropos from './components/APropos';
+import Parties from './components/Parties';
+import Classements from './components/Classement';
+import Joueurs from './components/Joueurs'
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/a-propos" element={<APropos />} />
             <Route path="/parties" element={<Parties />} />
             <Route path="/classements" element={<Classements />} />
+            <Route path="/joueurs" element={<Joueurs />} />
           </Routes> 
         </div>
       </div>

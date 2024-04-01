@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import moment from "moment";
-import "./Acceuil.css";
+import "../styles/Acceuil.css";
 
 /**
  * Composant fonctionnel représentant la page d'accueil de l'application.

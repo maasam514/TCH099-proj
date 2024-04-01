@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import './parties.css';
+import '../styles/parties.css';
 
 function Parties(){
     const [allGames, setAllGames] = useState([]); 

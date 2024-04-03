@@ -26,7 +26,7 @@ class StatistiqueEquipeController extends Controller
        /* SELECT * FROM Statistique_Equipe
        -  WHERE id_equipe=$id
        */
-       $requete=DB::table('Statistique_Equipe')
+       $requete=DB::table('statistique_equipe')
                 ->where('id_equipe',$id)
                 ->first();
 
@@ -52,7 +52,7 @@ class StatistiqueEquipeController extends Controller
         /* SELECT * FROM Joueur
         -  WHERE id_equipe=$id
         */
-        $joueurs=DB::table('Joueur')
+        $joueurs=DB::table('joueur')
                  ->where('id_equipe',$id)
                  ->get();
 
@@ -63,7 +63,7 @@ class StatistiqueEquipeController extends Controller
                 /* SELECT * FROM Feuille_Statistique_Joueur
                 -  WHERE id_joueur=$joueur.id_joueur
                 */
-                $statistiques = DB::table('Feuille_Statistique_Joueur')
+                $statistiques = DB::table('feuille_statistique_joueur')
                 ->where('id_joueur', $joueur->id_joueur)
                 ->get();
 
@@ -86,7 +86,7 @@ class StatistiqueEquipeController extends Controller
 
             //remplir le tableau qui sera renvoyee
                 foreach($statistiques as $statistique){
-                    $statistiquesComplete['idJouer']=
+                    $statistiquesComplete['idJoueur']=
                     $statistiquesComplete['nbButs']+=$statistique->nb_but;
                     $statistiquesComplete['nbPasses']+=$statistique->nb_passe;
                     $statistiquesComplete['nbCartonJaune']+=$statistique->nb_carton_jaune;

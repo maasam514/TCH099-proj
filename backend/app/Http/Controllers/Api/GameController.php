@@ -143,7 +143,7 @@ class GameController extends Controller
         /*SELECT game.id_ligue FROM Game
         - WHERE game.id_ligue=$id;
         */
-        $games=DB::table('Game')
+        $games=DB::table('game')
                ->where('id_ligue',$id)
                ->get();
         

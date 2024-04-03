@@ -59,7 +59,7 @@ class JoueurController extends Controller
         try{
             DB::beginTransaction();
 
-            DB::table('Joueur')->insert([
+            DB::table('joueur')->insert([
                 'prenom'=>$prenom,
                 'nom'=>$nom,
                 'date_de_naissance'=>$dateNaissance,

@@ -140,11 +140,15 @@ class GameController extends Controller
 
     public function getGameLigue(int $id){
 
-        /*SELECT game.id_ligue FROM Game
+        /*SELECT game.*, game_equipe.id_equipe_dom, game_equipe.id_equipe_ext
+        - FROM Game
+        - JOIN game_equipe ON game.id_game = game_equipe.id_game
         - WHERE game.id_ligue=$id;
         */
         $games=DB::table('game')
                ->where('id_ligue',$id)
+               ->select('game.*','game_equipe.id_equipe_dom','game_equipe.id_equipe_ext')
+               ->join('game_equipe','game.id_game','=','game_equipe.id_game')
                ->get();
         
         if($games->isEmpty()){

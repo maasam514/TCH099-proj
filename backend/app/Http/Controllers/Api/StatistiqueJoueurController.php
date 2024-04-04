@@ -16,7 +16,7 @@ class StatistiqueJoueurController extends Controller
         /* SELECT * FROM Feuille_Statistique_Joueur
         -  WHERE id_joueur=$id
         */
-        $statistiques = DB::table('Feuille_Statistique_Joueur')
+        $statistiques = DB::table('feuille_statistique_joueur')
         ->where('id_joueur', $id)
         ->get();
 

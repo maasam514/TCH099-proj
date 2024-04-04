@@ -94,6 +94,9 @@ Route::get('statistique/equipe/{id}',[StatistiqueEquipeController::class, 'getSt
 */
 Route::get('joueur/{id}',[JoueurController::class, 'getJoueur']);
 
+/*Route qui retourne les informations de tout les joueurs dans la base de donnees*/
+Route::get('joueurs',[JoueurController::class, 'getAllJoueurs']);
+
 /*Route qui retourne le resultat d'un match specifique
 - Prend en parametre l'id du match dans l'url
 */

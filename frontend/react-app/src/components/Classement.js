@@ -1,35 +1,24 @@
 import React, { useState, useEffect } from "react";
+import { useQuery } from '@tanstack/react-query';
+import { fetchLigues } from "../fetch/fetchLigues";
+import '../styles/classement.css';
 
 function Classements() {
-  // États locaux
-  const [allLigues, setLigues] = useState([]);
   const [idLigueSelectionnee, setIdLigueSelectionnee] = useState(1);
-  const [equipesFiltrer, setEquipesFiltrer] = useState([]);
+  const [equipesEnOrdre, setEquipeEnOrdre] = useState([]);
   const [filtrerPar, setFiltrerPar] = useState({
     colonne: 'rang',
     ordre: 'asc',
   });
 
   /*** Effet pour charger les ligues au montage du composant ***/
-  useEffect(() => {
-    async function fetchLigues() {
-      try {
-        const liguesResponse = await fetch('https://tch-099-proj.vercel.app/api/api/ligues');
-        if (!liguesResponse.ok) {
-          throw new Error('Erreur dans la recuperation des ligues');
-        }
-        const liguesData = await liguesResponse.json();
-        setLigues(liguesData);
-      } catch (error) {
-        console.error('Echec de la recuperation des ligues: ', error);
-      }
-    }
-    fetchLigues();
-  }, []);
+  const { data: ligues, isLoading: isLoadingLigues, error: erreurLigues } = useQuery({
+    queryKey: ['ligues'],
+    queryFn: fetchLigues,
+  });
 
   /*** Effet pour charger les équipes de la ligue sélectionnée et les trier ***/
-  useEffect(() => {
-    async function fetchEquipesLigue() {
+  async function fetchEquipesLigue(idLigueSelectionne) {
       try {
         const equipesLigueResponse = await fetch(`https://tch-099-proj.vercel.app/api/api/ligue/${idLigueSelectionnee}/equipes`);
         if (!equipesLigueResponse.ok) {
@@ -57,15 +46,18 @@ function Classements() {
         equipesLigueData.forEach((equipe, index) => {
           equipe.rang = index + 1;
         });
-
-        setEquipesFiltrer(equipesLigueData);
+        setEquipeEnOrdre(equipesLigueData);
         setFiltrerPar({ colonne: 'rang', ordre: 'asc' });
       } catch (error) {
         console.error('Echec dans la recuperation des equipes: ', error);
       }
-    }
-    fetchEquipesLigue();
-  }, [idLigueSelectionnee]);
+  }
+
+  const {data: equipesFiltrer, isLoading: isLoadingEquipesFiltrer, error: erreurEquipesFiltrer} = useQuery({
+    queryKey: ['equipesFiltrer',idLigueSelectionnee],
+    queryFn: fetchEquipesLigue,
+    enabled: !!idLigueSelectionnee,
+  });
 
   /*** Gestionnaire pour changer la ligue sélectionnée ***/
   const handleChangementLigue = async (idLigue) => {
@@ -79,47 +71,85 @@ function Classements() {
 
   /*** Fonction pour filtrer les équipes ***/
   const filtrerData = (colonne) => {
-    let ordre;
-    ordre = filtrerPar.colonne === colonne && filtrerPar.ordre === 'desc' ? 'asc' : 'desc';
+    let ordre = filtrerPar.colonne === colonne && filtrerPar.ordre === 'desc' ? 'asc' : 'desc';
 
     setFiltrerPar({ colonne, ordre});
-    const filtreEquipe = [...equipesFiltrer].sort((a, b) => {
+    const filtreEquipe = [...equipesEnOrdre].sort((a, b) => {
       if(a[colonne] < b[colonne]) return ordre === 'asc' ? -1 : 1;
       if(a[colonne] > b[colonne]) return ordre === 'asc' ? 1 : -1;
       return 0;
     });
-    setEquipesFiltrer(filtreEquipe);
+    setEquipeEnOrdre(filtreEquipe);
   }
 
-  // Rendu du composant
+  useEffect(() => {
+    if (equipesFiltrer) {
+      setEquipeEnOrdre(equipesFiltrer);
+    }
+  }, [equipesFiltrer]);
+
   return (
     <div className="conteneur">
       <section id="ligues">
         <h2>Ligues</h2>
-        {allLigues.map((ligue, index) => (
-          <button key={index} onClick={() => handleChangementLigue(ligue.id_ligue)}>{ligue.nom}</button>
-        ))}
+        {isLoadingLigues ?(
+          <div>Chargement des ligues...</div>
+        ): erreurLigues ?(
+          <div>Erreur dans le chargement des ligues: {erreurLigues.message}</div>
+        ): (
+          ligues.map((ligue, index) => (
+          <button key={index} onClick={() => handleChangementLigue(ligue.id_ligue)} className={idLigueSelectionnee === ligue.id_ligue ? 'ligueActive' : ''}>{ligue.nom}</button>
+          ))
+        )}
+        
       </section>
       <section className="classement">
         <table>
             <caption>Classement des équipes</caption>
             <thead>
                 <tr>
-                    <th scope="col" className="rang"><button className="filtrer-rang" onClick={() => handleFiltrerEquipe('rang')} title="filtrer par rang">Rang</button></th>
-                    <th scope="col" className="nom-equipe">Equipe</th>
-                    <th scope="col" className="nb-parties"><button className="filtrer-nb-parties" onClick={() => handleFiltrerEquipe('nbParties')} title="filtrer par nombre de parties">Parties</button></th>
-                    <th scope="col" className="nb-victories"><button className="filtrer-nb-victoires" onClick={() => handleFiltrerEquipe('nbVictoires')} title="filtrer par nombre de victoires">Victoires</button></th>
-                    <th scope="col" className="nb-defaites"><button className="filtrer-nb-defaites" onClick={() => handleFiltrerEquipe('nbDefaites')} title="filtrer par nombre de defaites">Defaites</button></th>
-                    <th scope="col" className="nb-nul"><button className="filtrer-nb-nul" onClick={() => handleFiltrerEquipe('nbEgalites')} title="filtrer par nombre d'egalite">Egalites</button></th>
-                    <th scope="col" className="nb-points"><button className="filtrer-nb-points" onClick={() => handleFiltrerEquipe('nbPoints')} title="filtrer par nombre de points">Points</button></th>
-                    <th scope="col" className="pourcentage-points"><button className="filtrer-pourcentage-points" onClick={() => handleFiltrerEquipe('pourcentagePoints')} title="filtrer par pourcentage de points">%Points</button></th>
-                    <th scope="col" className="nb-buts-pour"><button className="filtrer-nb-buts-pour" onClick={() => handleFiltrerEquipe('nombreButsPour')} title="filtrer par nombre de buts pour">Buts pour</button></th>
-                    <th scope="col" className="nb-buts-contre"><button className="filtrer-nb-buts-contre" onClick={() => handleFiltrerEquipe('nombreButsContre')} title="filtrer par nombre de buts cointre">Buts contre</button></th>
-                    <th scope="col" className="differentiel"><button className="filtrer-differentiel" onClick={() => handleFiltrerEquipe('differentiel')} title="filtrer par differentiel">Differentiel</button></th>
+                    <th scope="col" className="rang">
+                      <button className="filtrer-rang" onClick={() => handleFiltrerEquipe('rang')} title="filtrer par rang">Rang{filtrerPar.colonne === 'rang' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="nom-equipe">
+                      Equipe
+                    </th>
+                    <th scope="col" className="nb-parties">
+                      <button className="filtrer-nb-parties" onClick={() => handleFiltrerEquipe('nbParties')} title="filtrer par nombre de parties">Parties{filtrerPar.colonne === 'nbParties' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="nb-victories">
+                      <button className="filtrer-nb-victoires" onClick={() => handleFiltrerEquipe('nbVictoires')} title="filtrer par nombre de victoires">Victoires{filtrerPar.colonne === 'nbVictoires' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="nb-defaites">
+                      <button className="filtrer-nb-defaites" onClick={() => handleFiltrerEquipe('nbDefaites')} title="filtrer par nombre de defaites">Defaites{filtrerPar.colonne === 'nbDefaites' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="nb-nul">
+                      <button className="filtrer-nb-nul" onClick={() => handleFiltrerEquipe('nbEgalites')} title="filtrer par nombre d'egalite">Egalites{filtrerPar.colonne === 'nbEgalites' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="nb-points">
+                      <button className="filtrer-nb-points" onClick={() => handleFiltrerEquipe('nbPoints')} title="filtrer par nombre de points">Points{filtrerPar.colonne === 'nbPoints' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="pourcentage-points">
+                      <button className="filtrer-pourcentage-points" onClick={() => handleFiltrerEquipe('pourcentagePoints')} title="filtrer par pourcentage de points">%Points{filtrerPar.colonne === 'pourcentagePoints' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="nb-buts-pour">
+                      <button className="filtrer-nb-buts-pour" onClick={() => handleFiltrerEquipe('nombreButsPour')} title="filtrer par nombre de buts pour">Buts pour{filtrerPar.colonne === 'nombreButsPour' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="nb-buts-contre">
+                      <button className="filtrer-nb-buts-contre" onClick={() => handleFiltrerEquipe('nombreButsContre')} title="filtrer par nombre de buts cointre">Buts contre{filtrerPar.colonne === 'nombreButsContre' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
+                    <th scope="col" className="differentiel">
+                      <button className="filtrer-differentiel" onClick={() => handleFiltrerEquipe('differentiel')} title="filtrer par differentiel">Differentiel{filtrerPar.colonne === 'differentiel' && <span className={`arrow ${filtrerPar.ordre === 'asc' ? 'asc' : 'desc'}`}></span>}</button>
+                    </th>
                 </tr>
             </thead>
             <tbody>
-            {equipesFiltrer.map((equipe, index) => (
+            {isLoadingEquipesFiltrer ?(
+              <div>Equipes en chargement...</div>
+            ): erreurEquipesFiltrer ?(
+              <div>Erreur dans le chargement des equipes: {erreurEquipesFiltrer.message}</div>
+            ): Array.isArray(equipesEnOrdre) && equipesEnOrdre.length > 0 ?(
+              equipesEnOrdre.map((equipe, index) => (
                 <tr key={index}>
                     <td>{equipe.rang}</td>
                     <td>{equipe.nom}</td>
@@ -136,7 +166,10 @@ function Classements() {
                         {Math.abs(equipe.but_pour - equipe.but_contre)}
                     </td>
                 </tr>
-            ))}
+            ))
+          ): equipesEnOrdre != null ?(
+            <div>Aucune equipe pour cette ligue</div>
+          ):null}
             </tbody>
         </table>
       </section>

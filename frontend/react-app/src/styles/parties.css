@@ -65,3 +65,19 @@ div.barreVerticale {
     margin: 0 10px; 
     min-height: 1em; 
 }
+
+#ligues button{
+    display: flex;
+    justify-content: center;
+    background-color: #474A48;
+    color:white;
+    padding:0.5rem;
+}
+
+#ligues button:hover{
+    background-color: #8eb3a7;
+}
+
+#ligues button.ligueActive{
+    background-color:#77AF9C;
+}

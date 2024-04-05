@@ -48,7 +48,7 @@
 }
 
 #register:hover {
-    background-color: #39856b;
+    background-color:#8eb3a7;;
 }
 
 #register:focus {
@@ -89,7 +89,7 @@ ul#ligues{
 }
 
 #ligues>li:hover{
-    background-color: #39856b;
+    background-color:#8eb3a7;;
 }
 
 #resultatsHebdomadaire {
@@ -102,11 +102,11 @@ ul#ligues{
 #resultatsHebdomadaire::after {
     content: '';
     position: absolute;
-    bottom: 0; /* Move to the bottom of the <h1> */
+    bottom: 0; 
     left: 50%;
     transform: translateX(-50%);
     width: 5%;
-    height: 2px; /* Adjust the height of the underline */
+    height: 2px; 
     background-color: #77AF9C;
     border-radius: 0.8rem;
 }

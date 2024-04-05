@@ -1,36 +1,38 @@
 import React, {useState, useEffect} from "react";
+import { useQuery } from "@tanstack/react-query";
 import StatistiqueJoueurPopup from "./StatistiqueJoueurPopup";
 
 function BarreRecherche(){
     const [nomJoueur, setNomJoueur] = useState("");
-    const [allJoueurs, setAllJoueurs] = useState([]);
     const [idJoueurSelectionne, setIdJoueurSelectionne] = useState(null);
 
-    useEffect(() => {
-        const fetchJoueur = async () => {
-            try {
-                const informationsJoueursResponse = await fetch('https://tch-099-proj.vercel.app/api/api/joueurs');
-                if (!informationsJoueursResponse.ok) {
-                    throw new Error('Echec lors de la récupération des joueurs');
-                }
-
-                const informationsJoueursData = await informationsJoueursResponse.json();
-                setAllJoueurs(informationsJoueursData);
-            } catch (error) {
-                console.error('Erreur dans la récupération des joueurs: ', error);
+    const fetchJoueur = async () => {
+        try {
+            const informationsJoueursResponse = await fetch('https://tch-099-proj.vercel.app/api/api/joueurs');
+            if (!informationsJoueursResponse.ok) {
+                throw new Error('Echec lors de la récupération des joueurs');
             }
-        };
 
-        fetchJoueur();
-    }, []);
+            return await informationsJoueursResponse.json();
+            
+        } catch (error) {
+            console.error('Erreur dans la récupération des joueurs: ', error);
+        }
+    };
+
+    const {data: allJoueurs} = useQuery({
+        queryKey:['allJoueurs'],
+        queryFn: fetchJoueur
+    });
+
 
     const changementBarreRecherche = (event) =>{
         setNomJoueur(event.target.value);
     };
 
-    const joueursFiltrer = allJoueurs.filter((joueur) => 
+    const joueursFiltrer = allJoueurs ? allJoueurs.filter((joueur) => 
         joueur.nom.toLowerCase().includes(nomJoueur.toLowerCase()) || joueur.prenom.toLowerCase().includes(nomJoueur.toLowerCase())
-    );
+    ):[];
 
     const voirStatisitqueJoueur = (idJoueur) =>{
         setIdJoueurSelectionne(idJoueur);

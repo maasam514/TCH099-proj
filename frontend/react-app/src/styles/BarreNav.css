@@ -6,6 +6,7 @@ nav{
     background-color:#77AF9C;
     border-bottom-left-radius: 0.25rem;
     border-bottom-right-radius: 0.25rem;
+    justify-content: space-evenly;
 }
 
 a{

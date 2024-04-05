@@ -5,7 +5,8 @@ import Acceuil from './components/Acceuil';
 import APropos from './components/APropos';
 import Parties from './components/Parties';
 import Classements from './components/Classement';
-import Joueurs from './components/Joueurs'
+import Joueurs from './components/Joueurs';
+import './styles/index.css';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           </Routes> 
         </div>
       </div>
-    </Router>
+    </Router> 
   );
 }
 

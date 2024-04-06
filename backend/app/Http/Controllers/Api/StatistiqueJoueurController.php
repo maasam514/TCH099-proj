@@ -34,7 +34,7 @@ class StatistiqueJoueurController extends Controller
             'nbMatch'=>0,
         ];
 
-        int nombreMatch=0;
+        $nombreMatch=0;
         //remplir le tableau qui sera renvoyee
         foreach($statistiques as $statistique){
             $statistiquesComplete['nbButs']+=$statistique->nb_but;

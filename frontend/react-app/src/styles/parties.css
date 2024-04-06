@@ -66,12 +66,21 @@ div.barreVerticale {
     min-height: 1em; 
 }
 
-#ligues button{
+section#ligues button{
+    width: 10%;
+    height: 15%;
+    border:1px solid gray;
+    padding:10px;
+    text-align: center;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color: white;
+    color:black;
+    margin-left: 10px;
+}
+
+#ligues{
     display: flex;
-    justify-content: center;
-    background-color: #474A48;
-    color:white;
-    padding:0.5rem;
 }
 
 #ligues button:hover{

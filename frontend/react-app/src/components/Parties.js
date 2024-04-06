@@ -12,7 +12,7 @@ function Parties(){
         queryFn: fetchLigues,
     });
 
-    const fetchPartiesLigues = async(ligueSelectionne) => {
+    const fetchPartiesLigues = async() => {
         try{
             const response = await fetch(`https://tch-099-proj.vercel.app/api/api/game/ligue/${ligueSelectionne}`);
             if(!response.ok){
@@ -80,8 +80,8 @@ function Parties(){
     return (
         <div className="conteneur">
                 <div>
-                    <section id="ligues">
-                        <h2>Ligues</h2>
+                    <h2>Ligues</h2>
+                    <section id="ligues">   
                         {isLoadingLigues ?(
                             <div>Ligues en chargement...</div>
                         ) : erreurLigues ?(

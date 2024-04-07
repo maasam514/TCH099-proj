@@ -10,6 +10,7 @@ function Classements() {
     colonne: "rang",
     ordre: "asc",
   });
+  const NOMBRE_POINTS_PAR_VICTOIRE = 3;
 
   /*** Effet pour charger les ligues au montage du composant ***/
   const {
@@ -49,11 +50,14 @@ function Classements() {
         }
       });
 
+      //Assigner un rang a chaque equipe selon l'ordre definis auparavant
+      //Assigner le differentiel de but pour chaque equipe
+      //Assigner un pourcentage de point pour chaque equipe
       equipesLigueData.forEach((equipe, index) => {
         equipe.rang = index + 1;
         equipe.differentiel = equipe.but_pour - equipe.but_contre;
         equipe.pourcentage_point = 
-          (equipe.nb_point / (equipe.nb_game * 3)).toFixed(3);
+          (equipe.nb_point / (equipe.nb_game * NOMBRE_POINTS_PAR_VICTOIRE)).toFixed(3);
       });
 
       setFiltrerPar({ colonne: "rang", ordre: "asc" });
@@ -93,6 +97,13 @@ function Classements() {
         : "desc";
 
     setFiltrerPar({ colonne, ordre });
+    /*
+    - creer une copie du tableau equipeEnOrdre avec le spread operator afin de ne pas modifier equipesEnOrdre directement
+    - ensuite la methode sort prend en argument une fonction de comparaison avec deux parametres notes a et b.
+    - la fonction de trie retourne un nombre negatif si a doit etre placee avant b, retourne un nombre positif si a doit placee apres b
+    - et 0 si les deux sont egaux.
+    - Etant donne que JavaScript considere des tableaux JSON comme des objets JavaScript, on peut utilisee la notation a[colonne].
+    */
     const filtreEquipe = [...equipesEnOrdre].sort((a, b) => {
       if (a[colonne] < b[colonne]) return ordre === "asc" ? -1 : 1;
       if (a[colonne] > b[colonne]) return ordre === "asc" ? 1 : -1;
@@ -101,6 +112,7 @@ function Classements() {
     setEquipeEnOrdre(filtreEquipe);
   };
 
+  //Si equipesFiltrer est changer et existe, setEquipeEnOrdre avec equipesFiltrer.
   useEffect(() => {
     if (equipesFiltrer) {
       setEquipeEnOrdre(equipesFiltrer);
@@ -326,6 +338,7 @@ function Classements() {
                   <td>{equipe.pourcentage_point}</td>
                   <td>{equipe.but_pour}</td>
                   <td>{equipe.but_contre}</td>
+                  {/* Ecrire le differentiel en rouge s'il est negatif et en vert s'il est positif */}
                   <td
                     style={{
                       color: equipe.differentiel >= 0 ? "green" : "red",

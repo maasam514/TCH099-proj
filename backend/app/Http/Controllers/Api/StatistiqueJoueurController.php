@@ -28,7 +28,7 @@ class StatistiqueJoueurController extends Controller
         //intialiser le tableau de la reponse
         $statistiquesComplete=[
             'nbButs'=>0,
-            'nbAssist'=>0,
+            'nbPasses'=>0,
             'nbCartonJaune'=>0,
             'nbCartonRouge'=>0,
             'nbMatch'=>0,
@@ -38,7 +38,7 @@ class StatistiqueJoueurController extends Controller
         //remplir le tableau qui sera renvoyee
         foreach($statistiques as $statistique){
             $statistiquesComplete['nbButs']+=$statistique->nb_but;
-            $statistiquesComplete['nbAssist']+=$statistique->nb_assist;
+            $statistiquesComplete['nbPasses']+=$statistique->nb_passe;
             $statistiquesComplete['nbCartonJaune']+=$statistique->nb_carton_jaune;
             $statistiquesComplete['nbCartonRouge']+=$statistique->nb_carton_rouge;
             $nombreMatch++;

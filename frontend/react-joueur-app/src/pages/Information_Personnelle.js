@@ -32,7 +32,7 @@ export default function Information_Personnelle(){
       <div className="Background_info">
         <center><h1>Information Personnelle</h1></center>
         
-        <p>Hei maisonnette hoho{loginEmail} !</p>
+        <p>Hei maisonnette HAHAHHAHAH{loginEmail} !</p>
         <br />
         <div className="container" id="joueurInfoPerso">
           {playerInfo && Object.keys(playerInfo).map(key => {

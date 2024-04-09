@@ -23,7 +23,10 @@ class JoueurController extends Controller
 
     public function getAllJoueurs(){
         $infoJoueurs=DB::table('joueur')
+                    ->join('equipe', 'joueur.id_equipe', '=', 'equipe.id_equipe')
+                    ->select('joueur.*', 'equipe.nom')
                     ->get();
+        
         if(!is_null($infoJoueurs)){
             return response()->json($infoJoueurs,200);
         } 

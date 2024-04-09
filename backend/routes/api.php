@@ -30,7 +30,6 @@ use App\Http\Controllers\Controller;
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::post('logout', [AuthController::class, 'seDeconnecter']);
-    Route::post('joueur', [JoueurController::class, 'ajouterJoueur']);
 });
 
 //Les routes qui ne peuvent etre accessible au gestionnaire de ligue
@@ -93,6 +92,9 @@ Route::get('statistique/equipe/{id}',[StatistiqueEquipeController::class, 'getSt
 -Prend en parametres l'id du joueur dans l'url.
 */
 Route::get('joueur/{id}',[JoueurController::class, 'getJoueur']);
+
+//Route qui permet d'ajouter un joueur
+Route::post('joueur', [JoueurController::class, 'ajouterJoueur']);
 
 /*Route qui retourne les informations de tout les joueurs dans la base de donnees*/
 Route::get('joueurs',[JoueurController::class, 'getAllJoueurs']);

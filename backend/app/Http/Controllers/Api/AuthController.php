@@ -38,6 +38,14 @@ class AuthController extends Controller
             'mot_de_passe'=>bcrypt($champsValidee['mot_de_passe']),
             'role_utilisateur'=>$champsValidee['role_utilisateur']
         ]);
+
+        $id = null;
+        
+        if($utilisateur->role_utilisateur == 'joueur'){
+            $id = DB::table('joueur') -> select('id_joueur') -> where('courriel',$champsValidee['email']) -> first();
+        }else if($utilisateur->role_utilisateur == 'gestionnaire'){
+             $id = DB::table('gestionnaire_de_ligue') -> select('id_gestionnaire') -> where('courriel',$champsValidee['email']) -> first();
+        }
         
         //creation d'un token d'identification propre a l'utilisateur et qui est valide jusqu'au logout
         $tokenIdentification=$utilisateur->createToken('tokenutilisateur')->plainTextToken;
@@ -78,12 +86,23 @@ class AuthController extends Controller
                 'message'=>'Mauvais email ou mot de passe'
             ],401);
         }
+
+        $id=null;
+        
+        if($utilisateur->role_utilisateur == 'joueur'){
+            $id = DB::table('joueur') -> select('id_joueur') -> where('courriel',$champsValidee['email']) -> first();
+            $id = $id ? $id->id_joueur : null;
+        }else if($utilisateur->role_utilisateur == 'gestionnaire'){
+            $id = DB::table('gestionnaire_de_ligue') -> select('id_gestionnaire') -> where('courriel',$champsValidee['email']) -> first();
+            $id = $id ? $id->id_joueur : null;
+        }
         
         //creation d'un token d'identification propre a l'utilisateur
         $tokenIdentification=$utilisateur->createToken('tokenutilisateur')->plainTextToken;
 
         $reponse=[
             'utilisateur'=>$utilisateur,
+            'id'=>$id,
             'token'=>$tokenIdentification,
         ];
 

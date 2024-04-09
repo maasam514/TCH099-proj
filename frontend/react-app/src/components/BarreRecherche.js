@@ -65,7 +65,7 @@ function BarreRecherche() {
             <div className="barre-recherche">
                 <input className="barre-recherche-input" type="text" placeholder="Recherche d'un joueur" value={nomJoueur} onChange={changementBarreRecherche}/>
                 {nomJoueur && (
-                    <button className ="effacer-texte" onClick={effacerTexteBarreRecherche}>X</button>
+                    <button className ="effacer-texte" onClick={effacerTexteBarreRecherche}>&times;</button>
                 )}
             </div>
             <div className="conteneur-liste-suggestion">

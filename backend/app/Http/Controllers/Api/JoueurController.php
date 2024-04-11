@@ -87,7 +87,9 @@ class JoueurController extends Controller
             DB::rollBack();
             return response()->json(['error'=>'Ajout impossible','exception'=>$e->getMessage()],500);
         }
-        return response()->json(['succes'=>'Insertion du joueur reussi'],200);
+        $idJoueur = DB::getPdo()->lastInsertId();
+        $infoJoueur = DB::table('joueur')->where('id_joueur', $idJoueur)->first();
+        return response()->json(['succes' => 'Insertion du joueur réussi', 'joueur' => $infoJoueur], 200);
     }
 
     public function deleteJoueur(int $id){

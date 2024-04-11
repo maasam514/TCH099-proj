@@ -85,6 +85,8 @@ function BarreNav(){
           <li><Link to="/joueurs" className={pathname === "/joueurs" ? "actif" : ""}>Joueurs</Link></li>
           <li><Link to="/ligues" className={pathname === "/ligues" ? "actif" : ""}>Ligues</Link></li>
           <li><Link to="/contact" className={pathname === "/contact" ? "actif" : ""}>Contact</Link></li>
+          <li><Link to="/login" className={pathname === "/login" ? "actif" : ""}>Login</Link></li>
+          
           <li>
             {estConnecter ? (
                 <>

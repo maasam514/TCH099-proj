@@ -20,6 +20,9 @@ function App() {
             <Route path="/parties" element={<Parties />} />
             <Route path="/classements" element={<Classements />} />
             <Route path="/joueurs" element={<Joueurs />} />
+            <Route path="/login" element={<Login/>}/>
+            <Route path="/registration" element={<Registration/>}/>
+ 
           </Routes> 
         </div>
       </div>

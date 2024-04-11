@@ -1,5 +1,6 @@
 import { React } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 import BarreRecherche from "./BarreRecherche";
 
 function Joueurs(){
@@ -45,7 +46,10 @@ function Joueurs(){
                     <tbody>
                         {allJoueurs && allJoueurs.map((joueur) => (
                             <tr key={joueur.id}>
-                                <td>{joueur.prenom} {joueur.joueur_nom}</td>
+                                <td>
+                                    <Link to={`/joueur/${joueur.id_joueur}`}>
+                                        {joueur.prenom} {joueur.joueur_nom}
+                                    </Link></td>
                                 <td>{joueur.equipe_nom}</td>
                             </tr>
                         ))}

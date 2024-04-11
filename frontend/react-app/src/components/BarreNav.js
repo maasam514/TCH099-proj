@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {Link, useLocation } from 'react-router-dom';
+import '../styles/BarreNav.css';
 
 /**
  * Composant fonctionnel représentant la barre de naviguation de l'application.
@@ -80,8 +81,12 @@ function BarreNav(){
           <li><Link to="/" className={pathname === "/" ? "actif" : ""}>Accueil</Link></li>
           <li><Link to="/a-propos" className={pathname === "/a-propos" ? "actif" : ""}>À propos</Link></li>
           <li><Link to="/parties" className={pathname === "/parties" ? "actif" : ""}>Parties</Link></li>
+          <li><Link to="/classements" className={pathname === "/classements" ? "actif" : ""}>Classements</Link></li>
           <li><Link to="/joueurs" className={pathname === "/joueurs" ? "actif" : ""}>Joueurs</Link></li>
           <li><Link to="/ligues" className={pathname === "/ligues" ? "actif" : ""}>Ligues</Link></li>
+          <li><Link to="/contact" className={pathname === "/contact" ? "actif" : ""}>Contact</Link></li>
+          <li><Link to="/login" className={pathname === "/login" ? "actif" : ""}>Login</Link></li>
+          
           <li>
             {estConnecter ? (
                 <>

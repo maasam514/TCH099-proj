@@ -104,15 +104,12 @@ function Parties(){
                                     <div className="informations">
                                         <div>
                                             <span className="date">{partie.date_game}</span>
+                                            <span className="lieu">{partie.lieu}</span>
                                         </div>
                                         <div className="barreVerticale"> </div>
                                         <div>
                                             <span className="equipeDom">{nomsEquipesDomicile[index]}</span>
-                                            <span className="equipeDom">{nomsEquipesVisiteur[index]}</span>
-                                        </div>
-                                        <div className="barreVerticale"></div>
-                                        <div>
-                                        <span className="lieu">{partie.lieu}</span>
+                                            <span className="equipeVis">{nomsEquipesVisiteur[index]}</span>
                                         </div>
                                         <div className="barreVerticale"></div>
                                         <button className="details">Voir plus de details</button>

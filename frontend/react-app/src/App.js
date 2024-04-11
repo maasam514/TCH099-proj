@@ -6,6 +6,8 @@ import APropos from './components/APropos';
 import Parties from './components/Parties';
 import Classements from './components/Classement';
 import Joueurs from './components/Joueurs';
+import Login from './components/Login';
+import Registration from './components/Registration';
 import './styles/index.css';
 
 function App() {

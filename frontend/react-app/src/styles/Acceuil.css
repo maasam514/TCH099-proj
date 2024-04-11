@@ -39,16 +39,15 @@
     margin-top: 0.8rem;
     padding:0.6rem;
     font-size: 20px;
-    background-color:#77AF9C;
     border-radius: 0.5rem;
-    color:black;
+    color:white;
     border:none;
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     -webkit-font-smoothing: antialiased;
 }
 
 #register:hover {
-    background-color:#8eb3a7;;
+    background-color:#93c1f3;
 }
 
 #register:focus {
@@ -82,7 +81,7 @@ ul#ligues{
 #ligues .ligueActive{
     width: 10%;
     height: 15%;
-    background-color:#77AF9C;
+    background-color:#519def;
     color:black;
     padding:10px;
     text-align: center;
@@ -90,7 +89,7 @@ ul#ligues{
 }
 
 #ligues>li:hover{
-    background-color:#8eb3a7;;
+    background-color:#93c1f3;
 }
 
 #resultatsHebdomadaire {
@@ -106,9 +105,9 @@ ul#ligues{
     bottom: 0; 
     left: 50%;
     transform: translateX(-50%);
-    width: 5%;
+    width: 40%;
     height: 2px; 
-    background-color: #77AF9C;
+    background-color: #d31111;
     border-radius: 0.8rem;
 }
 
@@ -136,7 +135,7 @@ ul#ligues{
     max-width: 400px; 
     margin: 0 auto; 
     border: 1px solid #ccc; 
-    background-color: #474A48;
+    background-color: #ccc;
   }
 
   .react-calendar__tile {
@@ -152,7 +151,7 @@ ul#ligues{
   
 
   .react-calendar__navigation button {
-    background-color: #77AF9C; 
+    background-color: #eb5454; 
     color: black;  
     border-radius: 0;
     padding: 0.3rem 0.5rem; 

@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">TCH099-EM</string>
+    <string name="soccerstats">SoccerStats</string>
+    <string name="nom_quipe">Nom Équipe</string>
+    <string name="pj">PJ</string>
+    <string name="v">V</string>
+    <string name="d">D</string>
+    <string name="n">N</string>
+</resources>

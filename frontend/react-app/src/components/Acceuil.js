@@ -5,7 +5,6 @@ import 'react-calendar/dist/Calendar.css';
 import moment from "moment";
 import "../styles/Acceuil.css";
 import { fetchLigues } from "../fetch/fetchLigues";
-import { Link } from 'react-router-dom';
 
 function Accueil() {
     const { data: ligues, isLoading: isLoadingLigues, error: erreurLigues } = useQuery({
@@ -84,9 +83,7 @@ function Accueil() {
                 <h3>Vous faites partie d'une équipe ?</h3>
                 <span>Connectez-vous à votre compte personnel pour pouvoir visualiser vos statistiques personnelles, celles de votre équipe et de tous les autres joueurs dans votre ligue.</span><br />
                 <span>Créez votre compte dès aujourd'hui !</span><br />
-                <Link to='/registration'>
                 <button id="register">Inscrivez-vous maintenant !</button>
-                </Link>
             </section>
             <div id="calendrier">
                 <span>Calendrier des parties: </span>

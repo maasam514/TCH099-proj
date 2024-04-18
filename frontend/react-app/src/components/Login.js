@@ -17,7 +17,6 @@ export default function Login() {
     const handleLogin = async (e) => {
         e.preventDefault();
 
-        //Si le format est bon, on fait le fetch pour verifier si c'est un utilisateur
         if (validationInformation()) {
             try {
                 const response = await fetch("https://tch-099-proj.vercel.app/api/api/login", {
@@ -34,14 +33,14 @@ export default function Login() {
 
                 const responseData = await response.json();
 
-                //Si c'est un utilisateur on transfert l'information de l'utilisateur dans les autres pages de la section joueur
                 if (response.ok) {
                     const { id } = responseData;
                     localStorage.setItem('id', id);
-                    //Dirige vers la premier page de la section Joueur
+
+                    
                     navigate('/info_personnelle');
                     
-                //Si l'utilisateur n'est pas accepter alors un message erreur va informer l'utilisateur    
+                    
                 } else {
                     toast.error(responseData.message || 'Login failed');
                     setMessageError(responseData.message);
@@ -53,8 +52,6 @@ export default function Login() {
         }
     };
 
-
-    //Validation du format de l'email et du mot de passe de l'utilisateur
     const validationInformation = () => {
         let isValid = true;
         if (email === '' || email === null) {
@@ -70,7 +67,7 @@ export default function Login() {
             
             setPasswordError('Entrer votre mot de passe');
         }
-        else if (password.length < 9 ){
+        else if (password.length > 9 ){
             isValid = false;
 
             setPasswordError('Le mot de passe doit contenir au moins 9 caractères');

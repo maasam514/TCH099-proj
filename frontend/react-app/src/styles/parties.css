@@ -13,7 +13,7 @@ section#partiesLigues {
 }
 
 li.infoParties {
-    background-color: rgba(80, 90, 110, 0.4);
+    background-color: #fff;
     box-shadow: 0 0 4px rgba(0, 0, 0.5);
     width: 90%;
     height: 6em;
@@ -28,6 +28,7 @@ div.informations {
     display: flex;
     align-items: center;
     flex-grow: 1;
+    background: #fff;
 }
 
 span.date,
@@ -84,9 +85,9 @@ section#ligues button{
 }
 
 #ligues button:hover{
-    background-color: #8eb3a7;
+    background-color: #93c1f3;
 }
 
 #ligues button.ligueActive{
-    background-color:#77AF9C;
+    background-color:#519def;
 }

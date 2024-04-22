@@ -263,7 +263,7 @@ class GameController extends Controller
                 'scoreEquipeExterieur'=>$resultat->score_equipe_exterieur,
                 'passes'=>$resultat->passes,
                 'carteJaune'=>$resultat->carte_jaune,
-                'carteRouge'=>$game->carte_rouge,
+                'carteRouge'=>$resultat->carte_rouge,
             ];
             return response()->json($reponse,200);
         }

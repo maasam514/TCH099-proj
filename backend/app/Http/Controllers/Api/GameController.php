@@ -34,6 +34,7 @@ class GameController extends Controller
         } 
         return response()->json(["error"=>"Erreur lors de la requete"],404);      
     }
+    
     public function getGame(int $id){
         $informations=[
             'idGame'=>$id,
@@ -264,10 +265,9 @@ class GameController extends Controller
                 'carteJaune'=>$resultat->carte_jaune,
                 'carteRouge'=>$game->carte_rouge,
             ];
-        }
             return response()->json($reponse,200);
-        } 
-        return response()->json(["error"=>"Erreur lors de la requete"],404);      
+        }
+        return response()->json(["error"=>"Erreur lors de la requete"],404);     
     }
     
 

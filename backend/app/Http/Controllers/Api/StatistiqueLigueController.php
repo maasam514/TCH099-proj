@@ -28,6 +28,7 @@ class StatistiqueLigueController extends Controller
         if(!$equipes->isEmpty()){
             //renvoyer la reponse
             foreach($equipes as $equipe){
+                $statsEquipe=DB::table
                 $reponse[]=[
                     'idEquipe'=>$equipe->id_equipe,
                     'nom'=>$equipe->nom,
@@ -38,6 +39,9 @@ class StatistiqueLigueController extends Controller
                     'nbDefaites'=>$equipe->nb_defaite,
                     'nbNuls'=>$equipe->nb_nul,
                     'nbPoints'=>$equipe->nb_point,
+                    'nbButsPour'=>$equipe->but_pour,
+                    'nbButsContre'=>$equipe->but_contre,
+                    'nbMatch'=>$equipe->nb_match,
                 ];
             }
             return response()->json($reponse,200);

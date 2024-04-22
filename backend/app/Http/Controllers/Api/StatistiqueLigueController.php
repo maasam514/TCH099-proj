@@ -28,7 +28,6 @@ class StatistiqueLigueController extends Controller
         if(!$equipes->isEmpty()){
             //renvoyer la reponse
             foreach($equipes as $equipe){
-                $statsEquipe=DB::table
                 $reponse[]=[
                     'idEquipe'=>$equipe->id_equipe,
                     'nom'=>$equipe->nom,

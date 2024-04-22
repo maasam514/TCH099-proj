@@ -47,7 +47,7 @@ class JoueurController extends Controller
                     'numero'=>$joueur->numero,
                     'idEquipe'=>$joueur->id_equipe,
                     'dateDeNaissance'=>$joueur->date_de_naissance,
-                ]
+                ];
             }
             return response()->json($infoJoueurs,200);
         } 

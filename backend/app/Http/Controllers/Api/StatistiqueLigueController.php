@@ -40,7 +40,7 @@ class StatistiqueLigueController extends Controller
                     'nbPoints'=>$equipe->nb_point,
                     'nbButsPour'=>$equipe->but_pour,
                     'nbButsContre'=>$equipe->but_contre,
-                    'nbMatch'=>$equipe->nb_match,
+                    'nbMatch'=>$equipe->nb_game,
                 ];
             }
             return response()->json($reponse,200);

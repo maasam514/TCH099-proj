@@ -269,6 +269,34 @@ class GameController extends Controller
         }
         return response()->json(["error"=>"Erreur lors de la requete"],404);     
     }
+
+    public function getResultatsGamesPourEquipe(int $id){
+        $resultats = DB::table('resultat_match')
+                    ->whereIn('id_game', function($query) use ($id) {
+                        $query->select('id_game')
+                              ->from('game')
+                              ->where('id_equipe_dom', $id)
+                              ->orWhere('id_equipe_ext', $id);
+                    })
+                    ->get();
+        $reponse=[];
+
+        if(!$resultats->isEmpty()){
+            foreach($resultats as $resultat){
+                $reponse[]=[
+                    'idGame'=>$resultat->id_game,
+                    'scoreEquipeDom'=>$resultat->score_equipe_dom,
+                    'scoreEquipeExterieur'=>$resultat->score_equipe_exterieur,
+                    'passes'=>$resultat->passes,
+                    'carteJaune'=>$resultat->carte_jaune,
+                    'carteRouge'=>$resultat->carte_rouge,
+                ];
+            }
+            return response()->json($reponse,200);
+        }else {
+            return response()->json(["error"=>"Erreur lors de la requete"],404);
+        }
+    }
     
 
     public function ajouterResultatsMatch(Request $request){

@@ -18,20 +18,30 @@ class GameController extends Controller
                  ->select('game.*','game_equipe.id_equipe_dom','game_equipe.id_equipe_ext')
                  ->join('game_equipe','game.id_game','=','game_equipe.id_game')
                  ->get();
-               
+        $reponse =[];
         if(!$games->isEmpty()){
-            return response()->json($games,200);
+            foreach($games as $game){
+                $reponse[]=[
+                    'idGame'=>$game->id_game,
+                    'dateGame'=>$game->date_game,
+                    'lieu'=>$game->lieu,
+                    'idLigue'=>$game->id_ligue,
+                    'idEquipeDom'=>$game->id_equipe_dom,
+                    'idEquipeExt'=>$game->id_equipe_ext,
+                ];
+            }
+            return response()->json($reponse,200);
         } 
         return response()->json(["error"=>"Erreur lors de la requete"],404);      
     }
     public function getGame(int $id){
         $informations=[
-            'id_game'=>$id,
+            'idGame'=>$id,
             'date'=>null,
             'lieu'=>null,
             'equipeDom'=>null,
             'equipeVis'=>null,
-            'id_ligue'=>0,
+            'idLigue'=>0,
         ];
 
         /*
@@ -68,7 +78,7 @@ class GameController extends Controller
             $informations['lieu']=$requete->lieu;
             $informations['equipeDom']=$equipeDom->nom;
             $informations['equipeVis']=$equipeVis->nom;
-            $informations['id_ligue']=$requete->id_ligue;
+            $informations['idLigue']=$requete->id_ligue;
 
             return response()->json($informations,200);
         }else{
@@ -153,18 +163,29 @@ class GameController extends Controller
         
         if($games->isEmpty()){
             return response()->json(['error'=>'Aucun match trouve pour cette ligue'],404);
+        }
+        $reponse=[];
+        foreach($games as $game){
+            $reponse[]=[
+                'idGame'=>$game->id_game,
+                'dateGame'=>$game->date_game,
+                'lieu'=>$game->lieu,
+                'idLigue'=>$game->id_ligue,
+                'idEquipeDom'=>$game->id_equipe_dom,
+                'idEquipeExt'=>$game->id_equipe_ext,
+            ];
         }  
-        return response()->json($games,200);     
+        return response()->json($reponse,200);     
     }
 
     public function ajouterGame(Request $requete){
         $regles=[
-            'id_game'=>'required|integer',
+            'idGame'=>'required|integer',
             'date'=>'required|date',
             'lieu'=>'required|string|max:20',
-            'id_ligue'=>'required|integer',
-            'id_equipe_dom'=>'required|integer',
-            'id_equipe_ext'=>'required|integer'
+            'idLigue'=>'required|integer',
+            'idEquipeDom'=>'required|integer',
+            'idEquipeExt'=>'required|integer'
         ];
 
         $validation=Validator::make($requete->all(),$regles);
@@ -173,27 +194,27 @@ class GameController extends Controller
             return response()->json(['error'=>$validation->errors()],422);
         }
 
-        $id_game=strip_tags($requete->input('id_game'));
+        $idGame=filter_var($requete->input('idGame'),FILTRE_SANITIZE_NUMBER_INT);
         $date=strip_tags($requete->input('date'));
         $lieu=strip_tags($requete->input('lieu'));
-        $id_ligue=strip_tags($requete->input('id_ligue'));
-        $id_equipe_dom=strip_tags($requete->input('id_equipe_dom'));
-        $id_equipe_ext=strip_tags($requete->input('id_equipe_ext'));
+        $idLigue=filter_var($requete->input('idLigue'),FILTRE_SANITIZE_NUMBER_INT);
+        $idEquipeDom=filter_var($requete->input('idEquipeDom'),FILTRE_SANITIZE_NUMBER_INT);
+        $idEquipeExt=filter_var($requete->input('idEquipeExt'),FILTRE_SANITIZE_NUMBER_INT);
 
         try{
             DB::beginTransaction();
 
              DB::table('game')->insert([
-                'id_game'=>$id_game,
+                'id_game'=>$idGame,
                 'date_game'=>$date,
                 'lieu'=>$lieu,
-                'id_ligue'=>$id_ligue
+                'id_ligue'=>$idLigue
             ]);
 
             DB::table('game_equipe')->insert([
-                'id_equipe_dom'=>$id_equipe_dom,
-                'id_equipe_ext'=>$id_equipe_ext,
-                'id_game'=>$id_game
+                'id_equipe_dom'=>$idEquipeDom,
+                'id_equipe_ext'=>$idEquipeExt,
+                'id_game'=>$idGame
             ]);
 
             DB::commit();
@@ -230,10 +251,68 @@ class GameController extends Controller
     }
 
     public function getResultatGame(int $id){
+        $resultat=DB::table('resultat_match')
+                 ->where('id_game',$id)
+                 ->first();
 
+        if(!is_null($resultat)){
+            $reponse=[
+                'idGame'=>$resultat->id_game,
+                'scoreEquipeDom'=>$resultat->score_equipe_dom,
+                'scoreEquipeExterieur'=>$resultat->score_equipe_exterieur,
+                'passes'=>$resultat->passes,
+                'carteJaune'=>$resultat->carte_jaune,
+                'carteRouge'=>$game->carte_rouge,
+            ];
+        }
+            return response()->json($reponse,200);
+        } 
+        return response()->json(["error"=>"Erreur lors de la requete"],404);      
     }
+    
 
-    public function getResultatsGamesPourEquipe(int $id){
+    public function ajouterResultatsMatch(Request $request){
+        $regles =[
+            'idGame'=>'required|integer',
+            'scoreEquipeDom'=>'required|integer',
+            'scoreEquipeExterieur'=>'required|integer',
+            'passes'=>'required|integer',
+            'carteJaune'=>'required|integer',
+            'carteRouge'=>'required|integer',
+        ];
+
+        $validation=Validator::make($requete->all(),$regles);
+
+        if($validation->fails()){
+            return response()->json(['error'=>$validation->errors()],422);
+        }
+
+        $idGame = filter_var($request->input('idGame'), FILTER_SANITIZE_NUMBER_INT);
+        $scoreEquipeDom = filter_var($request->input('scoreEquipeDom'), FILTER_SANITIZE_NUMBER_INT);
+        $scoreEquipeExterieur = filter_var($request->input('scoreEquipeExterieur'), FILTER_SANITIZE_NUMBER_INT);
+        $passes = filter_var($request->input('passes'), FILTER_SANITIZE_NUMBER_INT);
+        $carteJaune = filter_var($request->input('carteJaune'), FILTER_SANITIZE_NUMBER_INT);
+        $carteRouge = filter_var($request->input('carteRouge'), FILTER_SANITIZE_NUMBER_INT);
+
+        try{
+            DB::beginTransaction();
+
+            DB::table('resultat_match')->insert([
+                'id_game'=>$idGame,
+                'score_equipe_dom'=>$scoreEquipeDom,
+                'score_equipe_exterieur'=>$scoreEquipeExterieur,
+                'passes'=>$passes,
+                'carte_jaune'=>$carteJaune,
+                'carte_rouge'=>$carteRouge,
+            ]);
+
+            DB::commit();
+            return response()->json(['succes'=>'Ajout des resultats reussis',200]);
+        }catch(QueryException $e){
+            DB::rollBack();
+            return response()->json(['error'=>'Ajout impossible','exception'=>$e->getMessage()],500);
+        }
+        
 
     }
 

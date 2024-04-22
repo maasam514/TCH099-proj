@@ -48,61 +48,50 @@ class StatistiqueEquipeController extends Controller
     }
 
     public function getStatistiquesJoueurs(int $id){
+        $joueurs = DB::table('Joueur')
+                    ->where('id_equipe', $id)
+                    ->get();
 
-        /* SELECT * FROM Joueur
-        -  WHERE id_equipe=$id
-        */
-        $joueurs=DB::table('joueur')
-                 ->where('id_equipe',$id)
-                 ->get();
+        $statistiquesJoueurs = [];
 
-        $statistiquesJoueurs=[];
-        $compteur=0;
-        if(!$joueurs->isEmpty()){
-            foreach($joueurs as $joueur){
-                /* SELECT * FROM Feuille_Statistique_Joueur
-                -  WHERE id_joueur=$joueur.id_joueur
-                */
-                $statistiques = DB::table('feuille_statistique_joueur')
-                ->where('id_joueur', $joueur->id_joueur)
-                ->get();
+        if (!$joueurs->isEmpty()) {
+            foreach ($joueurs as $joueur) {
+                $statistiques = DB::table('Feuille_Statistique_Joueur')
+                                ->where('id_joueur', $joueur->id_joueur)
+                                ->get();
 
-                //Verifier si le joueur avec l'id specifie existe et qu'il a des statistiques
-                if($statistiques->isEmpty()){
-                    return response()->json(['error'=>'Joueur non trouvee'], 404);
+                // Vérifier si le joueur avec l'id spécifié existe et qu'il a des statistiques
+                if ($statistiques->isEmpty()) {
+                    return response()->json(['error' => 'Statistiques non trouvées pour le joueur'], 404);
                 }
 
-            //intialiser le tableau de la reponse
-                $statistiquesComplete=[
-                    'idJoueur'=>$joueur->id_joueur,
-                    'prenom'=>$joueur->prenom,
-                    'nom'=>$joueur->nom,
-                    'capitaine'=>$joueur->capitaine,
-                    'nbButs'=>0,
-                    'nbPasses'=>0,
-                    'nbCartonJaune'=>0,
-                    'nbCartonRouge'=>0,
+                // Initialiser le tableau de la réponse
+                $statistiquesComplete = [
+                    'idJoueur'      => $joueur->id_joueur,
+                    'prenom'        => $joueur->prenom,
+                    'nom'           => $joueur->nom,
+                    'capitaine'     => $joueur->capitaine,
+                    'nbButs'        => 0,
+                    'nbPasses'      => 0,
+                    'nbCartonJaune' => 0,
+                    'nbCartonRouge' => 0,
                 ];
 
-            //remplir le tableau qui sera renvoyee
-                foreach($statistiques as $statistique){
-                    $statistiquesComplete['idJoueur']=
-                    $statistiquesComplete['nbButs']+=$statistique->nb_but;
-                    $statistiquesComplete['nbPasses']+=$statistique->nb_passe;
-                    $statistiquesComplete['nbCartonJaune']+=$statistique->nb_carton_jaune;
-                    $statistiquesComplete['nbCartonRouge']+=$statistique->nb_carton_rouge;
-                    $statistiquesJoueurs[$compteur]=$statistiquesComplete;
-                    $compteur++;
+                // Remplir le tableau qui sera renvoyé
+                foreach ($statistiques as $statistique) {
+                    $statistiquesComplete['nbButs'] += $statistique->nb_but;
+                    $statistiquesComplete['nbPasses'] += $statistique->nb_passe;
+                    $statistiquesComplete['nbCartonJaune'] += $statistique->nb_carton_jaune;
+                    $statistiquesComplete['nbCartonRouge'] += $statistique->nb_carton_rouge;
                 }
-            }
-        }else{
-            return response()->json(['error'=>'Equipe non trouvee'],404);
-        }
 
-        if(!empty($statistiquesJoueurs)){
-            return response()->json($statistiquesJoueurs,200);
-        }else{
-            return response()->json(['error'=>'Aucun joueurs trouves dans cette equipe'],404);
+                // Ajouter les statistiques complètes du joueur au tableau
+                $statistiquesJoueurs[] = $statistiquesComplete;
+            }
+
+            return response()->json($statistiquesJoueurs, 200);
+        } else {
+            return response()->json(['error' => 'Aucun joueur trouvé dans cette équipe'], 404);
         }
     }
 

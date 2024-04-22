@@ -15,8 +15,18 @@ class JoueurController extends Controller
         ->where('id_joueur',$id)
         ->first();
 
+        
         if(!is_null($infoJoueur)){
-            return response()->json($infoJoueur, 200);
+            $reponse = [
+                'idJoueur'=>$infoJoueur->id_joueur,
+                'prenom'=>$infoJoueur->prenom,
+                'nom'=>$infoJoueur->nom,
+                'capitaine'=>$infoJoueur->capitaine,
+                'numero'=>$infoJoueur->numero,
+                'idEquipe'=>$infoJoueur->id_equipe,
+                'dateDeNaissance'=>$infoJoueur->date_de_naissance,
+            ];
+            return response()->json($reponse, 200);
         }
         return response()->json(['error'=>'Aucun joueur trouvee'],404);
     }
@@ -26,8 +36,19 @@ class JoueurController extends Controller
                     ->join('equipe', 'joueur.id_equipe', '=', 'equipe.id_equipe')
                     ->select('joueur.*','joueur.nom as joueur_nom', 'equipe.nom as equipe_nom')
                     ->get();
-        
-        if(!is_null($infoJoueurs)){
+        $reponse=[];
+        if(!$infoJoueurs->isEmpty()){
+            foreach($infoJoueurs as $joueur){
+                $reponse[]=[
+                    'idJoueur'=>$joueur->id_joueur,
+                    'prenom'=>$joueur->prenom,
+                    'nom'=>$joueur->nom,
+                    'capitaine'=>$joueur->capitaine,
+                    'numero'=>$joueur->numero,
+                    'idEquipe'=>$joueur->id_equipe,
+                    'dateDeNaissance'=>$joueur->date_de_naissance,
+                ]
+            }
             return response()->json($infoJoueurs,200);
         } 
         return response()->json(['error'=>'Erreur dans la recuperation des joueurs']);           
@@ -39,12 +60,12 @@ class JoueurController extends Controller
         $regles=[
             'prenom'=>'required|string|max:20',
             'nom'=>'required|string|max:20',
-            'num_Tel'=>'required|regex:/\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*/',
+            'numTel'=>'required|regex:/\D*([2-9]\d{2})(\D*)([2-9]\d{2})(\D*)(\d{4})\D*/',
             'courriel'=>'required|string|max:40',
             'capitaine'=>'required|integer|between:0,1',
             'numero'=>'nullable|integer|max:99',
-            'date_de_naissance'=>'required|date|before_or_equal:today|after_or_equal:1900-01-01',
-            'id_equipe'=>'nullable|integer|max:9999999999'
+            'dateDeNaissance'=>'required|date|before_or_equal:today|after_or_equal:1900-01-01',
+            'idEquipe'=>'nullable|integer|max:9999999999'
         ];
 
         //Faire la validation cote serveur
@@ -59,12 +80,12 @@ class JoueurController extends Controller
         //faire un sanitize des champs de la requete.
         $prenom=strip_tags($requete->input('prenom'));
         $nom=strip_tags($requete->input('nom'));
-        $numTel=strip_tags($requete->input('num_tel'));
+        $numTel=strip_tags($requete->input('numTel'));
         $courriel=strip_tags($requete->input('courriel'));
-        $dateNaissance=strip_tags($requete->input('date_de_naissance'));
+        $dateNaissance=strip_tags($requete->input('dateDeNaissance'));
         $capitaine=$requete->input('capitaine');
-        $numero=$requete->input('numero');
-        $idEquipe=$requete->input('id_equipe');
+        $numero=filter_var($requete->input('numero'),FILTRE_SANITIZE_NUMBER_INT);
+        $idEquipe=filter_var($requete->input('idEquipe'),FILTRE_SANITIZE_NUMBER_INT);
 
         //faire l'insertion dans la base de donnee
 
@@ -120,11 +141,11 @@ class JoueurController extends Controller
             DB::beginTransaction();
 
             $modification=DB::table('joueur')
-                          ->where('id_joueur',$requete->id_joueur)
+                          ->where('id_joueur',$requete->idJoueur)
                           ->update(['prenom'=>$requete->prenom,'nom'=>$requete->nom,
-                                    'num_tel'=>$requete->num_tel,'courriel'=>$requete->courriel,
+                                    'num_tel'=>$requete->numTel,'courriel'=>$requete->courriel,
                                     'capitaine'=>$requete->capitaine,'numero'=>$requete->numero,
-                                    'id_equipe'=>$requete->id_equipe,'date_de_naissance'=>$requete->date_de_naissance]);          
+                                    'id_equipe'=>$requete->idEquipe,'date_de_naissance'=>$requete->dateDeNaissance]);          
             
             if($modification>0){
                 DB::commit();

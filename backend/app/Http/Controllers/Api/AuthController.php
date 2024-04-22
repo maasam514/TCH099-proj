@@ -52,7 +52,7 @@ class AuthController extends Controller
         $tokenIdentification=$utilisateur->createToken('tokenutilisateur')->plainTextToken;
 
         $reponse=[
-            'utilisateur'=>$utilisateur,
+            'utilisateur'=>$utilisateur->makeHidden(['mot_de_passe']),
             'token'=>$tokenIdentification,
         ];
 
@@ -90,24 +90,24 @@ class AuthController extends Controller
 
         $id=null;
         
-        if($utilisateur->role_utilisateur == 'joueur'){
-            $id = DB::table('joueur') -> select('id_joueur') -> where('courriel',$champsValidee['email']) -> first();
+        if ($utilisateur->role_utilisateur == 'joueur') {
+            $id = DB::table('joueur') -> select('id_joueur') -> where('courriel',$utilisateur['email']) -> first();
             $id = $id ? $id->id_joueur : null;
-        }else if($utilisateur->role_utilisateur == 'gestionnaire'){
-            $id = DB::table('gestionnaire_de_ligue') -> select('id_gestionnaire') -> where('courriel',$champsValidee['email']) -> first();
-            $id = $id ? $id->id_joueur : null;
+        } elseif ($user->role_utilisateur == 'gestionnaire') {
+            $id = DB::table('joueur') -> select('id_joueur') -> where('courriel',$utilisateur['email']) -> first();
+            $id = $id ? $id->id_gestionnaire : null;
         }
         
         //creation d'un token d'identification propre a l'utilisateur
         $tokenIdentification=$utilisateur->createToken('tokenutilisateur')->plainTextToken;
 
         $reponse=[
-            'utilisateur'=>$utilisateur,
+            'utilisateur'=>$utilisateur->makeHidden(['mot_de_passe']),
             'id'=>$id,
             'token'=>$tokenIdentification,
         ];
 
         //envoyer la reponse.
-        return response($reponse,201);
+        return response($reponse,200);
     }
 }

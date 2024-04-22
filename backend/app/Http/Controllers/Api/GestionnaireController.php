@@ -14,12 +14,20 @@ class GestionnaireController extends Controller
         $gestionnaire=DB::table('gestionnaire_de_ligue')
                       ->where('id_gestionnaire',$id)
                       ->first();
-               
+        
         if(!is_null($gestionnaire)){
-            return response()->json($gestionnaire,200);
+            $reponse=[
+                'idGestionnaire'=>$gestionnaire->id_gestionnaire,
+                'nom'=>$gestionnaire->nom,
+                'prenom'=>$gestionnaire->prenom,
+                'numTel'=>$gestionnaire->num_tel,
+                'courriel'=>$gestionnaire->courriel,
+                'idLigue'=>$gestionnaire->id_ligue,
+            ];
+            return response()->json($reponse,200);
         }
-        return response([
-            'error'=>'Aucun gestionnaire trouvee',
-        ],404);              
+        return response()->json([
+            'error' => 'Aucun gestionnaire trouvé'
+        ], 404);             
     }
 }

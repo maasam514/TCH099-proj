@@ -67,6 +67,9 @@ Route::middleware(['auth:sanctum','gestionnaire'])->group(function(){
 
     //Route qui modifie une ligue dans la base de donnee.
     Route::put('ligue/{id}',[LigueController::class,'modifierLigue']);
+
+    //Route quie permote de rentrer les resultats a la suite d'un match
+    Route::post('resultat/{id}',[GameController::class, 'ajouterResultatsMatch']);
 });
 
 //Route pour se connecter a son compte utilisateur si on en possede un

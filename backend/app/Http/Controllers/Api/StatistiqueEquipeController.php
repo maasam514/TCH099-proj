@@ -48,7 +48,7 @@ class StatistiqueEquipeController extends Controller
     }
 
     public function getStatistiquesJoueurs(int $id){
-        $joueurs = DB::table('Joueur')
+        $joueurs = DB::table('joueur')
                     ->where('id_equipe', $id)
                     ->get();
 
@@ -56,7 +56,7 @@ class StatistiqueEquipeController extends Controller
 
         if (!$joueurs->isEmpty()) {
             foreach ($joueurs as $joueur) {
-                $statistiques = DB::table('Feuille_Statistique_Joueur')
+                $statistiques = DB::table('feuille_statistique_joueur')
                                 ->where('id_joueur', $joueur->id_joueur)
                                 ->get();
 

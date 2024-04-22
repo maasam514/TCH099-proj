@@ -17,12 +17,12 @@ const ProfilJoueur = () => {
                 setInfoJoueur(dataJoueur);
 
                 // Fetch les informations de l'équipe en utilisant l'ID d'équipe du joueur
-                reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/equipe/${dataJoueur.id_equipe}`);
+                reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/equipe/${dataJoueur.idEquipe}`);
                 let data = await reponse.json();
                 setInfoEquipe(data);
 
                 // Fetch des statistiques de l'équipe en utilisant l'ID d'équipe du joueur
-                reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/statistique/equipe/${dataJoueur.id_equipe}`);
+                reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/statistique/equipe/${dataJoueur.idEquipe}`);
                 data = await reponse.json();
                 setStatEquipe(data);
 
@@ -46,7 +46,7 @@ const ProfilJoueur = () => {
                 <div>
                     <p>Nom : {infoJoueur.prenom} {infoJoueur.nom}</p>
                     <p>Email : {infoJoueur.courriel}</p>
-                    <p>Date de naissance : {infoJoueur.date_de_naissance}</p>
+                    <p>Date de naissance : {infoJoueur.dateDeNaissance}</p>
                     <p>Équipe : {infoEquipe ? infoEquipe.nom : 'Chargement des informations de l\'équipe...'}</p>
                 </div>
             ) : (

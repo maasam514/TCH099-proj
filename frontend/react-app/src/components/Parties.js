@@ -33,7 +33,7 @@ function Parties(){
     });
 
     //Permet d'avoir tous les ids de toutes les parties obtenus par l'api a l'interieur d'un seul tableau.
-    const idsEquipe = partiesLigues ? partiesLigues.flatMap(partie => [partie.id_equipe_dom, partie.id_equipe_ext]) : [];
+    const idsEquipe = partiesLigues ? partiesLigues.flatMap(partie => [partie.idEquipeDom, partie.idEquipeExt]) : [];
 
     //En utilisant new Set, on enleve les identifiants dupliquer, cela permettra recuperer les informations sur les equipes de maniere plus effective.
     //Array.from permet de transformer le Set en tableau.
@@ -65,12 +65,12 @@ function Parties(){
 
     //recuperer les noms d'equipes qui sont a domicile.
     const nomsEquipesDomicile = partiesLigues ? partiesLigues.map(partie => 
-        nomsEquipes ? nomsEquipes[idsEquipeUnique.indexOf(partie.id_equipe_dom)] : ""
+        nomsEquipes ? nomsEquipes[idsEquipeUnique.indexOf(partie.idEquipeDom)] : ""
     ) : [];
 
     //recuperer les noms d'equipes qui sont visiteurs
     const nomsEquipesVisiteur = partiesLigues ? partiesLigues.map(partie => 
-        nomsEquipes ? nomsEquipes[idsEquipeUnique.indexOf(partie.id_equipe_ext)] : ""
+        nomsEquipes ? nomsEquipes[idsEquipeUnique.indexOf(partie.idEquipeExt)] : ""
     ) : [];
 
     const handleLeagueChange = async (leagueId) => {
@@ -103,7 +103,7 @@ function Parties(){
                                 <li key={index} className="infoParties">
                                     <div className="informations">
                                         <div>
-                                            <span className="date">{partie.date_game}</span>
+                                            <span className="date">{partie.dateGame}</span>
                                         </div>
                                         <div className="barreVerticale"> </div>
                                         <div>

@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const ClassementLigue = () => {
-    const { id_ligue } = useParams();
+    const { idLigue } = useParams();
     const [ligue, setLigue] = useState(null);
     const [gestionnaire, setGestionnaire] = useState()
     const [equipes, setEquipes] = useState([]);
@@ -13,29 +13,29 @@ const ClassementLigue = () => {
     useEffect(() => {
         const fetchDonnees = async () => {
             try {
-                let reponseLigue = await fetch(`https://tch-099-proj.vercel.app/api/api/ligue/${id_ligue}`);
+                let reponseLigue = await fetch(`https://tch-099-proj.vercel.app/api/api/ligue/${idLigue}`);
                 let dataLigue = await reponseLigue.json();
                 setLigue(dataLigue);
 
-                let reponseGestionnaire = await fetch(`https://tch-099-proj.vercel.app/api/api/gestionnaire/${id_ligue}`);
+                let reponseGestionnaire = await fetch(`https://tch-099-proj.vercel.app/api/api/gestionnaire/${idLigue}`);
                 let dataGestionnaire = await reponseGestionnaire.json();
                 setGestionnaire(dataGestionnaire);
 
-                let reponseEquipes = await fetch(`https://tch-099-proj.vercel.app/api/api/ligue/${id_ligue}/equipes`);
+                let reponseEquipes = await fetch(`https://tch-099-proj.vercel.app/api/api/ligue/${idLigue}/equipes`);
                 let dataEquipes = await reponseEquipes.json();
                 setEquipes(dataEquipes);
 
-                let reponseMatchs = await fetch(`https://tch-099-proj.vercel.app/api/api/game/equipe/${id_ligue}`);
+                let reponseMatchs = await fetch(`https://tch-099-proj.vercel.app/api/api/game/equipe/${idLigue}`);
                 let dataMatchs = await reponseMatchs.json();
                 setMatchs(dataMatchs.parties);
                 
                 dataEquipes = dataEquipes.map(equipe => ({
                     ...equipe,
-                    differentiel: equipe.but_pour - equipe.but_contre,
-                    pourcentage_points: equipe.nb_game > 0 ? ((equipe.nb_point / (equipe.nb_game * 3))).toFixed(3) : "0.00"
+                    differentiel: equipe.nbButsPour - equipe.nbButsContre,
+                    pourcentagePoints: equipe.nbMatch > 0 ? ((equipe.nbPoints / (equipe.nbMatch * 3))).toFixed(3) : "0.00"
                 }));
 
-                dataEquipes.sort((a, b) => b.nb_point - a.nb_point); // Tri initial par points
+                dataEquipes.sort((a, b) => b.nbPoints - a.nbPoints); // Tri initial par points
                 dataEquipes.forEach((equipe, index) => equipe.rang = index + 1); // Calcul du rang
                 setEquipes(dataEquipes);
             } catch (erreur) {
@@ -44,7 +44,7 @@ const ClassementLigue = () => {
         };
 
         fetchDonnees();
-    }, [id_ligue]);
+    }, [idLigue]);
 
     const handleFiltrer = (colonne) => {
         const estAscendant = filtre.colonne === colonne && filtre.ordre === 'asc';
@@ -85,21 +85,21 @@ const ClassementLigue = () => {
                 </thead>
                 <tbody>
                     {equipes.map((equipe) => (
-                        <tr key={equipe.id_equipe}>
+                        <tr key={equipe.idEquipe}>
                             <td>{equipe.rang}</td>
                             <td>
-                            <Link to={`/equipe/${equipe.id_equipe}`}>
+                            <Link to={`/equipe/${equipe.idEquipe}`}>
                                     {equipe.nom}
                                 </Link>
                             </td>
-                            <td>{equipe.nb_game}</td>
-                            <td>{equipe.nb_victoire}</td>
-                            <td>{equipe.nb_defaite}</td>
-                            <td>{equipe.nb_nul}</td>
-                            <td>{equipe.nb_point}</td>
-                            <td>{equipe.pourcentage_points}</td>
-                            <td>{equipe.but_pour}</td>
-                            <td>{equipe.but_contre}</td>
+                            <td>{equipe.nbMatchs}</td>
+                            <td>{equipe.nbVictoires}</td>
+                            <td>{equipe.nbDefaites}</td>
+                            <td>{equipe.nbNuls}</td>
+                            <td>{equipe.nbPoints}</td>
+                            <td>{equipe.pourcentagePoints}</td>
+                            <td>{equipe.nbButsPour}</td>
+                            <td>{equipe.nbButsContre}</td>
                             <td>{equipe.differentiel}</td>
                         </tr>
                     ))}
@@ -133,7 +133,7 @@ const ClassementLigue = () => {
                 <div>
                     <h2>Contacter la ligue</h2>
                     <p>Gestionnaire : {gestionnaire.prenom} {gestionnaire.nom}</p>
-                    <p>Numero de telephone : {gestionnaire.num_tel}</p>
+                    <p>Numero de telephone : {gestionnaire.numTel}</p>
                     <p>Courriel : {gestionnaire.courriel}</p>
                 </div>
             ) : (

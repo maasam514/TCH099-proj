@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Equipe = () => {
-    const { id_equipe } = useParams();
+    const { idEquipe } = useParams();
     const [infoEquipe, setInfoEquipe] = useState(null);
     const [statEquipe, setStatEquipe] = useState(null);
     const [ligue, setLigue] = useState(null);
@@ -12,33 +12,33 @@ const Equipe = () => {
     useEffect(() => {
         const fetchDonnees = async () => {
             // Fetch les informations de l'équipe
-            let reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/equipe/${id_equipe}`);
+            let reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/equipe/${idEquipe}`);
             let dataInfoEquipe = await reponse.json();
             setInfoEquipe(dataInfoEquipe);
 
             // Fetch des statistiques de l'équipe
-            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/statistique/equipe/${id_equipe}`);
+            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/statistique/equipe/${idEquipe}`);
             let dataStatsEquipe = await reponse.json();
             setStatEquipe(dataStatsEquipe);
 
             // Fetch les infos de la ligue de l'équipe
-            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/ligue/${dataInfoEquipe.id_ligue}`);
+            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/ligue/${dataInfoEquipe.idLigue}`);
             let dataLigue = await reponse.json();
             setLigue(dataLigue);
 
             // Fetch les joueurs et leurs statistiques de l'équipe
-            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/equipe/${id_equipe}/joueurs`);
+            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/equipe/${idEquipe}/joueurs`);
             let dataJoueurs = await reponse.json();
             setJoueurs(dataJoueurs);
 
             // Fetch les match de l'équipe
-            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/game/equipe/${id_equipe}`);
+            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/game/equipe/${idEquipe}`);
             let dataMatchs = await reponse.json();
             setMatchs(dataMatchs.parties);
         };
 
         fetchDonnees();
-    }, [id_equipe]);
+    }, [idEquipe]);
 
     return (  
         <div className="conteneur">
@@ -60,12 +60,12 @@ const Equipe = () => {
                             <td>{infoEquipe.categorie}</td>
                             <td>
                                 {ligue ? (
-                                    <Link to={`/ligue/${infoEquipe.id_ligue}`}>
+                                    <Link to={`/ligue/${infoEquipe.idLigue}`}>
                                         {ligue.nomLigue}
                                     </Link>
                                 ) : 'Chargement de la ligue...'}
                             </td>
-                            <td>{infoEquipe.nb_joueurs}</td>
+                            <td>{infoEquipe.nbJoueurs}</td>
                         </tr>
                     )}
                 </tbody>

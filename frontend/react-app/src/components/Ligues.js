@@ -25,7 +25,7 @@ const Ligues = () => {
                 {ligues.length > 0 ? (
                     <table>
                         <thead>
-                            <tr key={ligues.id_ligue}>
+                            <tr key={ligues.idLigue}>
                                 <th>Nom</th>
                                 <th>Catégorie</th>
                                 <th>Année</th>
@@ -34,13 +34,13 @@ const Ligues = () => {
                         </thead>
                         <tbody>
                             {ligues.map((ligue) => (
-                                <tr key={ligues.id_ligue}>
-                                    <td><Link to={`/ligue/${ligue.id_ligue}`}>
+                                <tr key={ligues.idLigue}>
+                                    <td><Link to={`/ligue/${ligue.idLigue}`}>
                                             {ligue.nom}
                                         </Link></td>
                                     <td>{ligue.categorie}</td>
                                     <td>{ligue.annee}</td>
-                                    <td>{ligue.nb_equipe}</td>
+                                    <td>{ligue.nbEquipes}</td>
                                 </tr>
                             ))}
                         </tbody>

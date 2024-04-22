@@ -2,44 +2,29 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const ModifierEquipe = () => {
-    const { equipeId } = useParams();
+    const { idEquipe } = useParams();
     const navigate = useNavigate();
-    const [equipe, setEquipe] = useState({
-        nom: '', 
-        image: '',
-        categorie: '',
-    });
+    const [equipe, setEquipe] = useState();
     const [joueurs, setJoueurs] = useState([]);
     const [nouveauxJoueurs, setNouveauxJoueurs] = useState([]);
     const [joueursRetires, setJoueursRetires] = useState([]);
     const [idModifJoueur, setIdModifJoueur] = useState('');
 
-    //initialise les états de l'équipe et de ses joueurs
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const [equipeResponse, joueursResponse] = await Promise.all([
-                    fetch(`http://127.0.0.1:8000/api/equipe/${equipeId}`),
-                    fetch(`http://127.0.0.1:8000/api/equipe/${equipeId}/joueurs`)
-                ]);
+        const fetchDonnees = async () => {
+            // Fetch les informations de l'équipe
+            let reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/equipe/${idEquipe}`);
+            let dataEquipe = await reponse.json();
+            setEquipe(dataEquipe);
 
-                if (!equipeResponse.ok || !joueursResponse.ok) {
-                    throw new Error('Erreur lors du chargement des données');
-                }
-
-                const equipeData = await equipeResponse.json();
-                const joueursData = await joueursResponse.json();
-
-                setEquipe(equipeData);
-                setJoueurs(joueursData);
-            } catch (error) {
-                console.error("Erreur lors du chargement des données :", error);
-                // Afficher le message d'erreur à l'utilisateur ici, si nécessaire
-            }
+            // Fetch les joueurs et leurs statistiques de l'équipe
+            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/equipe/${idEquipe}/joueurs`);
+            let dataJoueurs = await reponse.json();
+            setJoueurs(dataJoueurs);
         };
 
-        fetchData();
-    }, [equipeId]);
+        fetchDonnees();
+    }, [idEquipe]);
 
         // Ajoute le joueur à l"équipe
     const ajouterJoueur = async () => {
@@ -98,7 +83,7 @@ const ModifierEquipe = () => {
     
         try {
             // Mise à jour des informations de l'équipe
-            const equipeResponse = await fetch(`http://127.0.0.1:8000/api/modifier/equipe/${equipeId}`, {
+            const equipeResponse = await fetch(`http://127.0.0.1:8000/api/modifier/equipe/${idEquipe}`, {
                 method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(equipe),
@@ -113,7 +98,7 @@ const ModifierEquipe = () => {
                 fetch(`http://127.0.0.1:8000/api/modifier/joueur/${joueur.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ...joueur, id_equipe: equipeId }),
+                    body: JSON.stringify({ ...joueur, id_equipe: idEquipe }),
                 })
             );
     
@@ -122,7 +107,7 @@ const ModifierEquipe = () => {
                 fetch(`http://127.0.0.1:8000/api/modifier/joueur/${joueur.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ...joueur, id_equipe: null }),
+                    body: JSON.stringify({ ...joueur, idEquipe: null }),
                 })
             );
     
@@ -131,7 +116,7 @@ const ModifierEquipe = () => {
     
             // Rediriger l'utilisateur une fois toutes les mises à jour terminées
             console.log("Équipe et joueurs modifiés avec succès !");
-            navigate(`/equipe/${equipeId}`);
+            navigate(`/equipe/${idEquipe}`);
         } catch (error) {
             console.error("Erreur lors de la mise à jour :", error);
             // Afficher le message d'erreur à l'utilisateur ici, si nécessaire
@@ -140,7 +125,8 @@ const ModifierEquipe = () => {
     
 
     return (
-        <div>
+        <div className='conteneur'>
+            {equipe && equipe.nom ? (
             <form onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="nom">Nom de l'équipe:</label>
@@ -149,16 +135,6 @@ const ModifierEquipe = () => {
                         id="nom"
                         value={equipe.nom || ''}
                         onChange={(e) => setEquipe({ ...equipe, nom: e.target.value })}
-                        required
-                    />
-                </div>
-
-                <div>
-                    <label htmlFor="image">Emblème de l'équipe:</label>
-                    <input
-                        type="file"
-                        id="image"
-                        onChange={(e) => setEquipe({ ...equipe, image: e.target.files[0] })}
                         required
                     />
                 </div>
@@ -186,16 +162,14 @@ const ModifierEquipe = () => {
                                 <th>ID</th>
                                 <th>Nom</th>
                                 <th>Prénom</th>
-                                <th>Numéro</th>
                             </tr>
                         </thead>
                         <tbody>
                             {joueurs.map(joueur => (
-                                <tr key={joueur.id}>
-                                    <td>{joueur.id}</td>
+                                <tr key={joueur.idJoueur}>
+                                    <td>{joueur.idJoueur}</td>
                                     <td>{joueur.nom}</td>
                                     <td>{joueur.prenom}</td>
-                                    <td>{joueur.numero}</td>
                                 </tr>
                             ))}
                         </tbody>
@@ -217,6 +191,9 @@ const ModifierEquipe = () => {
                                 
                 <button type="submit">Mettre à jour l'équipe</button>
             </form>
+            ) : (
+                <p>Chargement des données de l'équipe...</p>
+            )}
         </div>
     );
 };

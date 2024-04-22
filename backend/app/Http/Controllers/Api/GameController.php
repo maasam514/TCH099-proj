@@ -274,7 +274,7 @@ class GameController extends Controller
         $resultats = DB::table('resultat_match')
                     ->whereIn('id_game', function($query) use ($id) {
                         $query->select('id_game')
-                              ->from('game')
+                              ->from('game_equipe')
                               ->where('id_equipe_dom', $id)
                               ->orWhere('id_equipe_ext', $id);
                     })

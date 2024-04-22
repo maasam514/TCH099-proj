@@ -95,7 +95,7 @@ class AuthController extends Controller
             $id = $id ? $id->id_joueur : null;
         }else if($utilisateur->role_utilisateur == 'gestionnaire'){
             $id = DB::table('gestionnaire_de_ligue') -> select('id_gestionnaire') -> where('courriel',$champsValidee['email']) -> first();
-            $id = $id ? $id->id_joueur : null;
+            $id = $id ? $id->id_gestionnaire : null;
         }
         
         //creation d'un token d'identification propre a l'utilisateur

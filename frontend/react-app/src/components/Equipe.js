@@ -8,6 +8,8 @@ const Equipe = () => {
     const [ligue, setLigue] = useState(null);
     const [joueurs, setJoueurs] = useState(null);
     const [matchs , setMatchs] = useState([]);
+    const [ancienMatchs, setAncienMatchs] = useState([]);
+    const [opponents, setOpponents] = useState({});
 
     useEffect(() => {
         const fetchDonnees = async () => {
@@ -35,9 +37,33 @@ const Equipe = () => {
             reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/game/equipe/${idEquipe}`);
             let dataMatchs = await reponse.json();
             setMatchs(dataMatchs.parties);
+
+            //Fetch les ancien matchs
+            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/resultats/equipe/1`)
+            let dataAncienMatch = await reponse.json();
+            setAncienMatchs(dataAncienMatch);
         };
 
+
+        //Fonction qui vient chercher l'information qu'on veut du tableau Game dans la base de donnee pour ensuite l'utiliser dans la section ancien matchs 
+    async function fetchOpponentData() {
+        try {
+          
+          const response = await fetch(`https://tch-099-proj.vercel.app/api/api/game/equipe/${idEquipe}`);
+          const data = await response.json();
+          const opponentsData = {};
+          data.parties.forEach(match => {
+            opponentsData[match.idGame] = match.equipeContre;
+          });
+          setOpponents(opponentsData);
+        } catch (error) {
+          console.error("Error fetching opponent data:", error);
+          setOpponents({});
+        }
+      }
+
         fetchDonnees();
+        fetchOpponentData();
     }, [idEquipe]);
 
     return (  
@@ -101,7 +127,7 @@ const Equipe = () => {
             </table>
 
             {/* Joueurs */}
-            <h2>Joueurs</h2>
+            <h2>Statistique des Joueurs de l'équipe</h2>
             <table>
                 <thead>
                     <tr>
@@ -129,7 +155,7 @@ const Equipe = () => {
             </table>
 
             {/* Matchs */}
-            <h2>Matchs</h2>
+            <h2>Matchs Avenir</h2>
             <table>
                 <thead>
                     <tr>
@@ -149,6 +175,32 @@ const Equipe = () => {
                     ))}
                 </tbody>
             </table>
+
+            <h2>Matchs Précédents</h2>
+            <table>
+          <thead>
+            <tr>
+              <th>Match</th>
+              <th>Résultats</th>
+              <th>Passes</th>
+              <th>Carton Jaune</th>
+              <th>Carton Rouge</th>
+              <th>Adversaire</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ancienMatchs && ancienMatchs.map((resultat, index) => (
+              <tr key={index}>
+                <td>{resultat.idGame}</td>
+                <td>{resultat.scoreEquipeDom} - {resultat.scoreEquipeExterieur}</td>
+                <td>{resultat.passes}</td>
+                <td>{resultat.carteJaune}</td>
+                <td>{resultat.carteRouge}</td>
+                <td>{opponents[resultat.idGame]}</td> 
+              </tr>
+            ))}
+          </tbody>
+        </table>
         </div>
     );
 }

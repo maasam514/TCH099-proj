@@ -3,11 +3,11 @@
   "routes": [
     {
       "src": "^/api/(.*)",
-      "dest": "/api/index.php"
+      "dest": "/backend/api/index.php"
     },
     {
       "src": "^/(.*)",
-      "dest": "/frontend/react-app/public/index.html",
+      "dest": "/frontend/react-app/public/$1",
       "headers": {
         "Cache-Control": "s-maxage=1, stale-while-revalidate"
       }

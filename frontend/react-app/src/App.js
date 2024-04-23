@@ -11,7 +11,9 @@ import ClassementLigue from './components/ClassementLigue';
 import Equipe from './components/Equipe';
 import Login from './components/Login';
 import Registration from './components/Registration';
-import ModifierEquipe from './components/ModifierEquipe';
+import CreateEquipe from './components/CreateEquipe';
+import CreateLigue from './components/CreateLigue';
+import CreateMatch from './components/CreateMatch';
 import './styles/index.css';
 import "./styles/style.css";
 
@@ -32,7 +34,9 @@ function App() {
             <Route path="/equipe/:idEquipe" element={<Equipe />} />
             <Route path="/login" element={<Login />} />
             <Route path="/registration" element={<Registration />} />
-            <Route path="/modifierEquipe/:idEquipe" element={<ModifierEquipe />} />
+            <Route path="/creerEquipe/:idLigue" element={<CreateEquipe />} />
+            <Route path="/creerLigue" element={<CreateLigue />} />
+            <Route path="/creerPartie/:idLigue" element={<CreateMatch />} />
 
           </Routes> 
         </div>

@@ -25,9 +25,9 @@ const ClassementLigue = () => {
                 let dataEquipes = await reponseEquipes.json();
                 setEquipes(dataEquipes);
 
-                let reponseMatchs = await fetch(`https://tch-099-proj.vercel.app/api/api/game/equipe/${idLigue}`);
+                let reponseMatchs = await fetch(`https://tch-099-proj.vercel.app/api/api/game/ligue/${idLigue}`);
                 let dataMatchs = await reponseMatchs.json();
-                setMatchs(dataMatchs.parties);
+                setMatchs(dataMatchs);
                 
                 dataEquipes = dataEquipes.map(equipe => ({
                     ...equipe,
@@ -64,9 +64,19 @@ const ClassementLigue = () => {
         setFiltre({ colonne, ordre: nouvelOrdre });
     };
 
+    const getTeamNameById = (teamId) => {
+        const team = equipes.find((equipe) => equipe.idEquipe === teamId);
+        return team ? team.nom : 'Unknown';
+      };
+
     return ( 
         <div className="conteneur">
-            <h2>{ligue ? ligue.nomLigue : 'Chargement de la ligue...'}</h2>
+            <div className="entete-avec-button">
+                <h2>{ligue ? ligue.nomLigue : 'Chargement de la ligue...'}</h2>
+                <button>
+                    <Link to={`/creerEquipe/${idLigue}`}>Ajouter une équipe</Link>
+                </button>
+            </div>
             <table>
                 <thead>
                     <tr>
@@ -92,7 +102,7 @@ const ClassementLigue = () => {
                                     {equipe.nom}
                                 </Link>
                             </td>
-                            <td>{equipe.nbMatchs}</td>
+                            <td>{equipe.nbMatch}</td>
                             <td>{equipe.nbVictoires}</td>
                             <td>{equipe.nbDefaites}</td>
                             <td>{equipe.nbNuls}</td>
@@ -105,23 +115,29 @@ const ClassementLigue = () => {
                     ))}
                 </tbody>
             </table>
-            <h2>Matchs</h2>
+            <div className="entete-avec-button">
+                <h2>Parties</h2>
+                <button>
+                    <Link to={`/creerPartie/${idLigue}`}>Ajouter une partie</Link>
+                </button>
+            </div>
             {matchs ? (
                 <table>
                     <thead>
                         <tr>
                             <th>Date du match</th>
                             <th>Lieu</th>
-                            <th>Adversaire</th>
+                            <th>Equipe domicile</th>
+                            <th>Equipe visiteur</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {/* Ici, vous vérifiez d'abord si 'matchs' contient des éléments avant de faire le .map() */}
                         {matchs.length > 0 && matchs.map(match => (
                             <tr key={match.idGame}>
                                 <td>{match.dateGame}</td>
                                 <td>{match.lieu}</td>
-                                <td>{match.equipeContre}</td>
+                                <td>{getTeamNameById(match.idEquipeDom)}</td>
+                                 <td>{getTeamNameById(match.idEquipeExt)}</td>
                             </tr>
                         ))}
                     </tbody>

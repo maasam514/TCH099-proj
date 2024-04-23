@@ -20,8 +20,13 @@ const Ligues = () => {
 
     return (
         <div className="conteneur">
-            <div>
-                <h2>Ligues</h2>
+                <div className='entete-avec-button'>
+                    <h2>Ligues</h2>
+                    <button>
+                        <Link to={'/creerLigue'}>Créer une ligue</Link>
+                    </button>
+                </div>
+                
                 {ligues.length > 0 ? (
                     <table>
                         <thead>
@@ -48,7 +53,6 @@ const Ligues = () => {
                 ) : (
                     <p>Chargement des ligues...</p>
                 )}
-            </div>
         </div>
     );
 

@@ -98,13 +98,13 @@ const ModifierEquipe = () => {
                 fetch(`http://127.0.0.1:8000/api/modifier/joueur/${joueur.id}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ ...joueur, id_equipe: idEquipe }),
+                    body: JSON.stringify({ ...joueur, idEquipe: idEquipe }),
                 })
             );
     
             // Réinitialisation de l'id_equipe des joueurs retirés
             const joueurRetiresUpdates = joueursRetires.map(joueur =>
-                fetch(`http://127.0.0.1:8000/api/modifier/joueur/${joueur.id}`, {
+                fetch(`http://127.0.0.1:8000/api/modifier/joueur/${joueur.idJoueur}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ ...joueur, idEquipe: null }),

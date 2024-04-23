@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import StatistiqueJoueurPopup from "./StatistiqueJoueurPopup";
+import { Link } from "react-router-dom";
 import "../styles/barreRecherche.css";
 
 function BarreRecherche() {
@@ -71,9 +72,9 @@ function BarreRecherche() {
             <div className="conteneur-liste-suggestion">
                 <ul className="conteneur-suggestions-nom">
                     {joueursFiltrer.map((joueur) =>
-                        <li key={joueur.id_joueur} onClick={() => voirStatisitqueJoueur(joueur.id_joueur)} className="suggestion-joueur">
-                            {joueur.nom_complet}
-                        </li>
+                    <li key={joueur.id_joueur} className="suggestion-joueur">
+                        <Link to={`/joueur/${joueur.id_joueur}`}>{joueur.nom_complet}</Link>
+                    </li>
                     )}
                 </ul>
             </div>

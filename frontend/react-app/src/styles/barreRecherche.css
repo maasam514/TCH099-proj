@@ -40,6 +40,7 @@
     align-items: center;
     margin-top: 0;
     padding-left: 0;
+    color: black;
 }
 
 .suggestion-joueur{
@@ -47,8 +48,13 @@
     cursor: pointer;
     width: 100%;
     text-align: center;
+    color: black;
 }
 
 .suggestion-joueur:hover{
     background-color: #f0f0f0;
+}
+
+.suggestion-joueur a {
+    color: black;
 }

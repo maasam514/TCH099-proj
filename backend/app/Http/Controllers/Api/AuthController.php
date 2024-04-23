@@ -91,7 +91,7 @@ class AuthController extends Controller
         $id=null;
         
         if ($utilisateur->role_utilisateur == 'joueur') {
-            $id = DB::table('joueur') -> select('id_joueur') -> where('courriel',$utilisateur->email]) -> first();
+            $id = DB::table('joueur') -> select('id_joueur') -> where('courriel',$utilisateur->email) -> first();
             $id = $id ? $id->id_joueur : null;
         }else if($utilisateur->role_utilisateur == 'gestionnaire'){
             $id = DB::table('gestionnaire_de_ligue') -> select('id_gestionnaire') -> where('courriel',$utilisateur->email) -> first();

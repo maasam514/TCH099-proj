@@ -206,12 +206,12 @@ class GameController extends Controller
             return response()->json(['error'=>$validation->errors()],422);
         }
 
-        $idGame=filter_var($requete->input('idGame'),FILTRE_SANITIZE_NUMBER_INT);
+        $idGame=filter_var($requete->input('idGame'),FILTER_SANITIZE_NUMBER_INT);
         $date=strip_tags($requete->input('date'));
         $lieu=strip_tags($requete->input('lieu'));
-        $idLigue=filter_var($requete->input('idLigue'),FILTRE_SANITIZE_NUMBER_INT);
-        $idEquipeDom=filter_var($requete->input('idEquipeDom'),FILTRE_SANITIZE_NUMBER_INT);
-        $idEquipeExt=filter_var($requete->input('idEquipeExt'),FILTRE_SANITIZE_NUMBER_INT);
+        $idLigue=filter_var($requete->input('idLigue'),FILTER_SANITIZE_NUMBER_INT);
+        $idEquipeDom=filter_var($requete->input('idEquipeDom'),FILTER_SANITIZE_NUMBER_INT);
+        $idEquipeExt=filter_var($requete->input('idEquipeExt'),FILTER_SANITIZE_NUMBER_INT);
 
         try{
             DB::beginTransaction();

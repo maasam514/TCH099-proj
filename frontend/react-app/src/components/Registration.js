@@ -258,7 +258,7 @@ export default function Registration(){
         <div>
             <form method="POST" onSubmit={RegistrationUtilisateur} className="container">
                 
-                        <h1 style={{ background: 'white' }}>Inscription</h1>
+                        <center><h1 style={{ background: 'white' }}>Inscription d'un joueur</h1></center>
                     
                                 <div className="form-group"></div>
                                 <label>Nom :</label>

@@ -19,7 +19,7 @@ class LigueController extends Controller
         foreach($reponse as $ligue){
             $infoLigues[]=[
                 'idLigue'=>$ligue->id_ligue,
-                'nom'=>$ligue->nom,
+                'nomLigue'=>$ligue->nom,
                 'categorie'=>$ligue->categorie,
                 'annee'=>$ligue->annee,
                 'nbEquipes'=>$ligue->nb_equipe,

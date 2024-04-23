@@ -43,6 +43,8 @@ class GameController extends Controller
             'equipeDom'=>null,
             'equipeVis'=>null,
             'idLigue'=>0,
+            'idEquipeDom'=>0,
+            'idEquipeVis'=>0,
         ];
 
         /*
@@ -80,6 +82,8 @@ class GameController extends Controller
             $informations['equipeDom']=$equipeDom->nom;
             $informations['equipeVis']=$equipeVis->nom;
             $informations['idLigue']=$requete->id_ligue;
+            $informations['idEquipeDom']=$requete->id_equipe_dom;
+            $informations['idEquipeVis']=$requete->id_equipe_ext;
 
             return response()->json($informations,200);
         }else{

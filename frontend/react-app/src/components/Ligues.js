@@ -41,7 +41,7 @@ const Ligues = () => {
                             {ligues.map((ligue) => (
                                 <tr key={ligues.idLigue}>
                                     <td><Link to={`/ligue/${ligue.idLigue}`}>
-                                            {ligue.nom}
+                                            {ligue.nomLigue}
                                         </Link></td>
                                     <td>{ligue.categorie}</td>
                                     <td>{ligue.annee}</td>

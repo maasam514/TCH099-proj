@@ -14,6 +14,7 @@ import Registration from './components/Registration';
 import CreateEquipe from './components/CreateEquipe';
 import CreateLigue from './components/CreateLigue';
 import CreateMatch from './components/CreateMatch';
+import FaceAFace from './components/FaceAFace';
 import './styles/index.css';
 import "./styles/style.css";
 
@@ -37,7 +38,7 @@ function App() {
             <Route path="/creerEquipe/:idLigue" element={<CreateEquipe />} />
             <Route path="/creerLigue" element={<CreateLigue />} />
             <Route path="/creerPartie/:idLigue" element={<CreateMatch />} />
-
+            <Route path="/partie/:idGame" element={<FaceAFace />} />
           </Routes> 
         </div>
       </div>

@@ -1,7 +1,8 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const ClassementLigue = () => {
+    const navigate = useNavigate();
     const { idLigue } = useParams();
     const [ligue, setLigue] = useState(null);
     const [gestionnaire, setGestionnaire] = useState()
@@ -67,7 +68,11 @@ const ClassementLigue = () => {
     const getTeamNameById = (teamId) => {
         const team = equipes.find((equipe) => equipe.idEquipe === teamId);
         return team ? team.nom : 'Unknown';
-      };
+    };
+
+    const handleRowClick = (gameId) => {
+        navigate(`/partie/${gameId}`);
+    };
 
     return ( 
         <div className="conteneur">
@@ -132,12 +137,12 @@ const ClassementLigue = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {matchs.length > 0 && matchs.map(match => (
-                            <tr key={match.idGame}>
-                                <td>{match.dateGame}</td>
-                                <td>{match.lieu}</td>
-                                <td>{getTeamNameById(match.idEquipeDom)}</td>
-                                 <td>{getTeamNameById(match.idEquipeExt)}</td>
+                        {matchs.length > 0 && matchs.map((match) => (
+                            <tr key={match.idGame} onClick={() => handleRowClick(match.idGame)} style={{ cursor: 'pointer' }}>
+                            <td>{match.dateGame}</td>
+                            <td>{match.lieu}</td>
+                            <td>{getTeamNameById(match.idEquipeDom)}</td>
+                            <td>{getTeamNameById(match.idEquipeExt)}</td>
                             </tr>
                         ))}
                     </tbody>

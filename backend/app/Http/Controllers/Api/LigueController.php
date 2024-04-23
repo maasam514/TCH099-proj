@@ -77,9 +77,9 @@ class LigueController extends Controller
 
         $nom=strip_tags($requete->input('nom'));
         $categorie=strip_tags($requete->input('categorie'));
-        $annee=filter_var($requete->input('annee'),FILTRE_SANITIZE_NUMBER_INT);
-        $idGestionnaire=filter_var($requete->input('idGestionnaire'),FILTRE_SANITIZE_NUMBER_INT);
-        $nbEquipes=filter_var($requete->input('nbEquipes'),FILTRE_SANITIZE_NUMBER_INT);
+        $annee=filter_var($requete->input('annee'),FILTER_SANITIZE_NUMBER_INT);
+        $idGestionnaire=filter_var($requete->input('idGestionnaire'),FILTER_SANITIZE_NUMBER_INT);
+        $nbEquipes=filter_var($requete->input('nbEquipes'),FILTER_SANITIZE_NUMBER_INT);
 
         try{
             DB::beginTransaction();

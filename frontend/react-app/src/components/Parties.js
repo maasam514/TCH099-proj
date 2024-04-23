@@ -88,7 +88,7 @@ function Parties(){
                             <div>Erreur dans le chargement des ligues: {erreurLigues.message}</div>
                         ) : (
                             ligues.map((ligue, index) => (
-                                <button key={index} onClick={() => handleLeagueChange(ligue.id_ligue)} className={ligueSelectionne === ligue.id_ligue ? 'ligueActive' : ''}>{ligue.nom}</button>
+                                <button key={index} onClick={() => handleLeagueChange(ligue.id_ligue)} className={ligueSelectionne === ligue.id_ligue ? 'ligueActive' : ''}>{ligue.nomLigue}</button>
                             ))
                         )}
                     </section>

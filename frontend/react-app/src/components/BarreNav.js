@@ -1,100 +1,93 @@
-import React, { useState } from "react";
-import {Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-/**
- * Composant fonctionnel représentant la barre de naviguation de l'application.
- * Ce composant affiche les differentes pages disponibles sur le site web
- * ainsi qu'un bouton vers le formulaire de connexion pour les joueurs.
- * 
- * @returns {JSX.Element} Le JSX representant la barre de naviguation
- */
-function BarreNav(){
-
-    const [estConnecter , setEstConnecter]=useState(false);
-    const [nomUtilisateur, setNomUtilisateur]=useState('');
-    const [tokenUtilisateur, setTokenUtilisateur]=useState('');
+function BarreNav() {
+    const [estConnecter, setEstConnecter] = useState(false);
+    const [nomUtilisateur, setNomUtilisateur] = useState('');
+    const [tokenUtilisateur, setTokenUtilisateur] = useState('');
     const { pathname } = useLocation();
-    let data=[];
+    const navigate = useNavigate();
+    let data = [];
+    const token = localStorage.getItem('token');
 
-    /**
-     * Effectue une requete a l'api afin de gerer la connexion a son compte
-     * 
-     * @throws {Error} Si la connexion echoue.
-     * @returns {void}
-     */
-    const gererLaConnexion = async () =>{
-        try{
-            const response=await fetch('https://tch-099-proj.vercel.app/api/api/login',{
-                method:'POST',
-                headers:{
-                    'Accept':'application/json',
-                    'Content-type':'application/json'
-                },
-                body: JSON.stringify({/*mettre les champs du login*/})
-            });
-            
-            if(!response.ok){
-                throw new Error('Echec lors de la connexion a votre compte');
-            }
-            data=await response.json();
-            //
+    useEffect(() => {
+        // Verrifier si le user est connecter
+        const isLoggedIn = localStorage.getItem('id');
+        if (isLoggedIn) {
             setEstConnecter(true);
-            setNomUtilisateur(data.utilisateur.nom);
-            setTokenUtilisateur(data.token);
-        }catch(error){
-            console.error('Erreur lors de la connexion a votre compte:', error);
         }
-    }
+    }, []);
 
-    /**
-     * Effectue une requete a l'api pour la deconnexion de l'utilisateur
-     * 
-     * @throws {Error} Si la deconnexion echoue
-     * @returns {null}
-     */
-    const gererLaDeconnexion = async() => {
-        try{
-            const response=await fetch ('https://tch-099-proj.vercel.app/api/api/logout',{
-                method:'POST',
-                headers:{
-                    'Accept':'application/json',
-                    'Content-type':'application/json',
-                    'Authorization':'Bearer '+tokenUtilisateur
+    const gererLaDeconnexion = async () => {
+        try {
+            const response = await fetch('https://tch-099-proj.vercel.app/api/api/logout', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-type': 'application/json',
+                    'Authorization': 'Bearer ' + token
                 },
             });
 
-            if(!response.ok){
+            if (!response.ok) {
                 throw new Error('Echec lors de votre deconnexion');
             }
 
             setEstConnecter(false);
             setNomUtilisateur(null);
             setTokenUtilisateur(null);
-        }catch(error){
-            console.error('Erreur lors de la deconnexion de votre comptre: ',error);
+            localStorage.removeItem('id');
+            localStorage.removeItem('token');
+
+            navigate('/');
+        } catch (error) {
+            console.error('Erreur lors de la deconnexion de votre comptre: ', error);
         }
     }
-    return(
+
+    return (
         <nav>
-        <ul>
-          <li><Link to="/" className={pathname === "/" ? "actif" : ""}>Accueil</Link></li>
-          <li><Link to="/a-propos" className={pathname === "/a-propos" ? "actif" : ""}>À propos</Link></li>
-          <li><Link to="/parties" className={pathname === "/parties" ? "actif" : ""}>Parties</Link></li>
-          <li><Link to="/joueurs" className={pathname === "/joueurs" ? "actif" : ""}>Joueurs</Link></li>
-          <li><Link to="/ligues" className={pathname === "/ligues" ? "actif" : ""}>Ligues</Link></li>
-          <li>
-            {estConnecter ? (
-                <>
-                    <span class="nom"> Bonjour {nomUtilisateur} </span>
-                    <button onClick={gererLaDeconnexion}>Se déconnecter</button>
-                </>
             
-            ):(
-                <button onClick={gererLaConnexion}>Se Connecter</button>
-            )}
-          </li>
-        </ul>
-      </nav>
+                {!estConnecter && (
+                    
+                    <>
+                    <Link to ="/" className="site-title" style={{ fontSize: '40px', marginBottom: '20px' }}>SoccerHub</Link>
+                    <ul>
+                        <li><Link to="/a-propos" className={pathname === "/a-propos" ? "actif" : ""}>À propos</Link></li>
+                        <li><Link to="/parties" className={pathname === "/parties" ? "actif" : ""}>Parties</Link></li>
+                        <li><Link to="/joueurs" className={pathname === "/joueurs" ? "actif" : ""}>Joueurs</Link></li>
+                            <li><Link to="/ligues" className={pathname === "/ligues" ? "actif" : ""}>Ligues</Link></li>
+                            
+                        <li>
+                            <Link to="/login">
+                                <button>Se Connecter</button>
+                            </Link>
+                        </li>
+                    </ul>
+                    </>
+                )}
+                {estConnecter && (
+                    
+                
+                    <> 
+                    <Link  className="site-title" style={{ textAlign: 'left', fontSize: '40px', marginBottom: '20px' }}>SoccerHub</Link>
+                    <ul>
+                        <li><Link to="/a-propos" className={pathname === "/a-propos" ? "actif" : ""}>À propos</Link></li>
+                        <li><Link to="/parties" className={pathname === "/parties" ? "actif" : ""}>Parties</Link></li>
+                        <li><Link to="/joueurs" className={pathname === "/joueurs" ? "actif" : ""}>Joueurs</Link></li>
+                        <li><Link to="/ligues" className={pathname === "/ligues" ? "actif" : ""}>Ligues</Link></li>
+                        <li><Link to="/infoPersonnelle" className={pathname === "/infoPersonnelle" ? "actif" : ""}>Mes statistiques</Link></li>
+                        <li><Link to="/match" className={pathname === "/match" ? "actif" : ""}>Mes Matchs</Link></li>
+                        <li><button onClick={gererLaDeconnexion}>Se déconnecter</button></li>
+                    </ul>
+                    </>
+
+
+
+                )}
+            
+        </nav>
     );
 }
+
 export default BarreNav;

@@ -18,6 +18,7 @@ export default function Registration(){
     const[passwordError, setPasswordError] = useState('');
     const[date_de_naissance, ajoutDateDeNaissance] = useState('');
     const[dateError, setDateError] = useState('');
+    const [messageError, setMessageError] = useState('');
     const[role_utilisateur, ajoutUtilisateur] = useState('Joueur');
 
     const navigate = useNavigate();
@@ -28,7 +29,6 @@ export default function Registration(){
 
         if (validationInformation()) {
 
-            if (validationInformation()) {
             try {
 
                 
@@ -47,20 +47,26 @@ export default function Registration(){
                 });
 
                 
-
+                //Si l'inscription n'est pas accepter alors un message erreur va informer l'utilisateur
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    toast.error(response.message || 'Deja un utilisateur avec l\'email '+email);
+                    setMessageError('Deja un utilisateur avec l\'email: '+email);
+
+                }
+                else{
+
+                    toast.success('Registration avec succes');
+                    //RegistrationInfoJoueur();
+                    navigate('/login');
                 }
 
-                toast.success('Registration avec succes');
-                //RegistrationInfoJoueur();
-                navigate('/login');
+                
             } catch (error) {
-                console.log('Error:', error); // Log the error to console
+                console.log('Error:', error); 
                 toast.warning('Echouer: ' + error.message);
             }
 
-
+            //Aurait aimer implimenter le login pour ajouter les information aussi dans le tableau Jouer de la BD mais on a une erreur
             /*
                 try {
                     
@@ -100,7 +106,7 @@ export default function Registration(){
 
             */
             
-            }
+            
         }
     }
 
@@ -144,13 +150,15 @@ export default function Registration(){
         }
 
         if (!verifierDateNaissance(date_de_naissance)){
-            setDateError('Rentrer votre date de naissance dans ce format: YYYY-MM-DD');
+            isValid = false;
+            setDateError('Rentrer votre date de naissance dans ce format: YYYY-MM-DD et une année valide');
         }
         else {
             setDateError('');
         }
 
         if (!verifierTelephone(telephone)){
+            isValid = false;
             setTelephoneError('Rentrer votre numero de telephone dans ce format: 1231231234');
         }
         else{
@@ -177,9 +185,56 @@ export default function Registration(){
 
     const verifierDateNaissance = (date) =>{
 
-        const dateValide = /^\d{4}-\d{2}-\d{2}$/.test(date);
+        //C'est le format YYYY-MM-DD
+        const dateValide = /^\d{4}-\d{2}-\d{2}$/;
 
-        return dateValide;        
+        //Verifier si c'est le bon format YYYY-MM-DD
+        if (!dateValide.test(date)){
+            return false;
+        }
+
+        //Chercher les donneer individuelle de l'annee, mois, joueur
+        const [annee, mois, jour] = date.split('-').map(Number);
+
+        //Verifier en general si les donnee son bonne
+
+        if (mois < 1|| mois > 12|| jour < 1 || jour > 31 || annee < 1900 || annee >2024){
+            //Donnee hors limites
+            return false;
+        }
+
+        //Verifier les mois avec moins de 31 jours
+        const moisAvec31Jours = [1,3,5,7,8,10,12];
+
+        //Verifier si les mois on 31 jours ou pas 
+        if (jour > 30 && !moisAvec31Jours.includes(mois)){
+            //Il il n'y a pas de 31 jours ou plus 
+            return false;
+        }
+
+        //Verifier pour le mois de fevrier
+
+        if (mois === 2){
+
+            //Verifier si c'est une annee bissextile
+            if ((annee % 4 === 0 && annee % 100 !== 0) || annee % 400 === 0){
+
+                //L'annee bissextile possede 29 jours
+                if (jour > 29){
+                    return false;
+                }
+
+            }
+            else {
+                //L'annee non bissextile possede 28 jours
+                if (jour > 28){
+                    return false;
+                }
+            }
+        }
+
+        return true;
+                
     }
 
     const verifierTelephone = (tel) =>{
@@ -200,78 +255,71 @@ export default function Registration(){
 
 
     return (
-        <div className="offset-lg-3 col-lg-6">
+        <div>
             <form method="POST" onSubmit={RegistrationUtilisateur} className="container">
-                <div className="card">
-                    <div className="card-header">
-                        <h1>Registration</h1>
-                    </div>
-                    <div className="card-body">
-
-                        <div className="row">
-                            <div className="col-lg-6">
+                
+                        <h1 style={{ background: 'white' }}>Inscription</h1>
+                    
                                 <div className="form-group"></div>
-                                <label>Nom</label>
-                                <input value={nom} onChange={e=>ajoutNom(e.target.value)} className="form-control"></input>
+                                <label>Nom :</label>
+                                <input type ="text" value={nom} onChange={e=>ajoutNom(e.target.value)} className="form-control"></input>
                                 {nomError && <p style={{ color: 'red' }}>{nomError}</p>}
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-lg-6">
+                            
+                                <br/>
+                        
                                 <div className="form-group"></div>
-                                <label>Prenom</label>
-                                <input value={prenom} onChange={e=>ajoutPrenom(e.target.value)} className="form-control"></input>
+                                <label>Prenom :</label>
+                                <input type = "text" value={prenom} onChange={e=>ajoutPrenom(e.target.value)} className="form-control"></input>
                                 {prenomError && <p style={{ color: 'red' }}>{prenomError}</p>}
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-lg-6">
+                            
+                                <br/>
+                        
                                 <div className="form-group"></div>
-                                <label>Numero de telephone</label>
+                                <label>Numéro de téléphone</label>
                                 <p> Ex: 1234567893</p>
-                                <input value={telephone} onChange={e=>ajoutTelephone(e.target.value)}className="form-control"></input>
+                                <input type="text" value={telephone} onChange={e=>ajoutTelephone(e.target.value)}className="form-control"></input>
                                 {telephoneError && <p style={{ color: 'red' }}>{telephoneError}</p>}
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-lg-6">
+                            
+                        
+                                <br/>
+                        
                                 <div className="form-group"></div>
                                 <label>Date de naissance</label>
                                 <p> Ex: YYYY-MM-DD, 2001-05-16</p>
-                                <input value={date_de_naissance} onChange={e=>ajoutDateDeNaissance(e.target.value)}className="form-control"></input>
+                                <input input type="text" value={date_de_naissance} onChange={e=>ajoutDateDeNaissance(e.target.value)}className="form-control"></input>
                                 {dateError && <p style={{ color: 'red' }}>{dateError}</p>}
                             
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-lg-6">
+                            
+                                <br/>
+                        
                                 <div className="form-group"></div>
                                 <label>Email</label>
-                                <input type ="email" value={email} onChange={e=>ajoutEmail(e.target.value)} className="form-control"></input>
+                                <input type ="text" value={email} onChange={e=>ajoutEmail(e.target.value)} className="form-control"></input>
                                 {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
-                            </div>
-                        </div>
-
-                        <div className="row">
-                            <div className="col-lg-6">
+                            
+                                <br/>
+                        
                                 <div className="form-group"></div>
                                 <label>Mots de passe</label>
-                                <p> Au moins 9 charactere, un majuscule, un minuscule et un chiffre</p>
-                                <input value={password} onChange={e=>ajoutPassword(e.target.value)} className="form-control"></input>
+                                <p> Au moins 9 caractère, une majuscule, une minuscule et un chiffre</p>
+                                <input type="text" value={password} onChange={e=>ajoutPassword(e.target.value)} className="form-control"></input>
                                 {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
-                            </div>
-                        </div>
-
-                    </div>
-                    <div className="card-footer">
+                                
+                        
+                    
+                    <br/>
+                    <div className="button-container">
                         <button type="submit" className="btn btn-primary">Registration</button> 
-                        <Link className="btn btn-danger" to={'/login'}>Back</Link>
+                        <Link to={'/login'}>
+                        <button className="btn btn-danger">Connexion</button>
+                        </Link>
+                        <Link to={'/'}>
+                        <button className="btn btn-red">Acceuil</button>
+                        </Link>
                     </div>
-                </div>
+                    {messageError && <p style={{ color: 'red' }}>{messageError}</p>}
+                
+                            
             </form>
             
             {/* ToastContainer afficher le message d'erreur */}

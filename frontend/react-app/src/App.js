@@ -15,6 +15,8 @@ import CreateEquipe from './components/CreateEquipe';
 import CreateLigue from './components/CreateLigue';
 import CreateMatch from './components/CreateMatch';
 import FaceAFace from './components/FaceAFace';
+import InfoPersonnelle from './components/InfoPersonnelle';
+import Match from './components/Match';
 import './styles/index.css';
 import "./styles/style.css";
 
@@ -39,6 +41,8 @@ function App() {
             <Route path="/creerLigue" element={<CreateLigue />} />
             <Route path="/creerPartie/:idLigue" element={<CreateMatch />} />
             <Route path="/partie/:idGame" element={<FaceAFace />} />
+            <Route path="/infoPersonnelle" element={<InfoPersonnelle />} />
+            <Route path="/match" element={<Match />} />
           </Routes> 
         </div>
       </div>

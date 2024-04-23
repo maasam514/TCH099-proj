@@ -89,7 +89,7 @@ class EquipeController extends Controller
 
         $nom=strip_tags($requete->input('nom'));
         $categorie=strip_tags($requete->input('categorie'));
-        $idLigue=filter_var($requete->input('idLigue'),FILTRE_SANITIZE_NUMBER_INT);
+        $idLigue=filter_var($requete->input('idLigue'),FILTER_SANITIZE_NUMBER_INT);
 
         //Verifier si un fichier image a ete envoye, si il y en a une
         //creer un nom de fichier avec l'extension de l'image envoye

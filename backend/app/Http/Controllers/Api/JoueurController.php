@@ -85,8 +85,8 @@ class JoueurController extends Controller
         $courriel=strip_tags($requete->input('courriel'));
         $dateNaissance=strip_tags($requete->input('dateDeNaissance'));
         $capitaine=$requete->input('capitaine');
-        $numero=filter_var($requete->input('numero'),FILTRE_SANITIZE_NUMBER_INT);
-        $idEquipe=filter_var($requete->input('idEquipe'),FILTRE_SANITIZE_NUMBER_INT);
+        $numero=filter_var($requete->input('numero'),FILTER_SANITIZE_NUMBER_INT);
+        $idEquipe=filter_var($requete->input('idEquipe'),FILTER_SANITIZE_NUMBER_INT);
 
         //faire l'insertion dans la base de donnee
 

@@ -102,7 +102,7 @@ class JoueurController extends Controller
                 'capitaine'=>$capitaine,
                 'numero'=>$numero,
                 'id_equipe'=>$idEquipe,
-            ]);
+            ],'id_joueur');
 
             DB::commit();
         }catch(QueryException $e){

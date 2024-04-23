@@ -42,7 +42,7 @@ Route::middleware(['auth:sanctum','gestionnaire'])->group(function(){
     - La requete doit comptre les id des deux equipes (exterieur et domicile)
     - ainsi qu'un id de match
     */
-    Route::post('game',[GameController::class,'ajouterMatch']);
+    Route::post('game',[GameController::class,'ajouterGame']);
 
     //Route qui supprime un joueur dans la base de donnee.
     Route::delete('joueur/{id}',[JoueurController::class,'deleteJoueur']);

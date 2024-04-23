@@ -193,7 +193,7 @@ class GameController extends Controller
     public function ajouterGame(Request $requete){
         $regles=[
             'idGame'=>'required|integer',
-            'date'=>'required|date',
+            'date'=>'required|date_format:Y-m-d H:i:s',
             'lieu'=>'required|string|max:20',
             'idLigue'=>'required|integer',
             'idEquipeDom'=>'required|integer',

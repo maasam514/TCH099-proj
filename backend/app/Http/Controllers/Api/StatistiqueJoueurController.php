@@ -16,7 +16,7 @@ class StatistiqueJoueurController extends Controller
         /* SELECT * FROM Feuille_Statistique_Joueur
         -  WHERE id_joueur=$id
         */
-        $statistiques = DB::table('Feuille_Statistique_Joueur')
+        $statistiques = DB::table('feuille_statistique_joueur')
         ->where('id_joueur', $id)
         ->get();
 
@@ -31,15 +31,19 @@ class StatistiqueJoueurController extends Controller
             'nbPasses'=>0,
             'nbCartonJaune'=>0,
             'nbCartonRouge'=>0,
+            'nbMatch'=>0,
         ];
 
+        $nombreMatch=0;
         //remplir le tableau qui sera renvoyee
         foreach($statistiques as $statistique){
             $statistiquesComplete['nbButs']+=$statistique->nb_but;
             $statistiquesComplete['nbPasses']+=$statistique->nb_passe;
             $statistiquesComplete['nbCartonJaune']+=$statistique->nb_carton_jaune;
             $statistiquesComplete['nbCartonRouge']+=$statistique->nb_carton_rouge;
+            $nombreMatch++;
         }
+        $statistiquesComplete['nbMatch'] = $nombreMatch;
         //renvoyer les statistiques.
         return response()->json($statistiquesComplete,200);
      

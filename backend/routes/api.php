@@ -30,7 +30,6 @@ use App\Http\Controllers\Controller;
 Route::middleware('auth:sanctum')->group(function () {
     
     Route::post('logout', [AuthController::class, 'seDeconnecter']);
-    Route::post('joueur', [JoueurController::class, 'ajouterJoueur']);
 });
 
 //Les routes qui ne peuvent etre accessible au gestionnaire de ligue
@@ -43,7 +42,7 @@ Route::middleware(['auth:sanctum','gestionnaire'])->group(function(){
     - La requete doit comptre les id des deux equipes (exterieur et domicile)
     - ainsi qu'un id de match
     */
-    Route::post('game',[GameController::class,'ajouterMatch']);
+    Route::post('game',[GameController::class,'ajouterGame']);
 
     //Route qui supprime un joueur dans la base de donnee.
     Route::delete('joueur/{id}',[JoueurController::class,'deleteJoueur']);
@@ -68,6 +67,9 @@ Route::middleware(['auth:sanctum','gestionnaire'])->group(function(){
 
     //Route qui modifie une ligue dans la base de donnee.
     Route::put('ligue/{id}',[LigueController::class,'modifierLigue']);
+
+    //Route quie permote de rentrer les resultats a la suite d'un match
+    Route::post('resultat/{id}',[GameController::class, 'ajouterResultatsMatch']);
 });
 
 //Route pour se connecter a son compte utilisateur si on en possede un
@@ -93,6 +95,9 @@ Route::get('statistique/equipe/{id}',[StatistiqueEquipeController::class, 'getSt
 -Prend en parametres l'id du joueur dans l'url.
 */
 Route::get('joueur/{id}',[JoueurController::class, 'getJoueur']);
+
+//Route qui permet d'ajouter un joueur
+Route::post('joueur', [JoueurController::class, 'ajouterJoueur']);
 
 /*Route qui retourne les informations de tout les joueurs dans la base de donnees*/
 Route::get('joueurs',[JoueurController::class, 'getAllJoueurs']);

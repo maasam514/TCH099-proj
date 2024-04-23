@@ -15,7 +15,19 @@ class LigueController extends Controller
     public function getAllLigues(){
         $reponse=DB::table('ligue')->get();
 
-        return response()->json($reponse,200);
+        $infoLigues=[];
+        foreach($reponse as $ligue){
+            $infoLigues[]=[
+                'idLigue'=>$ligue->id_ligue,
+                'nomLigue'=>$ligue->nom,
+                'categorie'=>$ligue->categorie,
+                'annee'=>$ligue->annee,
+                'nbEquipes'=>$ligue->nb_equipe,
+                'idGestionnaire'=>$ligue->id_gestionnaire,
+            ];
+        }
+
+        return response()->json($infoLigues,200);
     }
     //fonction qui renvoie les informations sur une ligue
     public function getLigue(int $id){
@@ -53,8 +65,8 @@ class LigueController extends Controller
             'nom'=>'required|string|max:15',
             'categorie'=>'required|string|max:10',
             'annee'=>'int|max:9999',
-            'id_gestionnaire'=>'required|int|max:9999999999',
-            'nb_equipe'=>'required|int|max:99',
+            'idGestionnaire'=>'required|int|max:9999999999',
+            'nbEquipes'=>'required|int|max:99',
         ];
 
         $validation=Validator::make($requete->all(),$regles);
@@ -65,9 +77,9 @@ class LigueController extends Controller
 
         $nom=strip_tags($requete->input('nom'));
         $categorie=strip_tags($requete->input('categorie'));
-        $annee=strip_tags($requete->input('annee'));
-        $id_gestionnaire=strip_tags($requete->input('id_gestionnaire'));
-        $nb_equipe=strip_tags($requete->input('nb_equipe'));
+        $annee=filter_var($requete->input('annee'),FILTER_SANITIZE_NUMBER_INT);
+        $idGestionnaire=filter_var($requete->input('idGestionnaire'),FILTER_SANITIZE_NUMBER_INT);
+        $nbEquipes=filter_var($requete->input('nbEquipes'),FILTER_SANITIZE_NUMBER_INT);
 
         try{
             DB::beginTransaction();
@@ -76,8 +88,8 @@ class LigueController extends Controller
                 'nom'=>$nom,
                 'categorie'=>$categorie,
                 'annee'=>$annee,
-                'id_gestionnaire'=>$id_gestionnaire,
-                'nb_equipe'=>$nb_equipe,
+                'id_gestionnaire'=>$idGestionnaire,
+                'nb_equipe'=>$nbEquipes,
             ]);
 
             DB::commit();
@@ -116,11 +128,11 @@ class LigueController extends Controller
             DB::beginTransaction();
 
             $modification=DB::table('ligue')
-                          ->where('id_ligue',$requete->id_ligue)
+                          ->where('id_ligue',$requete->idLigue)
                           ->update(['nom'=>$requete->nom,
                                     'categorie'=>$requete->categorie,
                                     'annee'=>$requete->annee,
-                                    'nb_equipe'=>$requete->nb_equipe]);          
+                                    'nb_equipe'=>$requete->nbEquipes]);          
             
             if($modification>0){
                 DB::commit();

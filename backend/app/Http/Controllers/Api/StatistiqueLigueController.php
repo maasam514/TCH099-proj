@@ -22,10 +22,28 @@ class StatistiqueLigueController extends Controller
                 ->where('id_ligue',$id)
                 ->join('statistique_equipe','equipe.id_equipe','=','statistique_equipe.id_equipe')
                 ->get();
+
+        $reponse=[];        
         
         if(!$equipes->isEmpty()){
             //renvoyer la reponse
-            return response()->json($equipes,200);
+            foreach($equipes as $equipe){
+                $reponse[]=[
+                    'idEquipe'=>$equipe->id_equipe,
+                    'nom'=>$equipe->nom,
+                    'categorie'=>$equipe->categorie,
+                    'idLigue'=>$equipe->id_ligue,
+                    'nbJoueurs'=>$equipe->nb_joueurs,
+                    'nbVictoires'=>$equipe->nb_victoire,
+                    'nbDefaites'=>$equipe->nb_defaite,
+                    'nbNuls'=>$equipe->nb_nul,
+                    'nbPoints'=>$equipe->nb_point,
+                    'nbButsPour'=>$equipe->but_pour,
+                    'nbButsContre'=>$equipe->but_contre,
+                    'nbMatch'=>$equipe->nb_game,
+                ];
+            }
+            return response()->json($reponse,200);
         }else{
             return response()->json(['error' => 'Ligue non trouvée'], 404);
         }        

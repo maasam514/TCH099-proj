@@ -18,8 +18,16 @@ class EquipeController extends Controller
                     ->first();
         
         if(!is_null($infoEquipe)){
-            return response()->json($infoEquipe, 200);
+            $reponse = [
+                'idEquipe'=>$infoEquipe->id_equipe,
+                'nom'=>$infoEquipe->nom,
+                'categorie'=>$infoEquipe->categorie,
+                'idLigue'=>$infoEquipe->id_ligue,
+                'nbJoueurs'=>$infoEquipe->nb_joueurs,
+            ];
+            return response()->json($reponse, 200);
         }
+        
         return response()->json(['error'=>'Aucune equipe trouvee'],404);            
     }
 
@@ -27,8 +35,18 @@ class EquipeController extends Controller
         $equipes=DB::table('equipe')
                 ->get();
         
+        $reponse = [];
         if(!$equipes->isEmpty()){
-            return response()->json($equipes,200);
+            foreach($equipes as $equipe){
+                $reponse[] = [
+                    'idEquipe'=>$equipe->id_equipe,
+                    'nom'=>$equipe->nom,
+                    'categorie'=>$equipe->categorie,
+                    'idLigue'=>$equipe->id_ligue,
+                    'nbJoueurs'=>$equipe->nb_joueurs,
+                ];
+            }
+            return response()->json($reponse,200);
         }
         return response()->json(['message'=>'erreur lors de la demande'],404);        
     }
@@ -39,8 +57,18 @@ class EquipeController extends Controller
                 ->where('nb_joueurs','<=',$nbJoueurs)
                 ->get();
          
+        $reponse = [];        
         if(!$equipes->isEmpty()){
-            return response()->json($equipes,200);  
+            foreach($equipes as $equipe){
+                $reponse[] = [
+                    'idEquipe'=>$equipe->id_equipe,
+                    'nom'=>$equipe->nom,
+                    'categorie'=>$equipe->categorie,
+                    'idLigue'=>$equipe->id_ligue,
+                    'nbJoueurs'=>$equipe->nb_joueurs,
+                ];
+            }
+            return response()->json($reponse,200);  
         }        
         return response()->json(['message'=>'Aucune equipe avec moins de '.$nbJoueurs.' joueurs'],404);        
     }
@@ -50,7 +78,7 @@ class EquipeController extends Controller
             'nom'=>'required|string|max:20',
             'categorie'=>'required|string|max:10',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'id_ligue'=>'required|int|max:9999999999'
+            'idLigue'=>'required|int|max:9999999999'
         ];
 
         $validation=Validator::make($requete->all(),$regles);
@@ -61,7 +89,7 @@ class EquipeController extends Controller
 
         $nom=strip_tags($requete->input('nom'));
         $categorie=strip_tags($requete->input('categorie'));
-        $id_ligue=strip_tags($requete->input('id_ligue'));
+        $idLigue=filter_var($requete->input('idLigue'),FILTER_SANITIZE_NUMBER_INT);
 
         //Verifier si un fichier image a ete envoye, si il y en a une
         //creer un nom de fichier avec l'extension de l'image envoye
@@ -78,7 +106,7 @@ class EquipeController extends Controller
             DB::table('equipe')->insert([
                 'nom'=>$nom,
                 'categorie'=>$categorie,
-                'id_ligue'=>$id_ligue,
+                'id_ligue'=>$idLigue,
                 //mettre le nom du fichier image dans la base de donnee
                 'image'=>$nomImage,
             ]);
@@ -126,11 +154,11 @@ class EquipeController extends Controller
             DB::beginTransaction();
 
             $modification=DB::table('equipe')
-                          ->where('id_equipe',$requete->id_equipe)
+                          ->where('id_equipe',$requete->idEquipe)
                           ->update(['nom'=>$requete->nom,
                                     'categorie'=>$requete->categorie,
-                                    'id_ligue'=>$requete->id_ligue,
-                                    'nb_joueurs'=>$requete->nb_joueurs,]);          
+                                    'id_ligue'=>$requete->idLigue,
+                                    'nb_joueurs'=>$requete->nbJoueurs,]);          
             
             if($modification>0){
                 DB::commit();

@@ -167,6 +167,15 @@ class GameController extends Controller
         }
         $reponse=[];
         foreach($games as $game){
+            $nomEquipeDom = DB::table('equipe')
+                          ->select('equipe.nom')
+                          ->where('id_equipe','=',$game->id_equipe_dom)
+                          ->first();
+
+            $nomEquipeExt = DB::table('equipe')
+                          ->select('equipe.nom')
+                          ->where('id_equipe','=',$game->id_equipe_ext)
+                          ->first();
             $reponse[]=[
                 'idGame'=>$game->id_game,
                 'dateGame'=>$game->date_game,
@@ -174,6 +183,8 @@ class GameController extends Controller
                 'idLigue'=>$game->id_ligue,
                 'idEquipeDom'=>$game->id_equipe_dom,
                 'idEquipeExt'=>$game->id_equipe_ext,
+                'equipeDom'=>$nomEquipeDom->nom,
+                'equipeExt'=>$nomEquipeExt->nom,
             ];
         }  
         return response()->json($reponse,200);     

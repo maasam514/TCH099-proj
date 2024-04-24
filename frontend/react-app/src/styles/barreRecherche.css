@@ -1,0 +1,60 @@
+.conteneur-barre-recherche{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.barre-recherche{
+    display: flex;
+    justify-content: center;
+    width:auto;  
+}
+
+.barre-recherche-input{
+    width: 25%;
+    height: 1.5rem;
+    border-radius: 10px;
+    padding: 1em;
+    font-size: 15px;
+    position:relative;
+}
+
+.effacer-texte{
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 0;
+}
+
+.conteneur-liste-suggestion{
+    display: flex;
+    width:auto;
+    justify-content: center;
+}
+
+.conteneur-suggestions-nom{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: white;
+    width: 27%;
+    align-items: center;
+    margin-top: 0;
+    padding-left: 0;
+    color: black;
+}
+
+.suggestion-joueur{
+    padding: 1rem 0;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+    color: black;
+}
+
+.suggestion-joueur:hover{
+    background-color: #f0f0f0;
+}
+
+.suggestion-joueur a {
+    color: black;
+}

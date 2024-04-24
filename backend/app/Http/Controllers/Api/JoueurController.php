@@ -32,28 +32,31 @@ class JoueurController extends Controller
         return response()->json(['error'=>'Aucun joueur trouvee'],404);
     }
 
-    public function getAllJoueurs(){
-        $infoJoueurs=DB::table('joueur')
+   public function getAllJoueurs(){
+      $infoJoueurs = DB::table('joueur')
                     ->join('equipe', 'joueur.id_equipe', '=', 'equipe.id_equipe')
-                    ->select('joueur.*','joueur.nom as joueur_nom', 'equipe.nom as equipe_nom')
+                    ->select('joueur.*', 'equipe.nom as equipe_nom')
                     ->get();
-        $reponse=[];
-        if(!$infoJoueurs->isEmpty()){
-            foreach($infoJoueurs as $joueur){
-                $reponse[]=[
-                    'idJoueur'=>$joueur->id_joueur,
-                    'prenom'=>$joueur->prenom,
-                    'nom'=>$joueur->nom,
-                    'capitaine'=>$joueur->capitaine,
-                    'numero'=>$joueur->numero,
-                    'idEquipe'=>$joueur->id_equipe,
-                    'dateDeNaissance'=>$joueur->date_de_naissance,
-                ];
-            }
-            return response()->json($infoJoueurs,200);
-        } 
-        return response()->json(['error'=>'Erreur dans la recuperation des joueurs']);           
-    }
+                    
+      if (!$infoJoueurs->isEmpty()) {
+          $reponse = [];
+          foreach($infoJoueurs as $joueur){
+              $reponse[]=[
+                  'idJoueur'=>$joueur->id_joueur,
+                  'prenom'=>$joueur->prenom,
+                  'joueurNom'=>$joueur->nom,
+                  'capitaine'=>$joueur->capitaine,
+                  'numero'=>$joueur->numero,
+                  'idEquipe'=>$joueur->id_equipe,
+                  'dateDeNaissance'=>$joueur->date_de_naissance,
+                  'equipeNom'=>$joueur->equipe_nom
+              ];
+          }
+          return response()->json($reponse, 200);
+      } else {
+          return response()->json(['error'=>'Aucun joueur trouvé'], 500);
+      }
+  }
 
     public function ajouterJoueur(Request $requete){
 

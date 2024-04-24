@@ -8,13 +8,8 @@
     {
       "src": "/(css|js|images)/(.*)",
       "dest": "/public/$1/$2"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/react-app/build/$1"
     }
   ],
-    
   "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.6.1"

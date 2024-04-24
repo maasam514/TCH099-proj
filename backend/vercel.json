@@ -1,26 +1,8 @@
 {
   "version": 2,
-   "functions": {
-    "api/index.php": {
-      "runtime": "vercel-php@0.6.1"
-    }
-  },
-  "routes": [
-    {
-      "src": "/(css|js)/(.*)",
-      "dest": "public/$1/$2"
-    },
-    { "src": "/api/(.*)", "dest": "/api" },
-    {
-      "src": "/(.+)/$",
-      "status": 301,
-      "headers": { "Location": "/$1" },
-      "continue": true
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/react-app/build/$1"
-    }
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/index.php" },
+    { "source": "/(.*)", "destination": "/frontend/react-app/build/$1" }
   ],
   "env": {
     "APP_NAME": "LigueSoccer",

@@ -3,11 +3,12 @@
    "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.6.1"
+    },
+    "frontend-react-app": {
+      "runtime": "@vercel/node12-serverless",
+      "memory": 1024
     }
   },
-"builds": [
-    { "src": "/frontend/react-app", "use": "@vercel/static-build" }
-  ],
   "routes": [
     {
       "src": "/(css|js)/(.*)",

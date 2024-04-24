@@ -17,7 +17,7 @@ function Joueurs(){
                 if(comparaisonPrenom !==0 ){
                     return comparaisonPrenom;
                 }
-                return a.joueur_nom.localeCompare(b.joueur_nom);
+                return a.joueurNom.localeCompare(b.joueurNom);
             });
             return joueursFiltrer;
         }catch(error){
@@ -48,9 +48,9 @@ function Joueurs(){
                             <tr key={joueur.id}>
                                 <td>
                                     <Link to={`/joueur/${joueur.id_joueur}`}>
-                                        {joueur.prenom} {joueur.joueur_nom}
+                                        {joueur.prenom} {joueur.joueurNom}
                                     </Link></td>
-                                <td>{joueur.equipe_nom}</td>
+                                <td>{joueur.equipeNom}</td>
                             </tr>
                         ))}
                     </tbody>

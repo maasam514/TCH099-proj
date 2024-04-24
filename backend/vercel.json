@@ -1,30 +1,29 @@
 {
   "version": 2,
-  "functions": {
+   "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.6.1"
     }
   },
   "routes": [
     {
-      "src": "^/api/(.*)",
-      "dest": "/api/index.php"
-    },
-    {
-      "src": "/(css|js|images)/(.*)",
+      "src": "/(css|js)/(.*)",
       "dest": "public/$1/$2"
     },
+    { "src": "/api/(.*)", "dest": "/api" },
     {
-      "src": "/(.*)",
-      "dest": "/frontend/react-app/build/$1"
+      "src": "/(.+)/$",
+      "status": 301,
+      "headers": { "Location": "/$1" },
+      "continue": true
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/react-app/build/index.html"
+      "dest": "../frontend/react-app/build/$1"
     }
   ],
   "env": {
-    "APP_NAME": "SoccerHub",
+    "APP_NAME": "LigueSoccer",
     "APP_ENV": "production",
     "APP_DEBUG": "true",
     "APP_URL": "https://tch-099-proj.vercel.app",

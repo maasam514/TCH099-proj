@@ -5,6 +5,9 @@
       "runtime": "vercel-php@0.6.1"
     }
   },
+"builds": [
+    { "src": "/frontend/react-app", "use": "@vercel/static-build" }
+  ],
   "routes": [
     {
       "src": "/(css|js)/(.*)",

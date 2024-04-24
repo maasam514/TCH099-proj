@@ -47,7 +47,7 @@ function Joueurs(){
                         {allJoueurs && allJoueurs.map((joueur) => (
                             <tr key={joueur.id}>
                                 <td>
-                                    <Link to={`/joueur/${joueur.id_joueur}`}>
+                                    <Link to={`/joueur/${joueur.idJoueur}`}>
                                         {joueur.prenom} {joueur.joueurNom}
                                     </Link></td>
                                 <td>{joueur.equipeNom}</td>

@@ -309,7 +309,7 @@ export default function Registration(){
                     
                     <br/>
                     <div className="button-container">
-                        <button type="submit" className="btn btn-primary">Registration</button> 
+                        <button type="submit" className="btn btn-primary">Inscription</button> 
                         <Link to={'/login'}>
                         <button className="btn btn-danger">Connexion</button>
                         </Link>

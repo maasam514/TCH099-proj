@@ -101,7 +101,7 @@ export default function Login() {
                         {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
                         {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
                         <div className="card-footer">
-                            <button type="submit" className="btn btn-primary">Login</button>
+                            <button type="submit" className="btn btn-primary">Connexion</button>
                             <Link to={"/registration"}>
                             <button className="btn btn-danger">Registration</button>
                             </Link>

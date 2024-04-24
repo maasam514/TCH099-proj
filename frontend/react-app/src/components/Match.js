@@ -98,7 +98,7 @@ export default function Match() {
       </div>
       {categoryId === 1 ? (
         <div>
-          <center><h2>Matchs Avenir</h2></center>
+          <center><h2>Matchs À venir</h2></center>
         <table>
           <thead>
             <tr>

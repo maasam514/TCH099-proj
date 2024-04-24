@@ -155,7 +155,7 @@ const Equipe = () => {
             </table>
 
             {/* Matchs */}
-            <h2>Matchs Avenir</h2>
+            <h2>Matchs À venir</h2>
             <table>
                 <thead>
                     <tr>

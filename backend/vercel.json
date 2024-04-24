@@ -14,12 +14,7 @@
       "dest": "/frontend/react-app/build/$1"
     }
   ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/frontend/react-app/build/$1"
-    }
-  ],
+    
   "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.6.1"

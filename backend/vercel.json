@@ -10,8 +10,8 @@
       "dest": "/public/$1/$2"
     },
     {
-      "source": "/(.*)",
-      "destination": "/"
+      "src": "/(.*)",
+      "dest": "/frontend/react-app/build/$1"
     }
   ],
   "functions": {

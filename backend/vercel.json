@@ -20,7 +20,11 @@
     {
       "src": "/(.*)",
       "dest": "/frontend/react-app/build/$1"
-    }
+    },
+    {
+        "src":"/",
+        "dest":"/frontend/react-app/build/index.html"
+    },
   ],
   "env": {
     "APP_NAME": "LigueSoccer",

@@ -38,7 +38,7 @@ const Ligues = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {ligues.map((ligue) => (
+                            {ligues && ligues.map((ligue) => (
                                 <tr key={ligues.idLigue}>
                                     <td><Link to={`/ligue/${ligue.idLigue}`}>
                                             {ligue.nomLigue}

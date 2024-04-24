@@ -99,7 +99,7 @@ const ClassementLigue = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {equipes.map((equipe) => (
+                    {equipes.length > 0 && equipes.map((equipe) => (
                         <tr key={equipe.idEquipe}>
                             <td>{equipe.rang}</td>
                             <td>

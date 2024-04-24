@@ -39,7 +39,7 @@ const Equipe = () => {
             setMatchs(dataMatchs.parties);
 
             //Fetch les ancien matchs
-            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/resultats/equipe/1`)
+            reponse = await fetch(`https://tch-099-proj.vercel.app/api/api/resultats/equipe/${idEquipe}`)
             let dataAncienMatch = await reponse.json();
             setAncienMatchs(dataAncienMatch);
         };
@@ -139,7 +139,7 @@ const Equipe = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {joueurs && joueurs.map(joueur => (
+                    {joueurs !== null &&Array.isArray(joueurs)  && joueurs.map(joueur => (
                         <tr key={joueur.idJoueur}>
                             <td>
                             <Link to={`/joueur/${joueur.idJoueur}`}>

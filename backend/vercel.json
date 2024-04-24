@@ -3,10 +3,6 @@
    "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.6.1"
-    },
-    "frontend-react-app": {
-      "runtime": "@vercel/node12-serverless",
-      "memory": 1024
     }
   },
   "routes": [
@@ -28,7 +24,7 @@
     {
         "src":"/",
         "dest":"/frontend/react-app/build/index.html"
-    }
+    },
   ],
   "env": {
     "APP_NAME": "LigueSoccer",

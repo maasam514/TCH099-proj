@@ -3,21 +3,21 @@
   "routes": [
     {
       "src": "^/(api)/(.*)",
-      "dest": "/api/index.php"
+      "dest": "backend/api/index.php"
     },
     {
       "src": "/(css|js|images)/(.*)",
-      "dest": "/public/$1/$2"
+      "dest": "backend/public/$1/$2"
     },
     {
       "src": "/(.*)",
-      "dest": "/frontend/react-app/build/$1"
+      "dest": "/build/$1"
     }
   ],
   "rewrites": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "build/index.html"
     }
   ],
   "functions": {

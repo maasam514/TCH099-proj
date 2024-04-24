@@ -11,7 +11,7 @@
       "dest": "/api/index.php"
     },
     {
-      "src": "/(?!api)(.*)",
+      "src": "/(.*)",
       "dest": "/frontend/react-app/build/$1"
     }
   ],

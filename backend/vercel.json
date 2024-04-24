@@ -1,16 +1,11 @@
 {
   "version": 2,
-   "functions": {
-    "api/index.php": {
-      "runtime": "vercel-php@0.6.1"
-    }
-  },
   "routes": [
     {
       "src": "/(css|js)/(.*)",
       "dest": "public/$1/$2"
     },
-    { "src": "/api/(.*)", "dest": "/api" },
+    { "src": "/api/(.*)", "dest": "/api/$1" },
     {
       "src": "/(.+)/$",
       "status": 301,
@@ -18,14 +13,19 @@
       "continue": true
     },
     {
-      "src": "/(.*)",
-      "dest": "/frontend/react-app/build/$1"
+      "src": "/",
+      "dest": "/frontend/react-app/build/index.html"
     },
     {
-        "src":"/",
-        "dest":"/frontend/react-app/build/index.html"
+      "src": "/(.*)",
+      "dest": "/frontend/react-app/build/$1"
     }
   ],
+  "functions": {
+    "api/index.php": {
+      "runtime": "vercel-php@0.6.1"
+    }
+  },
   "env": {
     "APP_NAME": "LigueSoccer",
     "APP_ENV": "production",

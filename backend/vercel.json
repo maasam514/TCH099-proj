@@ -19,8 +19,8 @@
       "dest": "/frontend/react-app/build/$1"
     },
     {
-      "source": "/(.*)",
-      "destination": "/frontend/react-app/build/index.html"
+      "src": "/(.*)",
+      "dest": "/frontend/react-app/build/index.html"
     }
   ],
   "env": {

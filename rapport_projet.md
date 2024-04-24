@@ -19,7 +19,7 @@ membres de l'équipe:
 
 Objectif de l’application:
 
-	Cette application a pour objectif de gérer des ligues de soccer amateur. Elle prend en charge différents utilisateurs tels que joueur, 
+ Cette application a pour objectif de gérer des ligues de soccer amateur. Elle prend en charge différents utilisateurs tels que joueur, 
  visiteur et gestionnaire de ligue, chacun ayant des fonctionnalités spécifiques. Parmi ces fonctionnalités figurent la création d'équipes, 
  la planification des matchs, la consultation des résultats des matchs, l'affichage des statistiques des joueurs et des équipes, et bien plus encore.
 
@@ -78,47 +78,44 @@ Diagramme d’architecture :
 
 Revues des taches :
 Sprint 1 : 8 issues
-Taille	Eti_Lema	Maasam514	Alexandre
-Racine02	emilemadore	Cloudxyekay
+Taille	Eti_Lema	Maasam514	AlexandreRacine02	emilemadore	Cloudxyekay
 XS
-	-
-	-	-	-	-
+	   -               -	               -	             -	            -
 S
-	-	1	1	-	-
+	   -	           1	               1	             -	            -
 M
-	-	1	-	1	-
+	   -	           1	               -	             1	            -
 L
-	1	1	-	-	1
+	   1	           1	               -	             -	            1
 XL
-	-	-	-	-	-
+	   -	           -	               -	             -	            -
 
 Sprint 2 : 19 issues
-Taille	Eti_Lema	Maasam514	Alexandre
-Racine02	emilemadore	Cloudxyekay
+Taille	Eti_Lema	Maasam514	AlexandreRacine02	emilemadore	Cloudxyekay
 XS
-	-	-	-	-	-
+	-	            -	               -	             -	             -
 S
-	2	2	1	1	-
+	2	            2	               1	             1	             -
 M
-	2	2	2	3	3
+	2	            2	               2	             3	             3
 L
-	-	-	-	-	-
+	-	            -	               -	             -	             -
 XL
-	-	-	-	-	-
+	-	            -	               -	             -	             -
 
 Sprint 3 : 28 issues
-Taille	Eti_Lema	Maasam514	Alexandre
-Racine02	emilemadore	Cloudxyekay
+Taille	Eti_Lema	Maasam514	AlexandreRacine02	emilemadore	Cloudxyekay
+
 XS
-	-	-	-	-	-
+	   -	           -	               -	            -	             -
 S
-	3	1	-	1	1
+	   3	           1	               -	            1	             1
 M
-	1	2	3	3	1
+	   1	           2	               3	            3	             1
 L
-	-	-	-	-	-
+	   -	           -	               -	            -	             -
 XL
-	-	-	-	-	-
+	   -	           -	               -	            -	             -
 
 
 

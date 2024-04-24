@@ -1,16 +1,19 @@
 {
   "version": 2,
-   "functions": {
+  "functions": {
     "api/index.php": {
       "runtime": "vercel-php@0.6.1"
     }
   },
   "routes": [
     {
+      "src": "^/(api)/(.*)",
+      "dest": "/api/index.php"
+    },
+    {
       "src": "/(css|js)/(.*)",
       "dest": "public/$1/$2"
     },
-    { "src": "/api/(.*)", "dest": "/api" },
     {
       "src": "/(.+)/$",
       "status": 301,
@@ -19,7 +22,7 @@
     },
     {
       "src": "/(.*)",
-      "dest": "/api"
+      "dest": "../frontend/public/index.html"
     }
   ],
   "env": {

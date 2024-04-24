@@ -2,7 +2,7 @@
   "version": 2,
   "routes": [
     {
-      "src": "^/(api)/(.*)",
+      "src": "^/api/(.*)",
       "dest": "/api/index.php"
     },
     {
@@ -10,14 +10,8 @@
       "dest": "/public/$1/$2"
     },
     {
-      "src": "/(.+)/$",
-      "status": 301,
-      "headers": { "Location": "/$1" },
-      "continue": true
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/frontend/react-app/build/$1"
+      "source": "/(.*)",
+      "destination": "/"
     }
   ],
   "functions": {

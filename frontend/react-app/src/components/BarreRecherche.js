@@ -25,8 +25,8 @@ function BarreRecherche() {
 
             const joueurs = await informationsJoueursResponse.json();
             const nomPlusIdJoueurs = joueurs.map(joueur => ({
-                id_joueur: joueur.id_joueur,
-                nom_complet: `${joueur.prenom} ${joueur.nom}`
+                idJoueur: joueur.idJoueur,
+                nom_complet: `${joueur.prenom} ${joueur.joueurNom}`
             }));
 
             return nomPlusIdJoueurs;
@@ -72,8 +72,8 @@ function BarreRecherche() {
             <div className="conteneur-liste-suggestion">
                 <ul className="conteneur-suggestions-nom">
                     {joueursFiltrer.map((joueur) =>
-                    <li key={joueur.id_joueur} className="suggestion-joueur">
-                        <Link to={`/joueur/${joueur.id_joueur}`}>{joueur.nom_complet}</Link>
+                    <li key={joueur.idJoueur} className="suggestion-joueur">
+                        <Link to={`/joueur/${joueur.idJoueur}`}>{joueur.nom_complet}</Link>
                     </li>
                     )}
                 </ul>
